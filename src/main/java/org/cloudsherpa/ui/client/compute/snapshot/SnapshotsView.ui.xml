@@ -1,0 +1,33 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:cell="urn:import:com.google.gwt.user.cellview.client" xmlns:s="urn:import:org.cloudsherpa.ui.client.compute.snapshot">
+	<ui:style>
+		.grey {
+			background-color: #F1F1F1;
+		}
+	</ui:style>
+	<g:SplitLayoutPanel>
+		<g:north size="360">
+			<g:HeaderPanel>
+				<g:VerticalPanel width="100%">
+					<g:HorizontalPanel width="100%">
+						<g:cell width="50%">
+							<g:FlowPanel>
+								<g:Button ui:field="create" styleName="btn btn-primary"><i class="icon-plus icon-white"></i> Create</g:Button>
+								<g:Button ui:field="delete" styleName="btn btn-danger"><i class="icon-minus icon-white"></i> Delete</g:Button>
+								<g:Button ui:field="createVolume" styleName="btn"><i class="icon-plus"></i> Create Volume</g:Button>
+							</g:FlowPanel>
+						</g:cell>
+						<g:cell width="50%" horizontalAlignment="right">
+							<g:Button ui:field="refresh" styleName="btn btn-inverse"><i class="icon-refresh icon-white"></i> Refresh</g:Button>
+						</g:cell>
+					</g:HorizontalPanel>
+				</g:VerticalPanel>
+				<cell:DataGrid ui:field="grid" width="100%" height="100%" styleName="{style.grey}"/>
+			</g:HeaderPanel>
+		</g:north>
+		<g:center>
+			<s:SnapshotDetails ui:field="details" />
+		</g:center>
+	</g:SplitLayoutPanel>
+</ui:UiBinder> 

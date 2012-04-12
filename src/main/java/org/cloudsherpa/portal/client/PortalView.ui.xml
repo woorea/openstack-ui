@@ -1,0 +1,40 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p="urn:import:org.cloudsherpa.portal.client">
+	<ui:style>
+		.page {
+			margin: 10px;
+		}
+		.main {
+			border: 8px solid #E7E7E7;
+		}
+		.nav {
+			background-color: #F1F1F1;
+			height: 100%;
+		}
+	</ui:style>
+	<g:DockLayoutPanel styleName="{style.page}">
+		<g:north size="96">
+			<g:HTMLPanel>
+				TOP
+			</g:HTMLPanel>
+		</g:north>
+		<g:south size="32">
+			<g:HTMLPanel>
+				FOOTER
+			</g:HTMLPanel>
+		</g:south>
+		<g:center>
+			<g:SplitLayoutPanel styleName="{style.main}">
+				<g:west size="180">
+					<g:HTMLPanel styleName="{style.nav}">
+						<p:Navigation />
+					</g:HTMLPanel>
+				</g:west>
+				<g:center>
+					<g:SimpleLayoutPanel ui:field="main" />
+				</g:center>
+			</g:SplitLayoutPanel>
+		</g:center>
+	</g:DockLayoutPanel>
+</ui:UiBinder> 

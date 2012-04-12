@@ -1,0 +1,120 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:c="urn:import:org.cloudsherpa.ui.client.compute.common" xmlns:s="urn:import:org.cloudsherpa.ui.client.compute.server" xmlns:i="urn:import:org.cloudsherpa.ui.client.compute.image" xmlns:sg="urn:import:org.cloudsherpa.ui.client.compute.securitygroup">
+	<ui:style>
+		.steps {
+			margin: 0 auto;
+			width: 96%;
+			table-layout: fixed;
+			cursor: pointer;
+		}
+	</ui:style>
+	
+	<g:HeaderPanel width="800px" height="600px">
+		<g:HTMLPanel>
+			<div class="modal-header" style="margin-bottom: 15px">
+				<g:Anchor ui:field="close" styleName="close">×</g:Anchor>
+				<h3>Create Server Wizard</h3>
+				<g:HorizontalPanel ui:field="steps" styleName="{style.steps}" />
+			</div>
+		</g:HTMLPanel>
+		<g:DeckLayoutPanel ui:field="deck" height="100%">
+			<g:HTMLPanel title="Image Selection">
+				<i:ImagePicker ui:field="imageRef" />
+			</g:HTMLPanel>
+			<g:TabLayoutPanel title="Configuration" barHeight="30">
+				<g:tab>
+					<g:header>Configuration</g:header>
+					<g:HTMLPanel>
+						<table>
+							<tbody>
+								<tr>
+									<td colspan="2">
+										Name
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<g:TextBox ui:field="name" />
+									</td>
+								</tr>
+							</tbody>
+							<tbody>
+								<tr>
+									<td colspan="2">
+										Flavor
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<g:ListBox ui:field="flavorRef" />
+									</td>
+								</tr>
+							</tbody>
+							<tbody>
+								<tr>
+									<td>Min.</td>
+									<td>Max.</td>
+								</tr>
+								<tr>
+									<td>
+										<g:IntegerBox ui:field="min" value="1" />
+									</td>
+									<td>
+										<g:IntegerBox ui:field="max" value="1" />
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</g:HTMLPanel>
+				</g:tab>
+				<g:tab>
+					<g:header>Metadata</g:header>
+					<c:MetadataEditor ui:field="metadata" />
+				</g:tab>
+				<g:tab>
+					<g:header>Metadata</g:header>
+					<s:PersonalityEditor ui:field="personality" />
+				</g:tab>
+			</g:TabLayoutPanel>
+			<g:HTMLPanel title="Key Pair">
+				<table>
+					<tbody>
+						<tr>
+							<td colspan="2">
+								Key Pair
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<g:ListBox ui:field="keyName" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</g:HTMLPanel>
+			<g:HTMLPanel title="Security Groups">
+				<table>
+					<tbody>
+						<tr>
+							<td colspan="2">
+								Security Groups
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<g:ListBox ui:field="securityGroups" multipleSelect="true" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<sg:SecurityGroupEditor />
+				<sg:SecurityGroupRuleEditor />
+			</g:HTMLPanel>
+		</g:DeckLayoutPanel>
+		<g:HTMLPanel ui:field="footer" styleName="modal-footer">
+			<g:Button ui:field="save" styleName="btn">Save</g:Button>
+			<g:Button ui:field="cancel" styleName="btn">Cancel</g:Button>
+		</g:HTMLPanel>
+	</g:HeaderPanel>
+</ui:UiBinder> 

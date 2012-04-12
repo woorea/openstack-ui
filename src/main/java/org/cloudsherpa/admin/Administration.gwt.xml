@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='admin'>
+  <inherits name='org.cloudsherpa.ui.UI'/>
+  <inherits name='org.cloudsherpa.portal.Portal' />
+  <inherits name='com.google.gwt.user.theme.clean.Clean'/>
+  <entry-point class='org.cloudsherpa.admin.client.Administration'/>
+  <source path='client'/>
+  <source path='shared'/>
+</module>

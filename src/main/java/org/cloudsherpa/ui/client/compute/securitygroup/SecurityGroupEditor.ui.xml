@@ -1,0 +1,35 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		
+	</ui:style>
+	<g:HTMLPanel>
+		<table>
+			<tbody>
+				<tr>
+					<td>
+						Name
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<g:TextBox ui:field="name" />
+					</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<td>
+						Description
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<g:TextArea ui:field="description" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</g:HTMLPanel>
+</ui:UiBinder> 
