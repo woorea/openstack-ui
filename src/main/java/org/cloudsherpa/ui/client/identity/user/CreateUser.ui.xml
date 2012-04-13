@@ -40,7 +40,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<g:TextBox ui:field="password" width="100%" />
+								<g:PasswordTextBox ui:field="password" width="100%"></g:PasswordTextBox>
 							</td>
 						</tr>
 					</tbody>

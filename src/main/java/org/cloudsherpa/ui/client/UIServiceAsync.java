@@ -1,5 +1,6 @@
 package org.cloudsherpa.ui.client;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.openstack.model.compute.FloatingIp;
 import org.openstack.model.compute.KeyPair;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupForCreate;
+import org.openstack.model.compute.SecurityGroupRule;
 import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerAction;
@@ -21,6 +23,7 @@ import org.openstack.model.identity.Role;
 import org.openstack.model.identity.Service;
 import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.User;
+import org.openstack.model.identity.UserForCreate;
 import org.openstack.model.images.Image;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -28,92 +31,78 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface UIServiceAsync {
 
 	void associateFloatingIp(String ip, String serverId,
-			AsyncCallback<List<FloatingIp>> callback);
+			AsyncCallback<FloatingIp> callback);
 
-	void attachVolume(AsyncCallback<List<Volume>> callback);
+	void attachVolume(Integer id, String serverId,
+			AsyncCallback<Volume> callback);
 
-	void createEndpoint(Endpoint endpoint,
-			AsyncCallback<List<Endpoint>> callback);
+	void createEndpoint(Endpoint endpoint, AsyncCallback<Endpoint> callback);
 
-	void createFlavor(Flavor flavor, AsyncCallback<List<Flavor>> callback);
+	void createFlavor(Flavor flavor, AsyncCallback<Flavor> callback);
 
-	void createFloatingIp(AsyncCallback<List<FloatingIp>> callback);
+	void createFloatingIp(AsyncCallback<FloatingIp> callback);
 
-	void createImage(Image image, AsyncCallback<List<Image>> callback);
+	void createImage(Image image, AsyncCallback<Image> callback);
 
 	void createKeyPair(String name, AsyncCallback<KeyPair> callback);
 
-	void createRole(Role role, AsyncCallback<List<Role>> callback);
+	void createRole(Role role, AsyncCallback<Role> callback);
 
 	void createSecurityGroup(SecurityGroupForCreate securityGroup,
-			AsyncCallback<List<SecurityGroup>> callback);
+			AsyncCallback<SecurityGroup> callback);
 
 	void createSecurityGroupRule(SecurityGroupRuleForCreate rule,
-			AsyncCallback<SecurityGroup> callback);
+			AsyncCallback<SecurityGroupRule> callback);
 
 	void createServer(ServerForCreate serverForCreate,
-			AsyncCallback<List<Server>> callback);
+			AsyncCallback<Server> callback);
 
-	void createService(Service service, AsyncCallback<List<Service>> callback);
+	void createService(Service service, AsyncCallback<Service> callback);
 
 	void createSnapshots(SnapshotForCreate snapshotForCreate,
-			AsyncCallback<List<Snapshot>> callback);
+			AsyncCallback<Snapshot> callback);
 
-	void createTenant(Tenant tenant, AsyncCallback<List<Tenant>> callback);
+	void createTenant(Tenant tenant, AsyncCallback<Tenant> callback);
 
-	void createUser(User user, AsyncCallback<List<User>> callback);
+	void createUser(UserForCreate user, AsyncCallback<User> callback);
 
 	void createVolume(VolumeForCreate volumeForCreate,
-			AsyncCallback<List<Volume>> callback);
+			AsyncCallback<Volume> callback);
 
-	void deleteEndpoint(Collection<String> ids,
-			AsyncCallback<List<Endpoint>> callback);
+	void deleteEndpoint(String id, AsyncCallback<Void> callback);
 
-	void deleteFlavors(Collection<String> ids,
-			AsyncCallback<List<Flavor>> callback);
+	void deleteFlavor(String id, AsyncCallback<Void> callback);
 
-	void deleteFloatingIps(Collection<Integer> ids,
-			AsyncCallback<List<FloatingIp>> callback);
+	void deleteFloatingIp(Integer id, AsyncCallback<Void> callback);
 
-	void deleteImages(Collection<String> ids,
-			AsyncCallback<List<Image>> callback);
+	void deleteImage(String id, AsyncCallback<Void> callback);
 
-	void deleteKeyPairs(Collection<String> names,
-			AsyncCallback<List<KeyPair>> callback);
+	void deleteKeyPair(String name, AsyncCallback<Void> callback);
 
-	void deleteRoles(Collection<String> ids, AsyncCallback<List<Role>> callback);
+	void deleteRole(String id, AsyncCallback<Void> callback);
 
-	void deleteSecurityGroupRule(Collection<Integer> ids,
-			AsyncCallback<SecurityGroup> callback);
+	void deleteSecurityGroup(Integer id, AsyncCallback<Void> callback);
 
-	void deleteSecurityGroups(Collection<Integer> ids,
-			AsyncCallback<List<SecurityGroup>> callback);
+	void deleteSecurityGroupRule(Integer id, AsyncCallback<Void> callback);
 
-	void deleteServers(Collection<String> ids,
-			AsyncCallback<List<Server>> callback);
+	void deleteServer(String id, AsyncCallback<Void> callback);
 
-	void deleteSnapshots(Collection<Integer> ids,
-			AsyncCallback<List<Snapshot>> callback);
+	void deleteService(String id, AsyncCallback<Void> callback);
 
-	void deleteTenants(Collection<String> ids,
-			AsyncCallback<List<Tenant>> callback);
+	void deleteSnapshot(Integer ids, AsyncCallback<Void> callback);
 
-	void deleteUser(Collection<String> ids, AsyncCallback<List<User>> callback);
+	void deleteTenant(String id, AsyncCallback<Void> callback);
 
-	void deleteVolumes(Collection<Integer> ids,
-			AsyncCallback<List<Volume>> callback);
+	void deleteUser(String id, AsyncCallback<Void> callback);
 
-	void delteService(Collection<String> ids,
-			AsyncCallback<List<Service>> callback);
+	void deleteVolume(Integer id, AsyncCallback<Void> callback);
 
-	void detachVolumes(Integer id, String serverId,
-			AsyncCallback<List<Volume>> callback);
+	void detachVolume(Integer id, AsyncCallback<Volume> callback);
 
-	void disassociateFloatingIp(String ip,
-			AsyncCallback<List<FloatingIp>> callback);
+	void disassociateFloatingIp(String ip, AsyncCallback<FloatingIp> callback);
 
 	void executeServerAction(Collection<String> id, ServerAction action,
-			AsyncCallback<Server> callback);
+			AsyncCallback<Serializable> callback);
 
 	void listEndpoints(AsyncCallback<List<Endpoint>> callback);
 
@@ -140,5 +129,7 @@ public interface UIServiceAsync {
 	void listUsers(AsyncCallback<List<User>> callback);
 
 	void listVolumes(AsyncCallback<List<Volume>> callback);
+
+	void deleteTenants(String[] ids, AsyncCallback<Void> callback);
 
 }

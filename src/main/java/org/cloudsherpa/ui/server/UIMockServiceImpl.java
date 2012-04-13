@@ -1,11 +1,13 @@
 package org.cloudsherpa.ui.server;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.cloudsherpa.ui.client.UIService;
 import org.openstack.model.compute.Flavor;
@@ -40,6 +42,7 @@ import org.openstack.model.identity.Role;
 import org.openstack.model.identity.Service;
 import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.User;
+import org.openstack.model.identity.UserForCreate;
 import org.openstack.model.identity.keystone.KeystoneEndpoint;
 import org.openstack.model.identity.keystone.KeystoneRole;
 import org.openstack.model.identity.keystone.KeystoneService;
@@ -70,8 +73,8 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	private static Map<String, Tenant> tenants = Maps.newConcurrentMap();
 	private static Map<String, User> users = Maps.newConcurrentMap();
 	private static Map<String, Role> roles = Maps.newConcurrentMap();
-	private static Map<Integer, Service> services = Maps.newConcurrentMap();
-	private static Map<Integer, Endpoint> endpoints = Maps.newConcurrentMap();
+	private static Map<String, Service> services = Maps.newConcurrentMap();
+	private static Map<String, Endpoint> endpoints = Maps.newConcurrentMap();
 	
 	static {
 		NovaMetadata m = new NovaMetadata();
@@ -148,8 +151,8 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 			tenants.put(String.valueOf(i), new KeystoneTenant(String.valueOf(i),"tenant."+i));
 			users.put(String.valueOf(i), new KeystoneUser(String.valueOf(i),"user."+i));
 			roles.put(String.valueOf(i), new KeystoneRole(String.valueOf(i),"role."+i));
-			services.put(i, new KeystoneService(String.valueOf(i), "service."+i, "compute", "desc"));
-			endpoints.put(i, new KeystoneEndpoint(String.valueOf(i), "nova", String.valueOf(i)));
+			services.put(String.valueOf(i), new KeystoneService(String.valueOf(i), "service."+i, "compute", "desc"));
+			endpoints.put(String.valueOf(i), new KeystoneEndpoint(String.valueOf(i), "nova", String.valueOf(i)));
 			
 			
 		}
@@ -162,17 +165,17 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public List<Server> createServer(ServerForCreate serverForCreate) {
-		return listServers(0, 10);
+	public Server createServer(ServerForCreate serverForCreate) {
+		return new NovaServer();
 	}
 
 	@Override
-	public List<Server> deleteServers(Collection<String> ids) {
-		return listServers(0, 10);
+	public void deleteServer(String id) {
+		servers.remove(id);
 	}
 
 	@Override
-	public Server executeServerAction(Collection<String> id, ServerAction action) {
+	public Serializable executeServerAction(Collection<String> id, ServerAction action) {
 		return new NovaServer();
 	}
 
@@ -182,13 +185,13 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public List<Flavor> createFlavor(Flavor flavor) {
-		return listFlavors(0, 10);
+	public Flavor createFlavor(Flavor flavor) {
+		return flavor;
 	}
 
 	@Override
-	public List<Flavor> deleteFlavors(Collection<String> ids) {
-		return listFlavors(0, 10);
+	public void deleteFlavor(String id) {
+		flavors.remove(id);
 	}
 
 	@Override
@@ -197,13 +200,13 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public List<Image> createImage(Image image) {
-		return listImages(0, 10);
+	public Image createImage(Image image) {
+		return new GlanceImage();
 	}
 
 	@Override
-	public List<Image> deleteImages(Collection<String> ids) {
-		return listImages(0, 10);
+	public void deleteImage(String id) {
+		images.remove(id);
 	}
 
 	@Override
@@ -212,23 +215,23 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public List<FloatingIp> createFloatingIp() {
-		return listFloatingIps();
+	public FloatingIp createFloatingIp() {
+		return new NovaFloatingIp();
 	}
 
 	@Override
-	public List<FloatingIp> deleteFloatingIps(Collection<Integer> ids) {
-		return listFloatingIps();
+	public void deleteFloatingIp(Integer id) {
+		floatingIps.remove(id);
 	}
 
 	@Override
-	public List<FloatingIp> associateFloatingIp(String ip, String serverId) {
-		return listFloatingIps();
+	public FloatingIp associateFloatingIp(String ip, String serverId) {
+		return new NovaFloatingIp();
 	}
 
 	@Override
-	public List<FloatingIp> disassociateFloatingIp(String ip) {
-		return listFloatingIps();
+	public FloatingIp disassociateFloatingIp(String ip) {
+		return new NovaFloatingIp();
 	}
 
 	@Override
@@ -237,23 +240,23 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public List<Volume> createVolume(VolumeForCreate volumeForCreate) {
-		return listVolumes();
+	public Volume createVolume(VolumeForCreate volumeForCreate) {
+		return new NovaVolume();
 	}
 
 	@Override
-	public List<Volume> deleteVolumes(Collection<Integer> ids) {
-		return listVolumes();
+	public void deleteVolume(Integer id) {
+		volumes.remove(id);
 	}
 
 	@Override
-	public List<Volume> attachVolume() {
-		return listVolumes();
+	public Volume attachVolume(Integer id, String serverId) {
+		return new NovaVolume();
 	}
 
 	@Override
-	public List<Volume> detachVolumes(Integer id, String serverId) {
-		return listVolumes();
+	public Volume detachVolume(Integer id) {
+		return new NovaVolume();
 	}
 
 	@Override
@@ -262,13 +265,13 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public List<Snapshot> createSnapshots(SnapshotForCreate snapshotForCreate) {
-		return listSnapshots();
+	public Snapshot createSnapshots(SnapshotForCreate snapshotForCreate) {
+		return new NovaSnapshot();
 	}
 
 	@Override
-	public List<Snapshot> deleteSnapshots(Collection<Integer> ids) {
-		return listSnapshots();
+	public void deleteSnapshot(Integer id) {
+		snapshots.remove(id);
 	}
 
 	@Override
@@ -282,8 +285,8 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public List<KeyPair> deleteKeyPairs(Collection<String> names) {
-		return listKeyPairs();
+	public void deleteKeyPair(String name) {
+		keyPairs.remove(name);
 	}
 
 	@Override
@@ -292,23 +295,23 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public List<SecurityGroup> createSecurityGroup(SecurityGroupForCreate securityGroup) {
-		return listSecurityGroups();
-	}
-
-	@Override
-	public List<SecurityGroup> deleteSecurityGroups(Collection<Integer> ids) {
-		return listSecurityGroups();
-	}
-
-	@Override
-	public SecurityGroup createSecurityGroupRule(SecurityGroupRuleForCreate rule) {
+	public SecurityGroup createSecurityGroup(SecurityGroupForCreate securityGroup) {
 		return new NovaSecurityGroup();
 	}
 
 	@Override
-	public SecurityGroup deleteSecurityGroupRule(Collection<Integer> ids) {
-		return new NovaSecurityGroup();
+	public void deleteSecurityGroup(Integer id) {
+		securityGroups.remove(id);
+	}
+
+	@Override
+	public SecurityGroupRule createSecurityGroupRule(SecurityGroupRuleForCreate rule) {
+		return new NovaSecurityGroupRule();
+	}
+
+	@Override
+	public void deleteSecurityGroupRule(Integer id) {
+		
 	}
 
 	@Override
@@ -317,13 +320,22 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public List<Tenant> createTenant(Tenant tenant) {
-		return listTenants(0, 10);
+	public Tenant createTenant(Tenant tenant) {
+		tenant.setId(String.valueOf(System.currentTimeMillis()));
+		tenants.put(tenant.getId(), tenant);
+		return tenant;
 	}
 
 	@Override
-	public List<Tenant> deleteTenants(Collection<String> ids) {
-		return listTenants(0, 10);
+	public void deleteTenant(String id) {
+		tenants.remove(id);
+	}
+	
+	@Override
+	public void deleteTenants(String[] ids) {
+		for(String id : ids) {
+			deleteTenant(id);
+		}
 	}
 
 	@Override
@@ -332,13 +344,15 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public List<User> createUser(User user) {
-		return listUsers();
+	public User createUser(UserForCreate userForCreate) {
+		User user = new KeystoneUser(String.valueOf(System.currentTimeMillis()), String.valueOf(System.currentTimeMillis()));
+		users.put(user.getId(), user);
+		return user;
 	}
 
 	@Override
-	public List<User> deleteUser(Collection<String> ids) {
-		return listUsers();
+	public void deleteUser(String id) {
+		users.remove(id);
 	}
 
 	@Override
@@ -347,13 +361,15 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public List<Role> createRole(Role role) {
-		return listRoles();
+	public Role createRole(Role role) {
+		role.setId(String.valueOf(System.currentTimeMillis()));
+		roles.put(role.getId(), role);
+		return role;
 	}
 
 	@Override
-	public List<Role> deleteRoles(Collection<String> ids) {
-		return listRoles();
+	public void deleteRole(String id) {
+		roles.remove(id);
 	}
 
 	@Override
@@ -362,13 +378,15 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public List<Service> createService(Service service) {
-		return listServices();
+	public Service createService(Service service) {
+		service.setId(String.valueOf(System.currentTimeMillis()));
+		services.put(service.getId(), service);
+		return service;
 	}
 
 	@Override
-	public List<Service> delteService(Collection<String> ids) {
-		return listServices();
+	public void deleteService(String id) {
+		services.remove(id);
 	}
 
 	@Override
@@ -377,13 +395,15 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public List<Endpoint> createEndpoint(Endpoint endpoint) {
-		return listEndpoints();
+	public Endpoint createEndpoint(Endpoint endpoint) {
+		endpoint.setId(String.valueOf(System.currentTimeMillis()));
+		endpoints.put(endpoint.getId(), endpoint);
+		return endpoint;
 	}
 
 	@Override
-	public List<Endpoint> deleteEndpoint(Collection<String> ids) {
-		return listEndpoints();
+	public void deleteEndpoint(String id) {
+		endpoints.remove(id);
 	}
 
 }

@@ -1,10 +1,14 @@
 package org.cloudsherpa.ui.client.identity.tenant;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.cloudsherpa.admin.client.Administration;
 import org.openstack.model.identity.Tenant;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
@@ -93,6 +97,11 @@ public class TenantsView extends Composite {
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
+	
+	public void refresh() {
+		//grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
+		RangeChangeEvent.fire(grid, grid.getVisibleRange());
+	}
 
 	@UiHandler("create")
 	void onCreateClick(ClickEvent event) {
@@ -101,13 +110,33 @@ public class TenantsView extends Composite {
 	
 	@UiHandler("delete")
 	void onDeleteClick(ClickEvent event) {
+		Set<Tenant> tenants = selectionModel.getSelectedSet();
+		String[] ids = Collections2.transform(tenants, new Function<Tenant, String>() {
+
+			@Override
+			public String apply(Tenant tenant) {
+				return tenant.getId();
+			}
+			
+		}).toArray(new String[0]);
+		Administration.CLOUD.deleteTenants(ids, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				refresh();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.toString());
+			}
+			
+		});
 		presenter.onDelete();
 	}
 	
 	@UiHandler("refresh")
 	void onRefreshClick(ClickEvent event) {
-		//grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
-		RangeChangeEvent.fire(grid, grid.getVisibleRange());
 		presenter.onRefresh();
 	}
 	

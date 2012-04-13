@@ -1,6 +1,7 @@
 package org.cloudsherpa.ui.client;
 
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.openstack.model.compute.FloatingIp;
 import org.openstack.model.compute.KeyPair;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupForCreate;
+import org.openstack.model.compute.SecurityGroupRule;
 import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerAction;
@@ -22,6 +24,7 @@ import org.openstack.model.identity.Role;
 import org.openstack.model.identity.Service;
 import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.User;
+import org.openstack.model.identity.UserForCreate;
 import org.openstack.model.images.Image;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -35,95 +38,97 @@ public interface UIService extends RemoteService {
 	
 	public List<Server> listServers(int start, int max);
 	
-	public List<Server> createServer(ServerForCreate serverForCreate);
+	public Server createServer(ServerForCreate serverForCreate);
 	
-	public List<Server> deleteServers(Collection<String> ids);
+	public void deleteServer(String id);
 	
-	public Server executeServerAction(Collection<String> id, ServerAction action);
+	public Serializable executeServerAction(Collection<String> id, ServerAction action);
 	
 	public List<Flavor> listFlavors(int start, int max);
 	
-	public List<Flavor> createFlavor(Flavor flavor);
+	public Flavor createFlavor(Flavor flavor);
 	
-	public List<Flavor> deleteFlavors(Collection<String> ids);
+	public void deleteFlavor(String id);
 	
 	public List<Image> listImages(int starts, int max);
 	
-	public List<Image> createImage(Image image);
+	public Image createImage(Image image);
 	
-	public List<Image> deleteImages(Collection<String> ids);
+	public void deleteImage(String id);
 	
 	public List<FloatingIp> listFloatingIps();
 	
-	public List<FloatingIp> createFloatingIp();
+	public FloatingIp createFloatingIp();
 	
-	public List<FloatingIp> deleteFloatingIps(Collection<Integer> ids);
+	public void deleteFloatingIp(Integer id);
 	
-	public List<FloatingIp> associateFloatingIp(String ip, String serverId);
+	public FloatingIp associateFloatingIp(String ip, String serverId);
 	
-	public List<FloatingIp> disassociateFloatingIp(String ip);
+	public FloatingIp disassociateFloatingIp(String ip);
 	
 	public List<Volume> listVolumes();
 	
-	public List<Volume> createVolume(VolumeForCreate volumeForCreate);
+	public Volume createVolume(VolumeForCreate volumeForCreate);
 	
-	public List<Volume> deleteVolumes(Collection<Integer> ids);
+	public void deleteVolume(Integer id);
 	
-	public List<Volume> attachVolume();
+	public Volume attachVolume(Integer id, String serverId);
 	
-	public List<Volume> detachVolumes(Integer id, String serverId);
+	public Volume detachVolume(Integer id);
 	
 	public List<Snapshot> listSnapshots();
 	
-	public List<Snapshot> createSnapshots(SnapshotForCreate snapshotForCreate);
+	public Snapshot createSnapshots(SnapshotForCreate snapshotForCreate);
 	
-	public List<Snapshot> deleteSnapshots(Collection<Integer> ids);
+	public void deleteSnapshot(Integer ids);
 	
 	public List<KeyPair> listKeyPairs();
 	
 	public KeyPair createKeyPair(String name);
 	
-	public List<KeyPair> deleteKeyPairs(Collection<String> names);
+	public void deleteKeyPair(String name);
 	
 	public List<SecurityGroup> listSecurityGroups();
 	
-	public List<SecurityGroup> createSecurityGroup(SecurityGroupForCreate securityGroup);
+	public SecurityGroup createSecurityGroup(SecurityGroupForCreate securityGroup);
 	
-	public List<SecurityGroup> deleteSecurityGroups(Collection<Integer> ids);
+	public void deleteSecurityGroup(Integer id);
 	
-	public SecurityGroup createSecurityGroupRule(SecurityGroupRuleForCreate rule);
+	public SecurityGroupRule createSecurityGroupRule(SecurityGroupRuleForCreate rule);
 	
-	public SecurityGroup deleteSecurityGroupRule(Collection<Integer> ids);
+	public void deleteSecurityGroupRule(Integer id);
 	
 	//
 	
 	public List<Tenant> listTenants(int start, int max);
 	
-	public List<Tenant> createTenant(Tenant tenant);
+	public Tenant createTenant(Tenant tenant);
 	
-	public List<Tenant> deleteTenants(Collection<String> ids);
+	public void deleteTenant(String id);
+	
+	public void deleteTenants(String[] ids);
 	
 	public List<User> listUsers();
 	
-	public List<User> createUser(User user);
+	public User createUser(UserForCreate userForCreate);
 	
-	public List<User> deleteUser(Collection<String> ids);
+	public void deleteUser(String id);
 	
 	public List<Role> listRoles();
 	
-	public List<Role> createRole(Role role);
+	public Role createRole(Role role);
 	
-	public List<Role> deleteRoles(Collection<String> ids);
+	public void deleteRole(String id);
 	
 	public List<Service> listServices();
 	
-	public List<Service> createService(Service service);
+	public Service createService(Service service);
 	
-	public List<Service> delteService(Collection<String> ids);
+	public void deleteService(String id);
 	
 	public List<Endpoint> listEndpoints();
 	
-	public List<Endpoint> createEndpoint(Endpoint endpoint);
+	public Endpoint createEndpoint(Endpoint endpoint);
 	
-	public List<Endpoint> deleteEndpoint(Collection<String> ids);
+	public void deleteEndpoint(String id);
 }

@@ -94,6 +94,10 @@ public class UsersView extends Composite {
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
+	
+	public void refresh() {
+		RangeChangeEvent.fire(grid, grid.getVisibleRange());
+	}
 
 	@UiHandler("create")
 	void onCreateClick(ClickEvent event) {
@@ -107,8 +111,6 @@ public class UsersView extends Composite {
 	
 	@UiHandler("refresh")
 	void onRefreshClick(ClickEvent event) {
-		//grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
-		RangeChangeEvent.fire(grid, grid.getVisibleRange());
 		presenter.onRefresh();
 	}
 	
