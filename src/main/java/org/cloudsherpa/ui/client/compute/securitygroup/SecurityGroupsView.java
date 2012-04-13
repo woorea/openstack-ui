@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.cloudsherpa.portal.client.Portal;
 import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.SecurityGroupRule;
+import org.openstack.model.compute.nova.NovaMetadata.Item;
 
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.CheckboxCell;
@@ -132,7 +134,7 @@ public class SecurityGroupsView extends Composite {
 
 			@Override
 			public Boolean getValue(SecurityGroup object) {
-				return false;
+				return selectionModel.isSelected(object);
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
@@ -173,6 +175,17 @@ public class SecurityGroupsView extends Composite {
 	
 	private void onPreview(SecurityGroup securityGroup) {
 		details.id.setText(securityGroup.getId().toString());
+		details.name.setText(securityGroup.getName());
+		details.description.setText(securityGroup.getDescription());
+		
+		int row = 0;
+		for(SecurityGroupRule rule : securityGroup.getRules()) {
+			details.rules.setText(row, 0, rule.getIpProtocol());
+			details.rules.setText(row, 1, String.valueOf(rule.getFromPort()));
+			details.rules.setText(row, 2, String.valueOf(rule.getToPort()));
+			details.rules.setText(row, 3, rule.getIpRange().getCidr());
+			row++;
+		}
 	}
 	
 }

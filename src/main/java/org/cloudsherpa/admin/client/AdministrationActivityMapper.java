@@ -1,13 +1,6 @@
 package org.cloudsherpa.admin.client;
 
 import org.cloudsherpa.ui.client.compute.common.AdministrationPlace;
-import org.cloudsherpa.ui.client.compute.floatingip.FloatingIpsActivity;
-import org.cloudsherpa.ui.client.compute.image.ImagesActivity;
-import org.cloudsherpa.ui.client.compute.keypair.KeyPairsActivity;
-import org.cloudsherpa.ui.client.compute.securitygroup.SecurityGroupsActivity;
-import org.cloudsherpa.ui.client.compute.server.ServersActivity;
-import org.cloudsherpa.ui.client.compute.snapshot.SnapshotsActivity;
-import org.cloudsherpa.ui.client.compute.volume.VolumesActivity;
 import org.cloudsherpa.ui.client.identity.endpoint.EndpointsActivity;
 import org.cloudsherpa.ui.client.identity.role.RolesActivity;
 import org.cloudsherpa.ui.client.identity.service.ServicesActivity;
@@ -37,7 +30,6 @@ public class AdministrationActivityMapper implements ActivityMapper {
 				return new EndpointsActivity(pp);
 			}
 		}
-		GWT.log("No place");
 		return null;
 	}
 

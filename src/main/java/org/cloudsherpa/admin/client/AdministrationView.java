@@ -14,7 +14,7 @@ public class AdministrationView extends Composite {
 	interface PortalViewUiBinder extends UiBinder<Widget, AdministrationView> {
 	}
 	
-	@UiField SimpleLayoutPanel main;
+	@UiField SimpleLayoutPanel main2;
 
 	public AdministrationView() {
 		initWidget(uiBinder.createAndBindUi(this));

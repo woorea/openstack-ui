@@ -16,6 +16,23 @@ public class ImageDetails extends Composite {
 	}
 	
 	@UiField Label id;
+	@UiField Label checksum;
+	@UiField Label createdAt;
+	@UiField Label deleted;
+	@UiField Label deletedAt;
+	@UiField Label containerFormat;
+	@UiField Label diskFormat;
+	@UiField Label isProtected;
+	@UiField Label isPublic;
+	@UiField Label minDisk;
+	@UiField Label minRam;
+	@UiField Label name;
+	@UiField Label ownerx;
+	@UiField Label size;
+	@UiField Label status;
+	@UiField Label updatedAt;
+	@UiField Label uri;
+	
 
 	public ImageDetails() {
 		initWidget(uiBinder.createAndBindUi(this));

@@ -27,8 +27,7 @@ public class RolesActivity extends AbstractActivity implements RolesView.Present
 
 	@Override
 	public void onCreate() {
-		CreateServerWizard widget = new CreateServerWizard();
-		widget.edit(new NovaServerForCreate());
+		CreateRole widget = new CreateRole();
 		Administration.MODAL.setWidget(widget);
 		Administration.MODAL.center();
 		

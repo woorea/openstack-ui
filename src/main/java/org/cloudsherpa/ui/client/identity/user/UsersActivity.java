@@ -2,8 +2,6 @@ package org.cloudsherpa.ui.client.identity.user;
 
 import org.cloudsherpa.admin.client.Administration;
 import org.cloudsherpa.ui.client.compute.common.AdministrationPlace;
-import org.cloudsherpa.ui.client.compute.server.CreateServerWizard;
-import org.openstack.model.compute.nova.NovaServerForCreate;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -27,8 +25,7 @@ public class UsersActivity extends AbstractActivity implements UsersView.Present
 
 	@Override
 	public void onCreate() {
-		CreateServerWizard widget = new CreateServerWizard();
-		widget.edit(new NovaServerForCreate());
+		CreateUser widget = new CreateUser();
 		Administration.MODAL.setWidget(widget);
 		Administration.MODAL.center();
 		
@@ -44,22 +41,5 @@ public class UsersActivity extends AbstractActivity implements UsersView.Present
 	public void onRefresh() {
 		
 	}
-
-	@Override
-	public void onAttach() {
-		CreateServerWizard widget = new CreateServerWizard();
-		widget.edit(new NovaServerForCreate());
-		Administration.MODAL.setWidget(widget);
-		Administration.MODAL.center();
-		
-	}
-
-	@Override
-	public void onDetach() {
-		CreateServerWizard widget = new CreateServerWizard();
-		widget.edit(new NovaServerForCreate());
-		Administration.MODAL.setWidget(widget);
-		Administration.MODAL.center();
-	}
-
+	
 }

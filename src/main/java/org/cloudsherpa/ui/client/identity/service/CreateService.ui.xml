@@ -4,43 +4,23 @@
 	<ui:style>
 		
 	</ui:style>
-	<g:HeaderPanel width="600px" height="450px">
+	<g:HeaderPanel width="600px" height="400px">
 		<g:HTMLPanel>
 			<div class="modal-header" style="margin-bottom: 15px">
 				<g:Anchor ui:field="close" styleName="close">×</g:Anchor>
-				<h3>Create Volume</h3>
+				<h3>Create Service</h3>
 			</div>
 		</g:HTMLPanel>
 		<g:ResizeLayoutPanel height="100%">
 			<g:HTMLPanel>
-				<table style="width:98%">
+				<table>
 					<tbody>
 						<tr>
-							<td>Snapshot</td>
+							<td colspan="2">Type</td>
 						</tr>
 						<tr>
-							<td>
-								<g:ListBox ui:field="snapshotId" />
-							</td>
-						</tr>
-					</tbody>
-					<tbody>
-						<tr>
-							<td>Size (in GB)</td>
-						</tr>
-						<tr>
-							<td>
-								<g:IntegerBox ui:field="sizeInGB" width="100%" />
-							</td>
-						</tr>
-					</tbody>
-					<tbody>
-						<tr>
-							<td>Availability Zone</td>
-						</tr>
-						<tr>
-							<td>
-								<g:TextBox ui:field="availabilityZone" width="100%" />
+							<td colspan="2">
+								<g:TextBox ui:field="type" width="100%" />
 							</td>
 						</tr>
 					</tbody>

@@ -16,6 +16,9 @@ public class ServiceDetails extends Composite {
 	}
 	
 	@UiField Label id;
+	@UiField Label name;
+	@UiField Label description;
+	@UiField Label type;
 
 	public ServiceDetails() {
 		initWidget(uiBinder.createAndBindUi(this));

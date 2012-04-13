@@ -135,7 +135,7 @@ public class KeyPairsView extends Composite {
 
 			@Override
 			public Boolean getValue(KeyPair object) {
-				return false;
+				return selectionModel.isSelected(object);
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");

@@ -1,5 +1,7 @@
 package org.cloudsherpa.admin.client;
 
+import org.cloudsherpa.ui.client.UIService;
+import org.cloudsherpa.ui.client.UIServiceAsync;
 import org.cloudsherpa.ui.client.compute.common.AdministrationPlace;
 
 import com.google.gwt.activity.shared.ActivityManager;
@@ -22,6 +24,8 @@ public static final EventBus EVENT_BUS = new SimpleEventBus();
 	
 	public static final PopupPanel MODAL = new PopupPanel(true, true);
 	
+	public static final UIServiceAsync CLOUD = GWT.create(UIService.class);
+	
 	public void onModuleLoad() {
 		
 		Administration.MODAL.setGlassEnabled(true);
@@ -32,7 +36,7 @@ public static final EventBus EVENT_BUS = new SimpleEventBus();
 		ActivityMapper activityMapper = new AdministrationActivityMapper();
 		
 		ActivityManager activityManager = new ActivityManager(activityMapper, EVENT_BUS);
-		activityManager.setDisplay(view.main);
+		activityManager.setDisplay(view.main2);
 		
 		PlaceHistoryMapper historyMapper = GWT.create(AdministrationPlaceHistoryMapper.class);
 		PlaceHistoryHandler historyManager = new PlaceHistoryHandler(historyMapper);

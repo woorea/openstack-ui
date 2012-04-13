@@ -8,59 +8,61 @@
 		<g:HTMLPanel>
 			<div class="modal-header" style="margin-bottom: 15px">
 				<g:Anchor ui:field="close" styleName="close">×</g:Anchor>
-				<h3>Create Volume</h3>
+				<h3>Create Endpoint</h3>
 			</div>
 		</g:HTMLPanel>
 		<g:ResizeLayoutPanel height="100%">
 			<g:HTMLPanel>
-				<table style="width:98%">
+				<table>
 					<tbody>
 						<tr>
-							<td>Snapshot</td>
+							<td>Service Id</td>
 						</tr>
 						<tr>
 							<td>
-								<g:ListBox ui:field="snapshotId" />
+								<g:TextBox ui:field="serviceId" width="100%" />
 							</td>
 						</tr>
 					</tbody>
 					<tbody>
 						<tr>
-							<td>Size (in GB)</td>
+							<td>
+								<td>Region</td>
+							</td>
 						</tr>
 						<tr>
 							<td>
-								<g:IntegerBox ui:field="sizeInGB" width="100%" />
+								<g:TextBox ui:field="region" width="100%" />
 							</td>
 						</tr>
 					</tbody>
 					<tbody>
 						<tr>
-							<td>Availability Zone</td>
-						</tr>
-						<tr>
-							<td>
-								<g:TextBox ui:field="availabilityZone" width="100%" />
-							</td>
-						</tr>
-					</tbody>
-					<tbody>
-						<tr>
-							<td colspan="2">Name</td>
+							<td colspan="2">Public URL</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<g:TextBox ui:field="name" width="100%" />
+								<g:TextBox ui:field="publicURL" width="100%" />
 							</td>
 						</tr>
 					</tbody>
 					<tbody>
 						<tr>
-							<td colspan="2">Description</td>
+							<td colspan="2">Internal URL</td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<g:TextArea ui:field="description" width="100%" />
+								<g:TextBox ui:field="internalURL" width="100%" />
+							</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<td colspan="2">Administration URL</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<g:TextBox ui:field="adminURL" width="100%" />
 							</td>
 						</tr>
 					</tbody>

@@ -2,7 +2,7 @@ package org.cloudsherpa.ui.client.identity.endpoint;
 
 import java.util.List;
 
-import org.cloudsherpa.portal.client.Portal;
+import org.cloudsherpa.admin.client.Administration;
 import org.openstack.model.identity.Endpoint;
 
 import com.google.gwt.cell.client.CheckboxCell;
@@ -45,11 +45,7 @@ public class EndpointsView extends Composite {
 	
 	@UiField Button create;
 	@UiField Button delete;
-	@UiField Button attach;
-	@UiField Button detach;
 	@UiField Button refresh;
-	
-	@UiField EndpointDetails details;
 	
 	@UiField(provided = true) DataGrid<Endpoint> grid;
 	
@@ -64,7 +60,7 @@ public class EndpointsView extends Composite {
 			
 			final Range range = display.getVisibleRange();
 			
-			Portal.CLOUD.listEndpoints(new AsyncCallback<List<Endpoint>>() {
+			Administration.CLOUD.listEndpoints(new AsyncCallback<List<Endpoint>>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -106,16 +102,6 @@ public class EndpointsView extends Composite {
 		presenter.onDelete();
 	}
 	
-	@UiHandler("attach")
-	void onAtachClick(ClickEvent event) {
-		presenter.onAttach();
-	}
-	
-	@UiHandler("detach")
-	void onDetachClick(ClickEvent event) {
-		presenter.onDetach();
-	}
-	
 	@UiHandler("refresh")
 	void onRefreshClick(ClickEvent event) {
 		//grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
@@ -127,18 +113,12 @@ public class EndpointsView extends Composite {
 		switch (selectionModel.getSelectedSet().size()) {
 		case 0:
 			delete.setEnabled(false);
-			attach.setEnabled(false);
-			detach.setEnabled(false);
 			break;
 		case 1:
 			delete.setEnabled(true);
-			attach.setEnabled(true);
-			detach.setEnabled(true);
 			break;
 		default:
 			delete.setEnabled(true);
-			attach.setEnabled(false);
-			detach.setEnabled(false);
 			break;
 		}
 	}
@@ -150,7 +130,7 @@ public class EndpointsView extends Composite {
 
 			@Override
 			public Boolean getValue(Endpoint object) {
-				return false;
+				return selectionModel.isSelected(object);
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "30px");
@@ -222,10 +202,6 @@ public class EndpointsView extends Composite {
 			}
 		});
 		asyncDataProvider.addDataDisplay(grid); 
-	}
-	
-	private void onPreview(Endpoint server) {
-		details.id.setText(server.getId());
 	}
 	
 }

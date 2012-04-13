@@ -2,8 +2,9 @@ package org.cloudsherpa.ui.client.identity.service;
 
 import java.util.List;
 
-import org.cloudsherpa.portal.client.Portal;
+import org.cloudsherpa.admin.client.Administration;
 import org.openstack.model.identity.Service;
+import org.openstack.model.identity.User;
 
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.CheckboxCell;
@@ -40,15 +41,11 @@ public class ServicesView extends Composite {
 	public interface Presenter {
 		void onCreate();
 		void onDelete();
-		void onAttach();
-		void onDetach();
 		void onRefresh();
 	}
 	
 	@UiField Button create;
 	@UiField Button delete;
-	@UiField Button attach;
-	@UiField Button detach;
 	@UiField Button refresh;
 	
 	@UiField ServiceDetails details;
@@ -66,7 +63,7 @@ public class ServicesView extends Composite {
 			
 			final Range range = display.getVisibleRange();
 			
-			Portal.CLOUD.listServices(new AsyncCallback<List<Service>>() {
+			Administration.CLOUD.listServices(new AsyncCallback<List<Service>>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -108,16 +105,6 @@ public class ServicesView extends Composite {
 		presenter.onDelete();
 	}
 	
-	@UiHandler("attach")
-	void onAtachClick(ClickEvent event) {
-		presenter.onAttach();
-	}
-	
-	@UiHandler("detach")
-	void onDetachClick(ClickEvent event) {
-		presenter.onDetach();
-	}
-	
 	@UiHandler("refresh")
 	void onRefreshClick(ClickEvent event) {
 		//grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
@@ -129,18 +116,12 @@ public class ServicesView extends Composite {
 		switch (selectionModel.getSelectedSet().size()) {
 		case 0:
 			delete.setEnabled(false);
-			attach.setEnabled(false);
-			detach.setEnabled(false);
 			break;
 		case 1:
 			delete.setEnabled(true);
-			attach.setEnabled(true);
-			detach.setEnabled(true);
 			break;
 		default:
 			delete.setEnabled(true);
-			attach.setEnabled(false);
-			detach.setEnabled(false);
 			break;
 		}
 	}
@@ -152,7 +133,7 @@ public class ServicesView extends Composite {
 
 			@Override
 			public Boolean getValue(Service object) {
-				return false;
+				return selectionModel.isSelected(object);
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
@@ -217,6 +198,9 @@ public class ServicesView extends Composite {
 	
 	private void onPreview(Service server) {
 		details.id.setText(server.getId());
+		details.name.setText(server.getId());
+		details.description.setText(server.getId());
+		details.type.setText(server.getId());
 	}
 	
 }

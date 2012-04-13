@@ -12,25 +12,58 @@
 			<table class="{style.details}">
 				<tbody>
 					<tr>
-						<td>Status</td>
-						<td>Running</td>
+						<td>ID</td>
 						<td>
-							<g:Anchor ui:field="reboot">Reboot</g:Anchor>
-							<g:Anchor ui:field="stop">Stop</g:Anchor>
-							<g:Anchor ui:field="destroy">Destroy</g:Anchor>
+							<g:Label ui:field="id" />
 						</td>
 					</tr>
 					<tr>
-						<td>Uptime</td>
-						<td colspan="2">Less than 1 hour / $0.02 this month</td>
+						<td>Checksum</td>
+						<td>
+							<g:Label ui:field="checksum" />
+						</td>
 					</tr>
 					<tr>
-						<td>Instance ID</td>
-						<td colspan="2"><g:Label ui:field="id" /></td>
+						<td>Container Format</td>
+						<td>
+							<g:Label ui:field="containerFormat" />
+						</td>
 					</tr>
 					<tr>
-						<td>Hostname</td>
-						<td colspan="2">0123456789abcdef</td>
+						<td>Created At</td>
+						<td>
+							<g:Label ui:field="createdAt" />
+						</td>
+					</tr>
+					<tr>
+						<td>Updated At</td>
+						<td>
+							<g:Label ui:field="updatedAt" />
+						</td>
+					</tr>
+					<tr>
+						<td>Deleted</td>
+						<td>
+							<g:Label ui:field="deleted" />
+						</td>
+					</tr>
+					<tr>
+						<td>Deleted At</td>
+						<td>
+							<g:Label ui:field="deletedAt" />
+						</td>
+					</tr>
+					<tr>
+						<td>Disk Format</td>
+						<td>
+							<g:Label ui:field="diskFormat" />
+						</td>
+					</tr>
+					<tr>
+						<td>Protected</td>
+						<td>
+							<g:Label ui:field="isProtected" />
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -39,16 +72,52 @@
 			<table class="{style.details}">
 				<tbody>
 					<tr>
-						<td>Uptime</td>
-						<td colspan="2">Less than 1 hour / $0.02 this month</td>
+						<td>Public</td>
+						<td>
+							<g:Label ui:field="isPublic" />
+						</td>
 					</tr>
 					<tr>
-						<td>Instance ID</td>
-						<td colspan="2">0123456789abcdef</td>
+						<td>minDisk</td>
+						<td>
+							<g:Label ui:field="minDisk" />
+						</td>
 					</tr>
 					<tr>
-						<td>Hostname</td>
-						<td colspan="2">0123456789abcdef</td>
+						<td>minRam</td>
+						<td>
+							<g:Label ui:field="minRam" />
+						</td>
+					</tr>
+					<tr>
+						<td>name</td>
+						<td>
+							<g:Label ui:field="name" />
+						</td>
+					</tr>
+					<tr>
+						<td>owner</td>
+						<td>
+							<g:Label ui:field="ownerx" />
+						</td>
+					</tr>
+					<tr>
+						<td>size</td>
+						<td>
+							<g:Label ui:field="size" />
+						</td>
+					</tr>
+					<tr>
+						<td>status</td>
+						<td>
+							<g:Label ui:field="status" />
+						</td>
+					</tr>
+					<tr>
+						<td>uri</td>
+						<td>
+							<g:Label ui:field="uri" />
+						</td>
 					</tr>
 				</tbody>
 			</table>

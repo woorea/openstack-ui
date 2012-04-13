@@ -1,7 +1,9 @@
 package org.cloudsherpa.ui.server;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ import org.openstack.model.compute.FloatingIp;
 import org.openstack.model.compute.KeyPair;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupForCreate;
+import org.openstack.model.compute.SecurityGroupRule;
 import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerAction;
@@ -18,11 +21,17 @@ import org.openstack.model.compute.ServerForCreate;
 import org.openstack.model.compute.Snapshot;
 import org.openstack.model.compute.SnapshotForCreate;
 import org.openstack.model.compute.Volume;
+import org.openstack.model.compute.nova.NovaAddressList;
+import org.openstack.model.compute.nova.NovaAddressList.Network;
+import org.openstack.model.compute.nova.NovaAddressList.Network.Ip;
+import org.openstack.model.compute.nova.NovaFault;
 import org.openstack.model.compute.nova.NovaFlavor;
+import org.openstack.model.compute.nova.NovaMetadata;
 import org.openstack.model.compute.nova.NovaServer;
 import org.openstack.model.compute.nova.floatingip.NovaFloatingIp;
 import org.openstack.model.compute.nova.keypair.NovaKeyPair;
 import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroup;
+import org.openstack.model.compute.nova.securitygroup.NovaSecurityGroupRule;
 import org.openstack.model.compute.nova.snapshot.NovaSnapshot;
 import org.openstack.model.compute.nova.volume.NovaVolume;
 import org.openstack.model.compute.nova.volume.VolumeForCreate;
@@ -65,15 +74,75 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	private static Map<Integer, Endpoint> endpoints = Maps.newConcurrentMap();
 	
 	static {
+		NovaMetadata m = new NovaMetadata();
+		for(int i = 0; i < 5; i++) {
+			m.getItems().add(new NovaMetadata.Item("k."+i, "v."+i));
+		}
+		
+		NovaAddressList addresses = new NovaAddressList();
+		for(int i = 0; i < 2; i++) {
+			Network n = new Network();
+			n.setId("network."+i);
+			for(int j = 0; j < 3; j++) {
+				n.getIps().add(new Ip("4","192.168.1.1"));
+			}
+			addresses.getNetworks().add(n);
+		}
+		
+		List<SecurityGroupRule> rules = new ArrayList<SecurityGroupRule>();
+		for(int i = 0; i < 2; i++) {
+			NovaSecurityGroupRule rule = new NovaSecurityGroupRule();
+			rule.setIpProtocol("TCP");
+			rule.setFromPort(22);
+			rule.setToPort(32);
+			rule.getIpRange().setCidr("0.0.0.0/8");
+			rules.add(rule);
+		}
+		
 		for(int i = 0; i < 3; i++) {
-			images.put(String.valueOf(i), new GlanceImage(String.valueOf(i),"image."+i));
-			flavors.put(String.valueOf(i), new NovaFlavor(String.valueOf(i),"flavor."+i));
-			servers.put(String.valueOf(i), new NovaServer(String.valueOf(i),"server."+i));
+			GlanceImage image = new GlanceImage(String.valueOf(i),"image."+i);
+			image.setChecksum("12345678dsdhfjg");
+			image.setOwner("owner34434");
+			image.setContainerFormat("OVF");
+			image.setDiskFormat("JCOW2");
+			image.setMinDisk(1);
+			image.setMinRam(2);
+			image.setSize(98766L);
+			image.setDeleted(true);
+			image.setDeletedAt(new Date());
+			image.setUpdatedAt("12/04/1890");
+			image.setCreatedAt("12/04/1890");
+			image.setProtected(true);
+			image.setPublic(true);
+			image.setName("testing image");
+			image.setStatus("ACTIVE");
+			image.setUri("http://122121212121");
+			images.put(String.valueOf(i), image);
+			NovaFlavor flavor = new NovaFlavor(String.valueOf(i),"flavor."+i);
+			flavors.put(String.valueOf(i), flavor);
+			NovaServer server = new NovaServer(String.valueOf(i),"server."+i);
+			server.setConfigDrive("config_drive");
+			server.setCreated(new Date());
+			server.setUpdated(new Date());
+			server.setFault(new NovaFault(i, "12/04/2012", "test fault", "test fault desc"));
+			//server.setImage(image);
+			server.setFlavor(flavor);
+			server.setHostId("1234");
+			server.setKeyName("Keyname");
+			server.setProgress("100");
+			server.setStatus("ACTIVE");
+			server.setTenantId("tenant");
+			server.setUserId("userId");
+			server.setMetadata(m);
+			server.setAddresses(addresses);
+			servers.put(String.valueOf(i), server);
 			floatingIps.put(i, new NovaFloatingIp(i, String.valueOf(i), String.valueOf(i), "nova", String.valueOf(i)));
 			volumes.put(i, new NovaVolume(i, "volume."+i));
 			snapshots.put(i, new NovaSnapshot());
 			keyPairs.put("key."+i, new NovaKeyPair("key."+i));
-			securityGroups.put(i, new NovaSecurityGroup(i,"security group."+i));
+			NovaSecurityGroup securityGroup = new NovaSecurityGroup(i,"security group."+i,"security group."+i+" desc");
+			securityGroup.setRules(rules);
+			securityGroups.put(i, securityGroup);
 			
 			
 			tenants.put(String.valueOf(i), new KeystoneTenant(String.valueOf(i),"tenant."+i));

@@ -1,5 +1,6 @@
 package org.cloudsherpa.ui.client.compute.server;
 
+import org.cloudsherpa.portal.client.Portal;
 import org.cloudsherpa.ui.client.compute.common.MetadataEditor;
 import org.cloudsherpa.ui.client.compute.image.ImagePicker;
 import org.openstack.model.compute.ServerForCreate;
@@ -100,6 +101,11 @@ public class CreateServerWizard extends Composite implements Editor<ServerForCre
 	@UiHandler("save")
 	void onSaveClick(ClickEvent event) {
 		Window.alert(flush().toString());
+	}
+	
+	@UiHandler({"close","cancel"})
+	void onCloseClick(ClickEvent event) {
+		Portal.MODAL.hide();
 	}
 
 }

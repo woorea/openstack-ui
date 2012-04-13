@@ -2,10 +2,13 @@ package org.cloudsherpa.ui.client.identity.user;
 
 import java.util.List;
 
-import org.cloudsherpa.portal.client.Portal;
+import org.cloudsherpa.admin.client.Administration;
+import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.User;
 
+import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.CheckboxCell;
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -38,15 +41,11 @@ public class UsersView extends Composite {
 	public interface Presenter {
 		void onCreate();
 		void onDelete();
-		void onAttach();
-		void onDetach();
 		void onRefresh();
 	}
 	
 	@UiField Button create;
 	@UiField Button delete;
-	@UiField Button attach;
-	@UiField Button detach;
 	@UiField Button refresh;
 	
 	@UiField UserDetails details;
@@ -64,7 +63,7 @@ public class UsersView extends Composite {
 			
 			final Range range = display.getVisibleRange();
 			
-			Portal.CLOUD.listUsers(new AsyncCallback<List<User>>() {
+			Administration.CLOUD.listUsers(new AsyncCallback<List<User>>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -106,16 +105,6 @@ public class UsersView extends Composite {
 		presenter.onDelete();
 	}
 	
-	@UiHandler("attach")
-	void onAtachClick(ClickEvent event) {
-		presenter.onAttach();
-	}
-	
-	@UiHandler("detach")
-	void onDetachClick(ClickEvent event) {
-		presenter.onDetach();
-	}
-	
 	@UiHandler("refresh")
 	void onRefreshClick(ClickEvent event) {
 		//grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
@@ -127,18 +116,12 @@ public class UsersView extends Composite {
 		switch (selectionModel.getSelectedSet().size()) {
 		case 0:
 			delete.setEnabled(false);
-			attach.setEnabled(false);
-			detach.setEnabled(false);
 			break;
 		case 1:
 			delete.setEnabled(true);
-			attach.setEnabled(true);
-			detach.setEnabled(true);
 			break;
 		default:
 			delete.setEnabled(true);
-			attach.setEnabled(false);
-			detach.setEnabled(false);
 			break;
 		}
 	}
@@ -150,7 +133,7 @@ public class UsersView extends Composite {
 
 			@Override
 			public Boolean getValue(User object) {
-				return false;
+				return selectionModel.isSelected(object);
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
@@ -171,6 +154,20 @@ public class UsersView extends Composite {
 		};
 		grid.setColumnWidth(descriptionColumn, "120px");
 		grid.addColumn(descriptionColumn, "Description");
+		ButtonCell previewButton = new ButtonCell();
+		Column<User,String> preview = new Column<User,String>(previewButton) {
+		  public String getValue(User object) {
+		    return "Preview";
+		  }
+		};
+		preview.setFieldUpdater(new FieldUpdater<User, String>() {
+		  @Override
+		  public void update(int index, User server, String value) {
+			  onPreview(server);
+		  }
+		});
+		grid.setColumnWidth(preview, "100px");
+		grid.addColumn(preview);
 		grid.setSelectionModel(selectionModel, selectionEventManager);
 		selectionModel.addSelectionChangeHandler(new Handler() {
 			
@@ -185,6 +182,9 @@ public class UsersView extends Composite {
 	
 	private void onPreview(User server) {
 		details.id.setText(server.getId());
+		details.name.setText(server.getName());
+		details.email.setText(server.getEmail());
+		details.enabled.setText(String.valueOf(server.isEnabled()));
 	}
 	
 }

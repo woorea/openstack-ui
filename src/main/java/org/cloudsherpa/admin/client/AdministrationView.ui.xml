@@ -32,7 +32,7 @@
 					</g:HTMLPanel>
 				</g:west>
 				<g:center>
-					<g:SimpleLayoutPanel ui:field="main" />
+					<g:SimpleLayoutPanel ui:field="main2" />
 				</g:center>
 			</g:SplitLayoutPanel>
 		</g:center>

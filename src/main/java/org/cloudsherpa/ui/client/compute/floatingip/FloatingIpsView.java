@@ -49,8 +49,6 @@ public class FloatingIpsView extends Composite {
 	@UiField Button disassociate;
 	@UiField Button refresh;
 	
-	@UiField FloatingIpDetails details;
-	
 	@UiField(provided = true) DataGrid<FloatingIp> grid;
 	
 	MultiSelectionModel<FloatingIp> selectionModel;
@@ -150,7 +148,7 @@ public class FloatingIpsView extends Composite {
 
 			@Override
 			public Boolean getValue(FloatingIp object) {
-				return false;
+				return selectionModel.isSelected(object);
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
@@ -163,14 +161,6 @@ public class FloatingIpsView extends Composite {
 		};
 		grid.setColumnWidth(ipColumn, "120px");
 		grid.addColumn(ipColumn, "Name");
-		TextColumn<FloatingIp> instanceIdColumn = new TextColumn<FloatingIp>() {
-			@Override
-			public String getValue(FloatingIp object) {
-				return object.getInstanceId();
-			}
-		};
-		grid.setColumnWidth(instanceIdColumn, "120px");
-		grid.addColumn(instanceIdColumn, "Instance Id");
 		TextColumn<FloatingIp> fixedIpColumn = new TextColumn<FloatingIp>() {
 			@Override
 			public String getValue(FloatingIp object) {
@@ -187,6 +177,14 @@ public class FloatingIpsView extends Composite {
 		};
 		grid.setColumnWidth(poolColumn, "120px");
 		grid.addColumn(poolColumn, "Pool");
+		TextColumn<FloatingIp> instanceIdColumn = new TextColumn<FloatingIp>() {
+			@Override
+			public String getValue(FloatingIp object) {
+				return object.getInstanceId();
+			}
+		};
+		grid.setColumnWidth(instanceIdColumn, "120px");
+		grid.addColumn(instanceIdColumn, "Instance Id");
 		grid.setSelectionModel(selectionModel, selectionEventManager);
 		selectionModel.addSelectionChangeHandler(new Handler() {
 			
@@ -197,10 +195,6 @@ public class FloatingIpsView extends Composite {
 			}
 		});
 		asyncDataProvider.addDataDisplay(grid); 
-	}
-	
-	private void onPreview(FloatingIp server) {
-		details.id.setText(server.getId().toString());
 	}
 	
 }

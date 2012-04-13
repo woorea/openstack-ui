@@ -3,7 +3,6 @@ package org.cloudsherpa.ui.client.compute.image;
 import java.util.List;
 
 import org.cloudsherpa.portal.client.Portal;
-import org.openstack.model.compute.Server;
 import org.openstack.model.images.Image;
 
 import com.google.gwt.cell.client.ButtonCell;
@@ -133,7 +132,7 @@ public class ImagesView extends Composite {
 
 			@Override
 			public Boolean getValue(Image object) {
-				return false;
+				return selectionModel.isSelected(object);
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
@@ -176,13 +175,13 @@ public class ImagesView extends Composite {
 		ButtonCell previewButton = new ButtonCell();
 		Column<Image,String> preview = new Column<Image,String>(previewButton) {
 		  public String getValue(Image object) {
-		    return "Launch";
+		    return "Preview";
 		  }
 		};
 		preview.setFieldUpdater(new FieldUpdater<Image, String>() {
 		  @Override
-		  public void update(int index, Image securityGroup, String value) {
-		    //presenter.onLaunchImage(securityGroup.getId());
+		  public void update(int index, Image image, String value) {
+			onPreview(image);
 		  }
 		});
 		grid.setColumnWidth(preview, "100px");
@@ -199,8 +198,24 @@ public class ImagesView extends Composite {
 		asyncDataProvider.addDataDisplay(grid); 
 	}
 	
-	private void onPreview(Server server) {
-		details.id.setText(server.getId());
+	private void onPreview(Image image) {
+		details.id.setText(image.getId());
+		details.checksum.setText(image.getChecksum());
+		details.containerFormat.setText(image.getContainerFormat());
+		details.ownerx.setText(image.getOwner());
+		details.createdAt.setText(image.getCreatedAt());
+		details.deleted.setText(String.valueOf(image.isDeleted()));
+		details.deletedAt.setText(image.getDeletedAt().toString());
+		details.diskFormat.setText(image.getDiskFormat());
+		details.isProtected.setText(String.valueOf(image.isProtected()));
+		details.isPublic.setText(String.valueOf(image.isPublic()));
+		details.minDisk.setText(image.getMinDisk().toString());
+		details.minRam.setText(image.getMinRam().toString());
+		details.name.setText(image.getName());
+		details.size.setText(image.getSize().toString());
+		details.status.setText(image.getStatus());
+		details.updatedAt.setText(image.getUpdatedAt());
+		details.uri.setText(image.getUri());
 	}
 	
 }

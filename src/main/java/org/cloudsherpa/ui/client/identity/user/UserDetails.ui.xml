@@ -12,43 +12,28 @@
 			<table class="{style.details}">
 				<tbody>
 					<tr>
-						<td>Status</td>
-						<td>Running</td>
+						<td>ID</td>
 						<td>
-							<g:Anchor ui:field="reboot">Reboot</g:Anchor>
-							<g:Anchor ui:field="stop">Stop</g:Anchor>
-							<g:Anchor ui:field="destroy">Destroy</g:Anchor>
+							<g:Label ui:field="id" />
 						</td>
 					</tr>
 					<tr>
-						<td>Uptime</td>
-						<td colspan="2">Less than 1 hour / $0.02 this month</td>
+						<td>Name</td>
+						<td>
+							<g:Label ui:field="name" />
+						</td>
 					</tr>
 					<tr>
-						<td>Instance ID</td>
-						<td colspan="2"><g:Label ui:field="id" /></td>
+						<td>Email</td>
+						<td>
+							<g:Label ui:field="email" />
+						</td>
 					</tr>
 					<tr>
-						<td>Hostname</td>
-						<td colspan="2">0123456789abcdef</td>
-					</tr>
-				</tbody>
-			</table>
-		</g:HTMLPanel>
-		<g:HTMLPanel>
-			<table class="{style.details}">
-				<tbody>
-					<tr>
-						<td>Uptime</td>
-						<td colspan="2">Less than 1 hour / $0.02 this month</td>
-					</tr>
-					<tr>
-						<td>Instance ID</td>
-						<td colspan="2">0123456789abcdef</td>
-					</tr>
-					<tr>
-						<td>Hostname</td>
-						<td colspan="2">0123456789abcdef</td>
+						<td>Enabled</td>
+						<td>
+							<g:Label ui:field="enabled" />
+						</td>
 					</tr>
 				</tbody>
 			</table>

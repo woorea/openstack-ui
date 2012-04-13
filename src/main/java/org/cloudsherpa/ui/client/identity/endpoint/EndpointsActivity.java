@@ -27,8 +27,7 @@ public class EndpointsActivity extends AbstractActivity implements EndpointsView
 
 	@Override
 	public void onCreate() {
-		CreateServerWizard widget = new CreateServerWizard();
-		widget.edit(new NovaServerForCreate());
+		CreateEndpoint widget = new CreateEndpoint();
 		Administration.MODAL.setWidget(widget);
 		Administration.MODAL.center();
 		

@@ -6,7 +6,7 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<g:Tree ui:field="tree">
-			<g:TreeItem text="COMPUTE (Nova)" state="true">
+			<g:TreeItem text="Identity (Keystone)" state="true">
 				<g:Hyperlink text="Tenants" targetHistoryToken="a:tenants" />
 				<g:Hyperlink text="Users" targetHistoryToken="a:users" />
 				<g:Hyperlink text="Roles" targetHistoryToken="a:roles" />

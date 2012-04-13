@@ -1,11 +1,12 @@
 package org.cloudsherpa.ui.client.compute.server;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.cloudsherpa.portal.client.Portal;
 import org.openstack.model.compute.Server;
-import org.openstack.model.compute.nova.NovaServer;
+import org.openstack.model.compute.nova.NovaAddressList.Network;
+import org.openstack.model.compute.nova.NovaAddressList.Network.Ip;
+import org.openstack.model.compute.nova.NovaMetadata.Item;
 
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.CheckboxCell;
@@ -22,6 +23,9 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
@@ -216,6 +220,42 @@ public class ServersView extends Composite {
 	
 	private void onPreview(Server server) {
 		details.id.setText(server.getId());
+		details.configDrive.setText(server.getConfigDrive());
+		details.created.setText(server.getCreated().toString());
+		details.updated.setText(server.getUpdated().toString());
+		details.fault.setText(server.getFault().getMessage());
+		details.flavor.setText(server.getFlavor().getName());
+		details.hostId.setText(server.getHostId());
+		details.keyName.setText(server.getKeyName());
+		details.progress.setText(server.getProgress());
+		details.status.setText(server.getStatus());
+		details.tenantId.setText(server.getTenantId());
+		details.userId.setText(server.getUserId());
+		
+		int row = 0;
+		for(Item i : server.getMetadata().getItems()) {
+			details.metadata.setText(row, 0, i.getKey());
+			details.metadata.setText(row, 1, i.getValue());
+			row++;
+		}
+		
+		for(Network n : server.getAddresses().getNetworks()) {
+			VerticalPanel network = new VerticalPanel();
+			network.setWidth("100%");
+			network.add(new HTML("<h4>" + n.getId() + "<h4>"));
+			FlexTable ips = new FlexTable();
+			ips.setStyleName("table table-striped");
+			row = 0;
+			for(Ip ip : n.getIps()) {
+				ips.setText(row, 0, ip.getVersion());
+				ips.setText(row, 0, ip.getAddr());
+				row++;
+			}
+			network.add(ips);
+			
+			details.networks.add(network);			
+		}
+		
 	}
 	
 }

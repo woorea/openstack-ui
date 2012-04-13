@@ -7,51 +7,119 @@
 			table-layout: fixed;
 		}
 	</ui:style>
-	<g:HorizontalPanel styleName="{style.details}">
+	<g:HTMLPanel>
+		<g:HorizontalPanel styleName="{style.details}">
+			<g:HTMLPanel>
+				<table class="table table-stripped {style.details}">
+					<tbody>
+						<tr>
+							<td>ID</td>
+							<td>
+								<g:Label ui:field="id" />
+							</td>
+						</tr>
+						<tr>
+							<td>UUID</td>
+							<td>
+								<g:Label ui:field="uuid" />
+							</td>
+						</tr>
+
+
+						<tr>
+							<td>Config Drive</td>
+							<td>
+								<g:Label ui:field="configDrive" />
+							</td>
+						</tr>
+						<tr>
+							<td>Created</td>
+							<td>
+								<g:Label ui:field="created" />
+							</td>
+						</tr>
+						<tr>
+							<td>Updated</td>
+							<td>
+								<g:Label ui:field="updated" />
+							</td>
+						</tr>
+						<tr>
+							<td>Fault</td>
+							<td>
+								<g:Label ui:field="fault" />
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+			</g:HTMLPanel>
+			<g:HTMLPanel>
+				<table class="table table-stripped {style.details}">
+					<tbody>
+						<tr>
+							<td>Flavor</td>
+							<td>
+								<g:Label ui:field="flavor" />
+							</td>
+						</tr>
+						<tr>
+							<td>Host</td>
+							<td>
+								<g:Label ui:field="hostId" />
+							</td>
+						</tr>
+						<tr>
+							<td>Key Name</td>
+							<td>
+								<g:Label ui:field="keyName" />
+							</td>
+						</tr>
+						<tr>
+							<td>Progress / Status</td>
+							<td>
+								<g:InlineLabel ui:field="progress" /> / <g:InlineLabel ui:field="status" />
+							</td>
+						</tr>
+						<tr>
+							<td>Tenant ID</td>
+							<td>
+								<g:Label ui:field="tenantId" />
+							</td>
+						</tr>
+						<tr>
+							<td>User ID</td>
+							<td>
+								<g:Label ui:field="userId" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</g:HTMLPanel>
+		</g:HorizontalPanel>
 		<g:HTMLPanel>
-			<table class="{style.details}">
+			<h3>Networking</h3>
+			<table class="table table-stripped ">
 				<tbody>
 					<tr>
-						<td>Status</td>
-						<td>Running</td>
+						<td>Access IPv4</td>
 						<td>
-							<g:Anchor ui:field="reboot">Reboot</g:Anchor>
-							<g:Anchor ui:field="stop">Stop</g:Anchor>
-							<g:Anchor ui:field="destroy">Destroy</g:Anchor>
+							<g:Label ui:field="accessIPv4" />
+							192.168.1.45
 						</td>
 					</tr>
 					<tr>
-						<td>Uptime</td>
-						<td colspan="2">Less than 1 hour / $0.02 this month</td>
-					</tr>
-					<tr>
-						<td>Instance ID</td>
-						<td colspan="2"><g:Label ui:field="id" /></td>
-					</tr>
-					<tr>
-						<td>Hostname</td>
-						<td colspan="2">0123456789abcdef</td>
+						<td>Access IPv6</td>
+						<td>
+							<g:Label ui:field="accessIPv6" />
+							2001:db8:0:1::1
+						</td>
 					</tr>
 				</tbody>
 			</table>
+			<g:VerticalPanel ui:field="networks" width="100%"/>
+			<h3>Metadata</h3>
+			<g:FlexTable ui:field="metadata" styleName="table table-stripped" />
 		</g:HTMLPanel>
-		<g:HTMLPanel>
-			<table class="{style.details}">
-				<tbody>
-					<tr>
-						<td>Uptime</td>
-						<td colspan="2">Less than 1 hour / $0.02 this month</td>
-					</tr>
-					<tr>
-						<td>Instance ID</td>
-						<td colspan="2">0123456789abcdef</td>
-					</tr>
-					<tr>
-						<td>Hostname</td>
-						<td colspan="2">0123456789abcdef</td>
-					</tr>
-				</tbody>
-			</table>
-		</g:HTMLPanel>
-	</g:HorizontalPanel>
+	</g:HTMLPanel>
 </ui:UiBinder> 

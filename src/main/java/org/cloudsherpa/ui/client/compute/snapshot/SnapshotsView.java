@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.cloudsherpa.portal.client.Portal;
 import org.openstack.model.compute.Snapshot;
-import org.openstack.model.compute.Volume;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
@@ -47,8 +46,6 @@ public class SnapshotsView extends Composite {
 	@UiField Button delete;
 	@UiField Button createVolume;
 	@UiField Button refresh;
-	
-	@UiField SnapshotDetails details;
 	
 	@UiField(provided = true) DataGrid<Snapshot> grid;
 	
@@ -138,7 +135,7 @@ public class SnapshotsView extends Composite {
 
 			@Override
 			public Boolean getValue(Snapshot object) {
-				return false;
+				return selectionModel.isSelected(object);
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
@@ -178,10 +175,6 @@ public class SnapshotsView extends Composite {
 			}
 		});
 		asyncDataProvider.addDataDisplay(grid); 
-	}
-	
-	private void onPreview(Snapshot server) {
-		details.id.setText(server.getId().toString());
 	}
 	
 }

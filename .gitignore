@@ -1,0 +1,8 @@
+.classpath
+.project
+gwt-unitCache/
+war/WEB-INF/classes/
+war/WEB-INF/deploy/
+.settings/
+war/admin/
+war/portal/

@@ -85,7 +85,7 @@ public class SecurityGroupRuleEditor extends Composite implements Editor<Securit
 			table.setText(row, 0, r.getIpProtocol());
 			table.setText(row, 1, r.getFromPort().toString());
 			table.setText(row, 2, r.getToPort().toString());
-			table.setText(row, 3, r.getIpRange().cidr);
+			table.setText(row, 3, r.getIpRange().getCidr());
 			table.setWidget(row++, 4, new Button("x", new ClickHandler() {
 				
 				@Override

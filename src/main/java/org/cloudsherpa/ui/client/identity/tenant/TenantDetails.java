@@ -16,6 +16,9 @@ public class TenantDetails extends Composite {
 	}
 	
 	@UiField Label id;
+	@UiField Label name;
+	@UiField Label description;
+	@UiField Label enabled;
 
 	public TenantDetails() {
 		initWidget(uiBinder.createAndBindUi(this));

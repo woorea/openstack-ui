@@ -16,6 +16,9 @@ public class UserDetails extends Composite {
 	}
 	
 	@UiField Label id;
+	@UiField Label name;
+	@UiField Label email;
+	@UiField Label enabled;
 
 	public UserDetails() {
 		initWidget(uiBinder.createAndBindUi(this));

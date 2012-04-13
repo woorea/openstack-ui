@@ -7,51 +7,30 @@
 			table-layout: fixed;
 		}
 	</ui:style>
-	<g:HorizontalPanel styleName="{style.details}">
-		<g:HTMLPanel>
-			<table class="{style.details}">
-				<tbody>
-					<tr>
-						<td>Status</td>
-						<td>Running</td>
-						<td>
-							<g:Anchor ui:field="reboot">Reboot</g:Anchor>
-							<g:Anchor ui:field="stop">Stop</g:Anchor>
-							<g:Anchor ui:field="destroy">Destroy</g:Anchor>
-						</td>
-					</tr>
-					<tr>
-						<td>Uptime</td>
-						<td colspan="2">Less than 1 hour / $0.02 this month</td>
-					</tr>
-					<tr>
-						<td>Instance ID</td>
-						<td colspan="2"><g:Label ui:field="id" /></td>
-					</tr>
-					<tr>
-						<td>Hostname</td>
-						<td colspan="2">0123456789abcdef</td>
-					</tr>
-				</tbody>
-			</table>
-		</g:HTMLPanel>
-		<g:HTMLPanel>
-			<table class="{style.details}">
-				<tbody>
-					<tr>
-						<td>Uptime</td>
-						<td colspan="2">Less than 1 hour / $0.02 this month</td>
-					</tr>
-					<tr>
-						<td>Instance ID</td>
-						<td colspan="2">0123456789abcdef</td>
-					</tr>
-					<tr>
-						<td>Hostname</td>
-						<td colspan="2">0123456789abcdef</td>
-					</tr>
-				</tbody>
-			</table>
-		</g:HTMLPanel>
-	</g:HorizontalPanel>
+	<g:HTMLPanel>
+		<table class="table table-stripped {style.details}">
+			<tbody>
+				<tr>
+					<td>ID</td>
+					<td>
+						<g:Label ui:field="id" />
+					</td>
+				</tr>
+				<tr>
+					<td>Name</td>
+					<td>
+						<g:Label ui:field="name" />
+					</td>
+				</tr>
+				<tr>
+					<td>Description</td>
+					<td>
+						<g:Label ui:field="description" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<h3>Security Group Rules</h3>
+		<g:FlexTable ui:field="rules" styleName="table table-stripped" />
+	</g:HTMLPanel>
 </ui:UiBinder> 

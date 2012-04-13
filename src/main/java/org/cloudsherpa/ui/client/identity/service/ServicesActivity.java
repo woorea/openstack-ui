@@ -27,8 +27,7 @@ public class ServicesActivity extends AbstractActivity implements ServicesView.P
 
 	@Override
 	public void onCreate() {
-		CreateServerWizard widget = new CreateServerWizard();
-		widget.edit(new NovaServerForCreate());
+		CreateService widget = new CreateService();
 		Administration.MODAL.setWidget(widget);
 		Administration.MODAL.center();
 		
@@ -43,23 +42,6 @@ public class ServicesActivity extends AbstractActivity implements ServicesView.P
 	@Override
 	public void onRefresh() {
 		
-	}
-
-	@Override
-	public void onAttach() {
-		CreateServerWizard widget = new CreateServerWizard();
-		widget.edit(new NovaServerForCreate());
-		Administration.MODAL.setWidget(widget);
-		Administration.MODAL.center();
-		
-	}
-
-	@Override
-	public void onDetach() {
-		CreateServerWizard widget = new CreateServerWizard();
-		widget.edit(new NovaServerForCreate());
-		Administration.MODAL.setWidget(widget);
-		Administration.MODAL.center();
 	}
 
 }

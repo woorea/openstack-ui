@@ -51,8 +51,6 @@ public class VolumesView extends Composite {
 	@UiField Button createSnapshot;
 	@UiField Button refresh;
 	
-	@UiField VolumeDetails details;
-	
 	@UiField(provided = true) DataGrid<Volume> grid;
 	
 	MultiSelectionModel<Volume> selectionModel;
@@ -160,7 +158,7 @@ public class VolumesView extends Composite {
 
 			@Override
 			public Boolean getValue(Volume object) {
-				return false;
+				return selectionModel.isSelected(object);
 			}
 		};
 		grid.setColumnWidth(checkboxColumn, "40px");
@@ -210,10 +208,6 @@ public class VolumesView extends Composite {
 			}
 		});
 		asyncDataProvider.addDataDisplay(grid); 
-	}
-	
-	private void onPreview(Volume server) {
-		details.id.setText(server.getId().toString());
 	}
 	
 }
