@@ -1,7 +1,5 @@
 package org.cloudsherpa.ui.client.identity.tenant;
 
-import java.util.List;
-
 import org.cloudsherpa.admin.client.Administration;
 import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.keystone.KeystoneTenant;

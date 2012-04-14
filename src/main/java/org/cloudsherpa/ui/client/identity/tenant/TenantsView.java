@@ -1,6 +1,5 @@
 package org.cloudsherpa.ui.client.identity.tenant;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -30,7 +29,6 @@ import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.Range;
-import com.google.gwt.view.client.RangeChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
@@ -76,6 +74,7 @@ public class TenantsView extends Composite {
 
 				@Override
 				public void onSuccess(List<Tenant> result) {
+					update();
 					updateRowData(range.getStart(), result);
 					updateRowCount(range.getLength(), true);
 					
@@ -91,7 +90,6 @@ public class TenantsView extends Composite {
 	public TenantsView() {
 		createGrid();
 		initWidget(uiBinder.createAndBindUi(this));
-		update();
 	}
 
 	public void setPresenter(Presenter presenter) {
@@ -99,8 +97,8 @@ public class TenantsView extends Composite {
 	}
 	
 	public void refresh() {
-		//grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
-		RangeChangeEvent.fire(grid, grid.getVisibleRange());
+		grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
+		//RangeChangeEvent.fire(grid, grid.getVisibleRange());
 	}
 
 	@UiHandler("create")
@@ -119,6 +117,7 @@ public class TenantsView extends Composite {
 			}
 			
 		}).toArray(new String[0]);
+		GWT.log("CLI DEL " + ids);
 		Administration.CLOUD.deleteTenants(ids, new AsyncCallback<Void>() {
 			
 			@Override

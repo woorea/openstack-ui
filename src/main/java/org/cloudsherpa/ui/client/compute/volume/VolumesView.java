@@ -1,10 +1,13 @@
 package org.cloudsherpa.ui.client.compute.volume;
 
 import java.util.List;
+import java.util.Set;
 
 import org.cloudsherpa.portal.client.Portal;
 import org.openstack.model.compute.Volume;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -74,6 +77,7 @@ public class VolumesView extends Composite {
 
 				@Override
 				public void onSuccess(List<Volume> result) {
+					update();
 					updateRowData(range.getStart(), result);
 					updateRowCount(range.getLength(), true);
 					
@@ -89,11 +93,15 @@ public class VolumesView extends Composite {
 	public VolumesView() {
 		createGrid();
 		initWidget(uiBinder.createAndBindUi(this));
-		update();
 	}
 
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
+	}
+	
+	public void refresh() {
+		grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
+		//RangeChangeEvent.fire(grid, grid.getVisibleRange());
 	}
 
 	@UiHandler("create")
@@ -103,7 +111,29 @@ public class VolumesView extends Composite {
 	
 	@UiHandler("delete")
 	void onDeleteClick(ClickEvent event) {
-		presenter.onDelete();
+		Set<Volume> users = selectionModel.getSelectedSet();
+		Integer[] ids = Collections2.transform(users, new Function<Volume, Integer>() {
+
+			@Override
+			public Integer apply(Volume user) {
+				return user.getId();
+			}
+			
+		}).toArray(new Integer[0]);
+		Portal.CLOUD.deleteVolumes(ids, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				refresh();
+				presenter.onDelete();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.toString());
+			}
+			
+		});
 	}
 	
 	@UiHandler("attach")

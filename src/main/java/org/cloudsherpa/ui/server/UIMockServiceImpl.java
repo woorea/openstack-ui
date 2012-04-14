@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.cloudsherpa.ui.client.UIService;
 import org.openstack.model.compute.Flavor;
@@ -52,6 +51,7 @@ import org.openstack.model.images.Image;
 import org.openstack.model.images.glance.GlanceImage;
 
 import com.google.common.collect.Maps;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.thirdparty.guava.common.collect.Lists;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -61,20 +61,20 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class UIMockServiceImpl extends RemoteServiceServlet implements UIService {
 	
-	private static Map<String, Server> servers = Maps.newConcurrentMap();
-	private static Map<String, Flavor> flavors = Maps.newConcurrentMap();
-	private static Map<String, Image> images = Maps.newConcurrentMap();
-	private static Map<Integer, FloatingIp> floatingIps = Maps.newConcurrentMap();
-	private static Map<Integer, Volume> volumes = Maps.newConcurrentMap();
-	private static Map<Integer, Snapshot> snapshots = Maps.newConcurrentMap();
-	private static Map<String, KeyPair> keyPairs = Maps.newConcurrentMap();
-	private static Map<Integer, SecurityGroup> securityGroups = Maps.newConcurrentMap();
+	private static Map<String, Server> servers = Maps.newHashMap();
+	private static Map<String, Flavor> flavors = Maps.newHashMap();
+	private static Map<String, Image> images = Maps.newHashMap();
+	private static Map<Integer, FloatingIp> floatingIps = Maps.newHashMap();
+	private static Map<Integer, Volume> volumes = Maps.newHashMap();
+	private static Map<Integer, Snapshot> snapshots = Maps.newHashMap();
+	private static Map<String, KeyPair> keyPairs = Maps.newHashMap();
+	private static Map<Integer, SecurityGroup> securityGroups = Maps.newHashMap();
 	
-	private static Map<String, Tenant> tenants = Maps.newConcurrentMap();
-	private static Map<String, User> users = Maps.newConcurrentMap();
-	private static Map<String, Role> roles = Maps.newConcurrentMap();
-	private static Map<String, Service> services = Maps.newConcurrentMap();
-	private static Map<String, Endpoint> endpoints = Maps.newConcurrentMap();
+	private static Map<String, Tenant> tenants = Maps.newHashMap();
+	private static Map<String, User> users = Maps.newHashMap();
+	private static Map<String, Role> roles = Maps.newHashMap();
+	private static Map<String, Service> services = Maps.newHashMap();
+	private static Map<String, Endpoint> endpoints = Maps.newHashMap();
 	
 	static {
 		NovaMetadata m = new NovaMetadata();
@@ -328,12 +328,17 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 
 	@Override
 	public void deleteTenant(String id) {
+		System.out.println("TO del " + id);
 		tenants.remove(id);
 	}
 	
 	@Override
 	public void deleteTenants(String[] ids) {
+		GWT.log("DEL:"+ids);
+		System.out.println(ids);
 		for(String id : ids) {
+			
+			GWT.log("DEL:"+id);
 			deleteTenant(id);
 		}
 	}
@@ -354,6 +359,14 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	public void deleteUser(String id) {
 		users.remove(id);
 	}
+	
+	@Override
+	public void deleteUsers(String[] ids) {
+		for(String id : ids) {
+			deleteUser(id);
+		}
+		
+	}
 
 	@Override
 	public List<Role> listRoles() {
@@ -370,6 +383,14 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	@Override
 	public void deleteRole(String id) {
 		roles.remove(id);
+	}
+	
+	@Override
+	public void deleteRoles(String[] ids) {
+		for(String id : ids) {
+			deleteRole(id);
+		}
+		
 	}
 
 	@Override
@@ -388,6 +409,14 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	public void deleteService(String id) {
 		services.remove(id);
 	}
+	
+	@Override
+	public void deleteServices(String[] ids) {
+		for(String id : ids) {
+			deleteService(id);
+		}
+		
+	}
 
 	@Override
 	public List<Endpoint> listEndpoints() {
@@ -404,6 +433,86 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	@Override
 	public void deleteEndpoint(String id) {
 		endpoints.remove(id);
+	}
+
+	@Override
+	public void deleteEndpoints(String[] ids) {
+		for(String id : ids) {
+			deleteEndpoint(id);
+		}
+		
+	}
+
+	@Override
+	public void deleteServers(String[] ids) {
+		for(String id : ids) {
+			deleteServer(id);
+		}
+		
+	}
+
+	@Override
+	public void deleteFlavors(String[] ids) {
+		for(String id : ids) {
+			deleteFlavor(id);
+		}
+		
+	}
+
+	@Override
+	public void deleteImages(String[] ids) {
+		for(String id : ids) {
+			deleteImage(id);
+		}
+		
+	}
+
+	@Override
+	public void deleteFloatingIps(Integer[] ids) {
+		for(Integer id : ids) {
+			deleteFloatingIp(id);
+		}
+		
+	}
+
+	@Override
+	public void deleteVolumes(Integer[] ids) {
+		for(Integer id : ids) {
+			deleteVolume(id);
+		}
+		
+	}
+
+	@Override
+	public void deleteSnapshots(Integer[] ids) {
+		for(Integer id : ids) {
+			deleteSnapshot(id);
+		}
+		
+	}
+
+	@Override
+	public void deleteKeyPairs(String[] names) {
+		for(String id : names) {
+			deleteKeyPair(id);
+		}
+		
+	}
+
+	@Override
+	public void deleteSecurityGroups(Integer[] ids) {
+		for(Integer id : ids) {
+			deleteSecurityGroup(id);
+		}
+		
+	}
+
+	@Override
+	public void deleteSecurityGroupRules(Integer[] ids) {
+		for(Integer id : ids) {
+			deleteSecurityGroupRule(id);
+		}
+		
 	}
 
 }

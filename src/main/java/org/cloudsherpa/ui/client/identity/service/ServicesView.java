@@ -1,11 +1,13 @@
 package org.cloudsherpa.ui.client.identity.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.cloudsherpa.admin.client.Administration;
 import org.openstack.model.identity.Service;
-import org.openstack.model.identity.User;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
@@ -73,6 +75,7 @@ public class ServicesView extends Composite {
 
 				@Override
 				public void onSuccess(List<Service> result) {
+					update();
 					updateRowData(range.getStart(), result);
 					updateRowCount(range.getLength(), true);
 					
@@ -88,11 +91,15 @@ public class ServicesView extends Composite {
 	public ServicesView() {
 		createGrid();
 		initWidget(uiBinder.createAndBindUi(this));
-		update();
 	}
 
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
+	}
+	
+	public void refresh() {
+		grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
+		//RangeChangeEvent.fire(grid, grid.getVisibleRange());
 	}
 
 	@UiHandler("create")
@@ -102,7 +109,29 @@ public class ServicesView extends Composite {
 	
 	@UiHandler("delete")
 	void onDeleteClick(ClickEvent event) {
-		presenter.onDelete();
+		Set<Service> users = selectionModel.getSelectedSet();
+		String[] ids = Collections2.transform(users, new Function<Service, String>() {
+
+			@Override
+			public String apply(Service user) {
+				return user.getId();
+			}
+			
+		}).toArray(new String[0]);
+		Administration.CLOUD.deleteServices(ids, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				refresh();
+				presenter.onDelete();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.toString());
+			}
+			
+		});
 	}
 	
 	@UiHandler("refresh")

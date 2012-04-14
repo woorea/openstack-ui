@@ -34,7 +34,7 @@ public class UsersActivity extends AbstractActivity implements UsersView.Present
 
 	@Override
 	public void onDelete() {
-		onRefresh();
+		
 		
 	}
 

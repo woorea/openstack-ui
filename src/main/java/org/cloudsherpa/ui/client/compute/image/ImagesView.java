@@ -1,10 +1,13 @@
 package org.cloudsherpa.ui.client.compute.image;
 
 import java.util.List;
+import java.util.Set;
 
 import org.cloudsherpa.portal.client.Portal;
 import org.openstack.model.images.Image;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
@@ -72,6 +75,7 @@ public class ImagesView extends Composite {
 
 				@Override
 				public void onSuccess(List<Image> result) {
+					update();
 					updateRowData(range.getStart(), result);
 					updateRowCount(range.getLength(), true);
 					
@@ -87,11 +91,15 @@ public class ImagesView extends Composite {
 	public ImagesView() {
 		createGrid();
 		initWidget(uiBinder.createAndBindUi(this));
-		update();
 	}
 
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
+	}
+	
+	public void refresh() {
+		grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
+		//RangeChangeEvent.fire(grid, grid.getVisibleRange());
 	}
 
 	@UiHandler("create")
@@ -101,7 +109,29 @@ public class ImagesView extends Composite {
 	
 	@UiHandler("delete")
 	void onDeleteClick(ClickEvent event) {
-		presenter.onDelete();
+		Set<Image> users = selectionModel.getSelectedSet();
+		String[] ids = Collections2.transform(users, new Function<Image, String>() {
+
+			@Override
+			public String apply(Image user) {
+				return user.getId();
+			}
+			
+		}).toArray(new String[0]);
+		Portal.CLOUD.deleteImages(ids, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				refresh();
+				presenter.onDelete();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.toString());
+			}
+			
+		});
 	}
 	
 	@UiHandler("refresh")

@@ -2,16 +2,9 @@ package org.cloudsherpa.ui.client.compute.keypair;
 
 import org.cloudsherpa.portal.client.Portal;
 import org.cloudsherpa.ui.client.compute.common.PortalPlace;
-import org.cloudsherpa.ui.client.compute.server.CreateServerWizard;
-import org.cloudsherpa.ui.client.compute.server.ServersFilters;
-import org.cloudsherpa.ui.client.compute.server.ServersView;
-import org.cloudsherpa.ui.client.compute.server.ServersView.Presenter;
-import org.cloudsherpa.ui.client.compute.volume.VolumesView;
-import org.openstack.model.compute.nova.NovaServerForCreate;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class KeyPairsActivity extends AbstractActivity implements KeyPairsView.Presenter {

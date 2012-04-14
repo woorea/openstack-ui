@@ -9,7 +9,6 @@ import org.cloudsherpa.ui.client.identity.user.UsersActivity;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.Place;
 
 public class AdministrationActivityMapper implements ActivityMapper {

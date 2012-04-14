@@ -1,10 +1,13 @@
 package org.cloudsherpa.ui.client.compute.floatingip;
 
 import java.util.List;
+import java.util.Set;
 
 import org.cloudsherpa.portal.client.Portal;
 import org.openstack.model.compute.FloatingIp;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -72,6 +75,7 @@ public class FloatingIpsView extends Composite {
 
 				@Override
 				public void onSuccess(List<FloatingIp> result) {
+					update();
 					updateRowData(range.getStart(), result);
 					updateRowCount(range.getLength(), true);
 					
@@ -87,11 +91,15 @@ public class FloatingIpsView extends Composite {
 	public FloatingIpsView() {
 		createGrid();
 		initWidget(uiBinder.createAndBindUi(this));
-		update();
 	}
 
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
+	}
+	
+	public void refresh() {
+		grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
+		//RangeChangeEvent.fire(grid, grid.getVisibleRange());
 	}
 
 	@UiHandler("create")
@@ -101,7 +109,29 @@ public class FloatingIpsView extends Composite {
 	
 	@UiHandler("delete")
 	void onDeleteClick(ClickEvent event) {
-		presenter.onDelete();
+		Set<FloatingIp> users = selectionModel.getSelectedSet();
+		Integer[] ids = Collections2.transform(users, new Function<FloatingIp, Integer>() {
+
+			@Override
+			public Integer apply(FloatingIp user) {
+				return user.getId();
+			}
+			
+		}).toArray(new Integer[0]);
+		Portal.CLOUD.deleteFloatingIps(ids, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				refresh();
+				presenter.onDelete();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.toString());
+			}
+			
+		});
 	}
 	
 	@UiHandler("associate")

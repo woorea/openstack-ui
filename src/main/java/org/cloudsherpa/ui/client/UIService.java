@@ -42,6 +42,8 @@ public interface UIService extends RemoteService {
 	
 	public void deleteServer(String id);
 	
+	public void deleteServers(String[] ids);
+	
 	public Serializable executeServerAction(Collection<String> id, ServerAction action);
 	
 	public List<Flavor> listFlavors(int start, int max);
@@ -50,17 +52,23 @@ public interface UIService extends RemoteService {
 	
 	public void deleteFlavor(String id);
 	
+	public void deleteFlavors(String[] ids);
+	
 	public List<Image> listImages(int starts, int max);
 	
 	public Image createImage(Image image);
 	
 	public void deleteImage(String id);
 	
+	public void deleteImages(String[] id);
+	
 	public List<FloatingIp> listFloatingIps();
 	
 	public FloatingIp createFloatingIp();
 	
 	public void deleteFloatingIp(Integer id);
+	
+	public void deleteFloatingIps(Integer[] ids);
 	
 	public FloatingIp associateFloatingIp(String ip, String serverId);
 	
@@ -72,6 +80,8 @@ public interface UIService extends RemoteService {
 	
 	public void deleteVolume(Integer id);
 	
+	public void deleteVolumes(Integer[] id);
+	
 	public Volume attachVolume(Integer id, String serverId);
 	
 	public Volume detachVolume(Integer id);
@@ -82,11 +92,15 @@ public interface UIService extends RemoteService {
 	
 	public void deleteSnapshot(Integer ids);
 	
+	public void deleteSnapshots(Integer[] ids);
+	
 	public List<KeyPair> listKeyPairs();
 	
 	public KeyPair createKeyPair(String name);
 	
 	public void deleteKeyPair(String name);
+	
+	public void deleteKeyPairs(String[] names);
 	
 	public List<SecurityGroup> listSecurityGroups();
 	
@@ -94,9 +108,13 @@ public interface UIService extends RemoteService {
 	
 	public void deleteSecurityGroup(Integer id);
 	
+	public void deleteSecurityGroups(Integer[] ids);
+	
 	public SecurityGroupRule createSecurityGroupRule(SecurityGroupRuleForCreate rule);
 	
 	public void deleteSecurityGroupRule(Integer id);
+	
+	public void deleteSecurityGroupRules(Integer[] ids);
 	
 	//
 	
@@ -114,11 +132,15 @@ public interface UIService extends RemoteService {
 	
 	public void deleteUser(String id);
 	
+	public void deleteUsers(String[] ids);
+	
 	public List<Role> listRoles();
 	
 	public Role createRole(Role role);
 	
 	public void deleteRole(String id);
+	
+	public void deleteRoles(String[] ids);
 	
 	public List<Service> listServices();
 	
@@ -126,9 +148,13 @@ public interface UIService extends RemoteService {
 	
 	public void deleteService(String id);
 	
+	public void deleteServices(String[] ids);
+	
 	public List<Endpoint> listEndpoints();
 	
 	public Endpoint createEndpoint(Endpoint endpoint);
 	
 	public void deleteEndpoint(String id);
+	
+	public void deleteEndpoints(String[] ids);
 }

@@ -9,9 +9,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class AdministrationView extends Composite {
 
-	private static PortalViewUiBinder uiBinder = GWT.create(PortalViewUiBinder.class);
+	private static Binder uiBinder = GWT.create(Binder.class);
 
-	interface PortalViewUiBinder extends UiBinder<Widget, AdministrationView> {
+	interface Binder extends UiBinder<Widget, AdministrationView> {
 	}
 	
 	@UiField SimpleLayoutPanel main2;

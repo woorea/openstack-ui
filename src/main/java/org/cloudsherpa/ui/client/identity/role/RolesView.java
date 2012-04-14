@@ -1,10 +1,13 @@
 package org.cloudsherpa.ui.client.identity.role;
 
 import java.util.List;
+import java.util.Set;
 
 import org.cloudsherpa.admin.client.Administration;
 import org.openstack.model.identity.Role;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -38,8 +41,6 @@ public class RolesView extends Composite {
 	public interface Presenter {
 		void onCreate();
 		void onDelete();
-		void onAttach();
-		void onDetach();
 		void onRefresh();
 	}
 	
@@ -70,6 +71,7 @@ public class RolesView extends Composite {
 
 				@Override
 				public void onSuccess(List<Role> result) {
+					update();
 					updateRowData(range.getStart(), result);
 					updateRowCount(range.getLength(), true);
 					
@@ -85,11 +87,15 @@ public class RolesView extends Composite {
 	public RolesView() {
 		createGrid();
 		initWidget(uiBinder.createAndBindUi(this));
-		update();
 	}
 
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
+	}
+	
+	public void refresh() {
+		grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
+		//RangeChangeEvent.fire(grid, grid.getVisibleRange());
 	}
 
 	@UiHandler("create")
@@ -99,7 +105,29 @@ public class RolesView extends Composite {
 	
 	@UiHandler("delete")
 	void onDeleteClick(ClickEvent event) {
-		presenter.onDelete();
+		Set<Role> users = selectionModel.getSelectedSet();
+		String[] ids = Collections2.transform(users, new Function<Role, String>() {
+
+			@Override
+			public String apply(Role user) {
+				return user.getId();
+			}
+			
+		}).toArray(new String[0]);
+		Administration.CLOUD.deleteRoles(ids, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				refresh();
+				presenter.onDelete();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.toString());
+			}
+			
+		});
 	}
 	
 	@UiHandler("refresh")

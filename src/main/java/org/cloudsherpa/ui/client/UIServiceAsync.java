@@ -64,38 +64,66 @@ public interface UIServiceAsync {
 
 	void createTenant(Tenant tenant, AsyncCallback<Tenant> callback);
 
-	void createUser(UserForCreate user, AsyncCallback<User> callback);
+	void createUser(UserForCreate userForCreate, AsyncCallback<User> callback);
 
 	void createVolume(VolumeForCreate volumeForCreate,
 			AsyncCallback<Volume> callback);
 
 	void deleteEndpoint(String id, AsyncCallback<Void> callback);
 
+	void deleteEndpoints(String[] ids, AsyncCallback<Void> callback);
+
 	void deleteFlavor(String id, AsyncCallback<Void> callback);
+
+	void deleteFlavors(String[] ids, AsyncCallback<Void> callback);
 
 	void deleteFloatingIp(Integer id, AsyncCallback<Void> callback);
 
+	void deleteFloatingIps(Integer[] ids, AsyncCallback<Void> callback);
+
 	void deleteImage(String id, AsyncCallback<Void> callback);
+
+	void deleteImages(String[] id, AsyncCallback<Void> callback);
 
 	void deleteKeyPair(String name, AsyncCallback<Void> callback);
 
+	void deleteKeyPairs(String[] names, AsyncCallback<Void> callback);
+
 	void deleteRole(String id, AsyncCallback<Void> callback);
+
+	void deleteRoles(String[] ids, AsyncCallback<Void> callback);
 
 	void deleteSecurityGroup(Integer id, AsyncCallback<Void> callback);
 
 	void deleteSecurityGroupRule(Integer id, AsyncCallback<Void> callback);
 
+	void deleteSecurityGroupRules(Integer[] ids, AsyncCallback<Void> callback);
+
+	void deleteSecurityGroups(Integer[] ids, AsyncCallback<Void> callback);
+
 	void deleteServer(String id, AsyncCallback<Void> callback);
+
+	void deleteServers(String[] ids, AsyncCallback<Void> callback);
 
 	void deleteService(String id, AsyncCallback<Void> callback);
 
+	void deleteServices(String[] ids, AsyncCallback<Void> callback);
+
 	void deleteSnapshot(Integer ids, AsyncCallback<Void> callback);
+
+	void deleteSnapshots(Integer[] ids, AsyncCallback<Void> callback);
 
 	void deleteTenant(String id, AsyncCallback<Void> callback);
 
+	void deleteTenants(String[] ids, AsyncCallback<Void> callback);
+
 	void deleteUser(String id, AsyncCallback<Void> callback);
 
+	void deleteUsers(String[] ids, AsyncCallback<Void> callback);
+
 	void deleteVolume(Integer id, AsyncCallback<Void> callback);
+
+	void deleteVolumes(Integer[] id, AsyncCallback<Void> callback);
 
 	void detachVolume(Integer id, AsyncCallback<Volume> callback);
 
@@ -129,7 +157,5 @@ public interface UIServiceAsync {
 	void listUsers(AsyncCallback<List<User>> callback);
 
 	void listVolumes(AsyncCallback<List<Volume>> callback);
-
-	void deleteTenants(String[] ids, AsyncCallback<Void> callback);
 
 }

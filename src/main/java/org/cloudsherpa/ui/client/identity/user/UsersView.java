@@ -1,11 +1,13 @@
 package org.cloudsherpa.ui.client.identity.user;
 
 import java.util.List;
+import java.util.Set;
 
 import org.cloudsherpa.admin.client.Administration;
-import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.User;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
@@ -27,7 +29,6 @@ import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.Range;
-import com.google.gwt.view.client.RangeChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
@@ -73,9 +74,9 @@ public class UsersView extends Composite {
 
 				@Override
 				public void onSuccess(List<User> result) {
+					update();
 					updateRowData(range.getStart(), result);
 					updateRowCount(range.getLength(), true);
-					
 				}
 			});
 			
@@ -88,7 +89,6 @@ public class UsersView extends Composite {
 	public UsersView() {
 		createGrid();
 		initWidget(uiBinder.createAndBindUi(this));
-		update();
 	}
 
 	public void setPresenter(Presenter presenter) {
@@ -96,7 +96,8 @@ public class UsersView extends Composite {
 	}
 	
 	public void refresh() {
-		RangeChangeEvent.fire(grid, grid.getVisibleRange());
+		grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
+		//RangeChangeEvent.fire(grid, grid.getVisibleRange());
 	}
 
 	@UiHandler("create")
@@ -106,7 +107,29 @@ public class UsersView extends Composite {
 	
 	@UiHandler("delete")
 	void onDeleteClick(ClickEvent event) {
-		presenter.onDelete();
+		Set<User> users = selectionModel.getSelectedSet();
+		String[] ids = Collections2.transform(users, new Function<User, String>() {
+
+			@Override
+			public String apply(User user) {
+				return user.getId();
+			}
+			
+		}).toArray(new String[0]);
+		Administration.CLOUD.deleteUsers(ids, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				refresh();
+				presenter.onDelete();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.toString());
+			}
+			
+		});
 	}
 	
 	@UiHandler("refresh")
