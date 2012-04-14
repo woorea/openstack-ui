@@ -1,7 +1,6 @@
 package org.cloudsherpa.ui.client.compute.securitygroup;
 
 import org.cloudsherpa.portal.client.Portal;
-import org.cloudsherpa.ui.client.compute.common.MetadataEditor;
 import org.openstack.model.compute.SecurityGroup;
 
 import com.google.gwt.core.client.GWT;
@@ -12,6 +11,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DeckLayoutPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -39,6 +39,15 @@ public class CreateSecurityGroupWizard extends Composite {
 	
 	@UiField SecurityGroupRuleEditor securityGroupRules;
 	
+	@UiField
+	Button cancel;
+	@UiField
+	Button previous;
+	@UiField
+	Button next;
+	@UiField
+	Button finish;
+	
 	public CreateSecurityGroupWizard() {
 		initWidget(uiBinder.createAndBindUi(this));
 		for (int i = 0; i < deck.getWidgetCount(); i++) {
@@ -54,7 +63,7 @@ public class CreateSecurityGroupWizard extends Composite {
 			});
 			steps.add(step);
 		}
-		deck.showWidget(0);
+		step(0);
 	}
 	
 	public void setListener(Listener listener) {
@@ -62,34 +71,54 @@ public class CreateSecurityGroupWizard extends Composite {
 		
 	}
 	
-	@UiHandler({"close","cancel"})
-	void onCloseClick(ClickEvent event) {
-		Portal.MODAL.hide();
+	public void step(int index) {
+		previous.setEnabled(index != 0);
+		next.setVisible(index < (deck.getWidgetCount() - 1));
+		finish.setVisible(!next.isVisible());
+		deck.showWidget(index);
 		
 	}
 	
-	@UiHandler({"save"})
-	void onSaveClick(ClickEvent event) {
-		if(deck.getVisibleWidgetIndex() == 0) {
-			Portal.CLOUD.create(securityGroup.flush(), new AsyncCallback<SecurityGroup>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-					
-				}
-
-				@Override
-				public void onSuccess(SecurityGroup result) {
-					securityGroupRules.refresh(result.getId());
-					deck.showWidget(1);
-				}
-			
-			});
-		} else {
-			Portal.MODAL.hide();
-			listener.onFinish(null);
+	@UiHandler("previous")
+	void onPreviousClick(ClickEvent event) {
+		int currentIndex = deck.getVisibleWidgetIndex();
+		if(currentIndex > 0) {
+			step(--currentIndex);
 		}
+	}
+	
+	@UiHandler("next")
+	void onNextClick(ClickEvent event) {
+		final int currentIndex = deck.getVisibleWidgetIndex();
+		Portal.CLOUD.create(securityGroup.flush(), new AsyncCallback<SecurityGroup>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.getMessage());
+				
+			}
+
+			@Override
+			public void onSuccess(SecurityGroup result) {
+				if(currentIndex < deck.getWidgetCount()) {
+					securityGroupRules.refresh(result.getId());
+					step(currentIndex + 1);
+				}
+			}
+		
+		});
+		
+	}
+	
+	@UiHandler("finish")
+	void onFinishClick(ClickEvent event) {
+		Portal.MODAL.hide();
+		listener.onFinish(null);
+	}
+	
+	@UiHandler({"close","cancel"})
+	void onCloseClick(ClickEvent event) {
+		Portal.MODAL.hide();
 		
 	}
 

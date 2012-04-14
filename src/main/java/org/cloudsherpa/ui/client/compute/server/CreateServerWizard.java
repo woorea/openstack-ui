@@ -62,7 +62,14 @@ public class CreateServerWizard extends Composite implements Editor<ServerForCre
 	
 	@UiField ListBox securityGroups;
 	
-	@UiField Button save;
+	@UiField
+	Button cancel;
+	@UiField
+	Button previous;
+	@UiField
+	Button next;
+	@UiField
+	Button finish;
 
 	public CreateServerWizard() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -80,7 +87,7 @@ public class CreateServerWizard extends Composite implements Editor<ServerForCre
 			steps.add(step);
 		}
 		imageRef.setListener(this);
-		deck.showWidget(0);
+		step(0);
 	}
 	
 	public void edit(ServerForCreate serverForCreate) {
@@ -95,11 +102,35 @@ public class CreateServerWizard extends Composite implements Editor<ServerForCre
 
 	@Override
 	public void onImageSelected() {
-		deck.showWidget(1);
+		step(1);
 	}
 	
-	@UiHandler("save")
-	void onSaveClick(ClickEvent event) {
+	public void step(int index) {
+		previous.setEnabled(index != 0);
+		next.setVisible(index < (deck.getWidgetCount() - 1));
+		finish.setVisible(!next.isVisible());
+		deck.showWidget(index);
+		
+	}
+	
+	@UiHandler("previous")
+	void onPreviousClick(ClickEvent event) {
+		int currentIndex = deck.getVisibleWidgetIndex();
+		if(currentIndex > 0) {
+			step(--currentIndex);
+		}
+	}
+	
+	@UiHandler("next")
+	void onNextClick(ClickEvent event) {
+		int currentIndex = deck.getVisibleWidgetIndex();
+		if(currentIndex < deck.getWidgetCount()) {
+			step(++currentIndex);
+		}
+	}
+	
+	@UiHandler("finish")
+	void onFinishClick(ClickEvent event) {
 		Window.alert(flush().toString());
 	}
 	

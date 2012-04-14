@@ -8,6 +8,9 @@
 			table-layout: fixed;
 			cursor: pointer;
 		}
+		.cancel {
+			float: left !important;
+		}
 	</ui:style>
 	<g:HeaderPanel width="800px" height="450px">
 		<g:HTMLPanel>
@@ -26,8 +29,10 @@
 			</g:DeckLayoutPanel>
 		</g:ResizeLayoutPanel>
 		<g:HTMLPanel ui:field="footer" styleName="modal-footer">
-			<g:Button ui:field="save" styleName="btn">Save</g:Button>
-			<g:Button ui:field="cancel" styleName="btn">Cancel</g:Button>
+			<g:Button ui:field="previous" styleName="btn">Previous</g:Button>
+			<g:Button ui:field="next" styleName="btn">Next</g:Button>
+			<g:Button ui:field="finish" styleName="btn">Finish</g:Button>
+			<g:Button ui:field="cancel" styleName="btn {style.cancel}">Cancel</g:Button>
 		</g:HTMLPanel>
 	</g:HeaderPanel>
 </ui:UiBinder> 
