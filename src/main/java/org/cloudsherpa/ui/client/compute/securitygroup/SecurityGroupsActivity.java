@@ -24,9 +24,8 @@ public class SecurityGroupsActivity extends AbstractActivity implements Security
 	}
 
 	@Override
-	public void onSave(SecurityGroup securityGroup) {
+	public void onFinish(SecurityGroup securityGroup) {
 		VIEW.refresh();
-		
 	}
 
 	@Override

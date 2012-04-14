@@ -41,7 +41,7 @@ public class SecurityGroupsView extends Composite {
 	interface Binder extends UiBinder<Widget, SecurityGroupsView> {
 	}
 	
-	public interface Presenter extends CreateSecurityGroup.Listener {
+	public interface Presenter extends CreateSecurityGroupWizard.Listener {
 		void onDelete();
 		void onRefresh();
 	}
@@ -104,7 +104,7 @@ public class SecurityGroupsView extends Composite {
 
 	@UiHandler("create")
 	void onCreateClick(ClickEvent event) {
-		CreateSecurityGroup widget = new CreateSecurityGroup();
+		CreateSecurityGroupWizard widget = new CreateSecurityGroupWizard();
 		widget.setListener(presenter);
 		Portal.MODAL.setWidget(widget);
 		Portal.MODAL.center();

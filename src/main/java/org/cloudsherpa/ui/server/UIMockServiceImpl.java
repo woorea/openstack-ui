@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -76,8 +77,6 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	private static Map<String, Service> services = Maps.newHashMap();
 	private static Map<String, Endpoint> endpoints = Maps.newHashMap();
 	
-	private static List<SecurityGroupRule> rules = new ArrayList<SecurityGroupRule>();
-	
 	static {
 		NovaMetadata m = new NovaMetadata();
 		for(int i = 0; i < 5; i++) {
@@ -95,14 +94,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 		}
 		
 		
-		for(int i = 0; i < 2; i++) {
-			NovaSecurityGroupRule rule = new NovaSecurityGroupRule();
-			rule.setIpProtocol("TCP");
-			rule.setFromPort(22);
-			rule.setToPort(32);
-			rule.getIpRange().setCidr("0.0.0.0/8");
-			rules.add(rule);
-		}
+		
 		
 		for(int i = 0; i < 3; i++) {
 			GlanceImage image = new GlanceImage(String.valueOf(i),"image."+i);
@@ -146,6 +138,16 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 			snapshots.put(i, new NovaSnapshot(i, "snapshot."+i, i));
 			keyPairs.put("key."+i, new NovaKeyPair("key."+i));
 			NovaSecurityGroup securityGroup = new NovaSecurityGroup(i,"security group."+i,"security group."+i+" desc");
+			List<SecurityGroupRule> rules = new ArrayList<SecurityGroupRule>();
+			for(int r = 0; r < 2; r++) {
+				NovaSecurityGroupRule rule = new NovaSecurityGroupRule();
+				rule.setParentGroupId(i);
+				rule.setIpProtocol("TCP");
+				rule.setFromPort(22);
+				rule.setToPort(32);
+				rule.getIpRange().setCidr("0.0.0.0/8");
+				rules.add(rule);
+			}
 			securityGroup.setRules(rules);
 			securityGroups.put(i, securityGroup);
 			
@@ -339,9 +341,14 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	@Override
 	public SecurityGroup create(SecurityGroupForCreate securityGroupForCreate) {
 		NovaSecurityGroup securityGroup = new NovaSecurityGroup((int)System.currentTimeMillis(),"security group."+System.currentTimeMillis(),"security group."+System.currentTimeMillis()+" desc");
-		securityGroup.setRules(rules);
 		securityGroups.put(securityGroup.getId(), securityGroup);
 		return securityGroup;
+	}
+	
+
+	@Override
+	public SecurityGroup showSecurityGroup(Integer id) {
+		return securityGroups.get(id);
 	}
 
 	@Override
@@ -350,8 +357,20 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public SecurityGroupRule create(SecurityGroupRuleForCreate rule) {
-		return new NovaSecurityGroupRule();
+	public SecurityGroupRule create(SecurityGroupRuleForCreate ruleForCreate) {
+		Integer parentGroupId = ruleForCreate.getParentGroupId();
+		SecurityGroup sg = securityGroups.get(parentGroupId);
+		
+		NovaSecurityGroupRule rule = new NovaSecurityGroupRule();
+		rule.setId((int)System.currentTimeMillis());
+		rule.setParentGroupId(parentGroupId);
+		rule.setIpProtocol("TCP");
+		rule.setFromPort(22);
+		rule.setToPort(32);
+		rule.getIpRange().setCidr("0.0.0.0/8");
+		sg.getRules().add(rule);
+		
+		return rule;
 	}
 
 	@Override
@@ -559,5 +578,6 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 		}
 		
 	}
+
 
 }

@@ -156,4 +156,6 @@ public interface UIServiceAsync {
 
 	void listVolumes(AsyncCallback<List<Volume>> callback);
 
+	void showSecurityGroup(Integer id, AsyncCallback<SecurityGroup> callback);
+
 }

@@ -1,5 +1,6 @@
 package org.cloudsherpa.ui.client.compute.keypair;
 
+import org.cloudsherpa.portal.client.Portal;
 import org.openstack.model.compute.KeyPair;
 
 import com.google.gwt.core.client.GWT;
@@ -29,7 +30,10 @@ public class CreateKeyPair extends Composite {
 	
 	private Listener listener;
 	
-	
+	@UiHandler({"close","cancel"})
+	void onCloseClick(ClickEvent event) {
+		Portal.MODAL.hide();
+	}
 	
 	@UiHandler({"save"})
 	void onSaveClick(ClickEvent event) {

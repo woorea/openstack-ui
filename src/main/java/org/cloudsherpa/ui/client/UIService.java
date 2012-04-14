@@ -106,6 +106,8 @@ public interface UIService extends RemoteService {
 	
 	public SecurityGroup create(SecurityGroupForCreate securityGroup);
 	
+	public SecurityGroup showSecurityGroup(Integer id);
+	
 	public void deleteSecurityGroup(Integer id);
 	
 	public void deleteSecurityGroups(Integer[] ids);
