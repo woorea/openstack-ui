@@ -1,7 +1,7 @@
 package org.cloudsherpa.ui.client.compute.securitygroup;
 
-import org.cloudsherpa.portal.client.Portal;
 import org.cloudsherpa.ui.client.compute.common.PortalPlace;
+import org.openstack.model.compute.SecurityGroup;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -24,10 +24,8 @@ public class SecurityGroupsActivity extends AbstractActivity implements Security
 	}
 
 	@Override
-	public void onCreate() {
-		CreateSecurityGroup widget = new CreateSecurityGroup();
-		Portal.MODAL.setWidget(widget);
-		Portal.MODAL.center();
+	public void onSave(SecurityGroup securityGroup) {
+		VIEW.refresh();
 		
 	}
 

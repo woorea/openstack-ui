@@ -38,10 +38,9 @@ public class FloatingIpsView extends Composite {
 	interface Binder extends UiBinder<Widget, FloatingIpsView> {
 	}
 	
-	public interface Presenter {
+	public interface Presenter extends AssociateFloatingIp.Listener {
 		void onCreate();
 		void onDelete();
-		void onAssociate();
 		void onDisassociate();
 		void onRefresh();
 	}
@@ -75,10 +74,10 @@ public class FloatingIpsView extends Composite {
 
 				@Override
 				public void onSuccess(List<FloatingIp> result) {
-					update();
+					selectionModel.clear();
 					updateRowData(range.getStart(), result);
 					updateRowCount(range.getLength(), true);
-					
+					update();
 				}
 			});
 			
@@ -104,7 +103,20 @@ public class FloatingIpsView extends Composite {
 
 	@UiHandler("create")
 	void onCreateClick(ClickEvent event) {
-		presenter.onCreate();
+		Portal.CLOUD.createFloatingIp(new AsyncCallback<FloatingIp>() {
+			
+			@Override
+			public void onSuccess(FloatingIp result) {
+				refresh();
+				presenter.onCreate();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.toString());
+			}
+			
+		});
 	}
 	
 	@UiHandler("delete")
@@ -135,13 +147,32 @@ public class FloatingIpsView extends Composite {
 	}
 	
 	@UiHandler("associate")
-	void onAtachClick(ClickEvent event) {
-		presenter.onAssociate();
+	void onAssociateClick(ClickEvent event) {
+		FloatingIp floatingIp = selectionModel.getSelectedSet().iterator().next();
+		AssociateFloatingIp widget = new AssociateFloatingIp();
+		widget.floatingIp = floatingIp;
+		widget.setListener(presenter);
+		Portal.MODAL.setWidget(widget);
+		Portal.MODAL.center();
 	}
 	
 	@UiHandler("disassociate")
-	void onDetachClick(ClickEvent event) {
-		presenter.onDisassociate();
+	void onDisassociateClick(ClickEvent event) {
+		FloatingIp floatingIp = selectionModel.getSelectedSet().iterator().next();
+		Portal.CLOUD.disassociateFloatingIp(floatingIp.getIp(), new AsyncCallback<FloatingIp>() {
+			
+			@Override
+			public void onSuccess(FloatingIp result) {
+				refresh();
+				presenter.onDisassociate();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.toString());
+			}
+			
+		});
 	}
 	
 	@UiHandler("refresh")
@@ -152,7 +183,8 @@ public class FloatingIpsView extends Composite {
 	}
 	
 	private void update() {
-		switch (selectionModel.getSelectedSet().size()) {
+		Set<FloatingIp> selected = selectionModel.getSelectedSet();
+		switch (selected.size()) {
 		case 0:
 			delete.setEnabled(false);
 			associate.setEnabled(false);
@@ -160,8 +192,14 @@ public class FloatingIpsView extends Composite {
 			break;
 		case 1:
 			delete.setEnabled(true);
-			associate.setEnabled(true);
-			disassociate.setEnabled(true);
+			FloatingIp floatingIp = selected.iterator().next();
+			if(floatingIp.getInstanceId() == null) {
+				associate.setEnabled(true);
+				disassociate.setEnabled(false);
+			} else {
+				associate.setEnabled(false);
+				disassociate.setEnabled(true);
+			}
 			break;
 		default:
 			delete.setEnabled(true);

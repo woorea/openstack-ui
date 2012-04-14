@@ -76,6 +76,8 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	private static Map<String, Service> services = Maps.newHashMap();
 	private static Map<String, Endpoint> endpoints = Maps.newHashMap();
 	
+	private static List<SecurityGroupRule> rules = new ArrayList<SecurityGroupRule>();
+	
 	static {
 		NovaMetadata m = new NovaMetadata();
 		for(int i = 0; i < 5; i++) {
@@ -92,7 +94,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 			addresses.getNetworks().add(n);
 		}
 		
-		List<SecurityGroupRule> rules = new ArrayList<SecurityGroupRule>();
+		
 		for(int i = 0; i < 2; i++) {
 			NovaSecurityGroupRule rule = new NovaSecurityGroupRule();
 			rule.setIpProtocol("TCP");
@@ -140,8 +142,8 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 			server.setAddresses(addresses);
 			servers.put(String.valueOf(i), server);
 			floatingIps.put(i, new NovaFloatingIp(i, String.valueOf(i), String.valueOf(i), "nova", String.valueOf(i)));
-			volumes.put(i, new NovaVolume(i, "volume."+i));
-			snapshots.put(i, new NovaSnapshot());
+			volumes.put(i, new NovaVolume(i, "volume."+i, null));
+			snapshots.put(i, new NovaSnapshot(i, "snapshot."+i, i));
 			keyPairs.put("key."+i, new NovaKeyPair("key."+i));
 			NovaSecurityGroup securityGroup = new NovaSecurityGroup(i,"security group."+i,"security group."+i+" desc");
 			securityGroup.setRules(rules);
@@ -216,7 +218,9 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 
 	@Override
 	public FloatingIp createFloatingIp() {
-		return new NovaFloatingIp();
+		FloatingIp floatingIp = new NovaFloatingIp((int) System.currentTimeMillis(), String.valueOf(System.currentTimeMillis()), String.valueOf(System.currentTimeMillis()), "nova", String.valueOf(System.currentTimeMillis()));
+		floatingIps.put(floatingIp.getId(), floatingIp);
+		return floatingIp;
 	}
 
 	@Override
@@ -226,12 +230,28 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 
 	@Override
 	public FloatingIp associateFloatingIp(String ip, String serverId) {
-		return new NovaFloatingIp();
+		FloatingIp fip = null;
+		for(FloatingIp cfip : floatingIps.values()) {
+			if(cfip.getIp().equals(ip)) {
+				cfip.setInstanceId(serverId);
+				fip = cfip;
+				break;
+			}
+		}
+		return fip;
 	}
 
 	@Override
 	public FloatingIp disassociateFloatingIp(String ip) {
-		return new NovaFloatingIp();
+		FloatingIp fip = null;
+		for(FloatingIp cfip : floatingIps.values()) {
+			if(cfip.getIp().equals(ip)) {
+				cfip.setInstanceId(null);
+				fip = cfip;
+				break;
+			}
+		}
+		return fip;
 	}
 
 	@Override
@@ -241,7 +261,9 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 
 	@Override
 	public Volume create(VolumeForCreate volumeForCreate) {
-		return new NovaVolume();
+		Volume volume = new NovaVolume((int)System.currentTimeMillis(), "volume."+System.currentTimeMillis(), volumeForCreate.getSnapshotId());
+		volumes.put(volume.getId(), volume);
+		return volume;
 	}
 
 	@Override
@@ -251,12 +273,28 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 
 	@Override
 	public Volume attachVolume(Integer id, String serverId) {
-		return new NovaVolume();
+		Volume fip = null;
+		for(Volume cfip : volumes.values()) {
+			if(cfip.getId().equals(id)) {
+				//cfip.setInstanceId(serverId);
+				fip = cfip;
+				break;
+			}
+		}
+		return fip;
 	}
 
 	@Override
 	public Volume detachVolume(Integer id) {
-		return new NovaVolume();
+		Volume fip = null;
+		for(Volume cfip : volumes.values()) {
+			if(cfip.getId().equals(id)) {
+				//cfip.setInstanceId(serverId);
+				fip = cfip;
+				break;
+			}
+		}
+		return fip;
 	}
 
 	@Override
@@ -266,7 +304,9 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 
 	@Override
 	public Snapshot create(SnapshotForCreate snapshotForCreate) {
-		return new NovaSnapshot();
+		Snapshot s = new NovaSnapshot((int)System.currentTimeMillis(), "snapshot."+System.currentTimeMillis(), null);
+		snapshots.put(s.getId(), s);
+		return s;
 	}
 
 	@Override
@@ -281,7 +321,9 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 
 	@Override
 	public KeyPair createKeyPair(String name) {
-		return new NovaKeyPair();
+		KeyPair kp = new NovaKeyPair(name);
+		keyPairs.put(name, kp);
+		return kp;
 	}
 
 	@Override
@@ -295,8 +337,11 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public SecurityGroup create(SecurityGroupForCreate securityGroup) {
-		return new NovaSecurityGroup();
+	public SecurityGroup create(SecurityGroupForCreate securityGroupForCreate) {
+		NovaSecurityGroup securityGroup = new NovaSecurityGroup((int)System.currentTimeMillis(),"security group."+System.currentTimeMillis(),"security group."+System.currentTimeMillis()+" desc");
+		securityGroup.setRules(rules);
+		securityGroups.put(securityGroup.getId(), securityGroup);
+		return securityGroup;
 	}
 
 	@Override

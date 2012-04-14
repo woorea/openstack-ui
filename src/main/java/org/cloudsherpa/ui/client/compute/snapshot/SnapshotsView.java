@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.cloudsherpa.portal.client.Portal;
+import org.cloudsherpa.ui.client.compute.snapshot.CreateSnapshot.CreateVolumeUiBinder;
+import org.cloudsherpa.ui.client.compute.volume.CreateVolume;
 import org.openstack.model.compute.Snapshot;
 
 import com.google.common.base.Function;
@@ -38,10 +40,8 @@ public class SnapshotsView extends Composite {
 	interface Binder extends UiBinder<Widget, SnapshotsView> {
 	}
 	
-	public interface Presenter {
-		void onCreate();
+	public interface Presenter extends CreateSnapshot.Listener, CreateVolume.Listener {
 		void onDelete();
-		void onCreateVolume();
 		void onRefresh();
 	}
 	
@@ -73,10 +73,10 @@ public class SnapshotsView extends Composite {
 
 				@Override
 				public void onSuccess(List<Snapshot> result) {
-					update();
+					selectionModel.clear();
 					updateRowData(range.getStart(), result);
 					updateRowCount(range.getLength(), true);
-					
+					update();
 				}
 			});
 			
@@ -103,13 +103,15 @@ public class SnapshotsView extends Composite {
 
 	@UiHandler("create")
 	void onCreateClick(ClickEvent event) {
-		presenter.onCreate();
+		CreateSnapshot widget = new CreateSnapshot();
+		Portal.MODAL.setWidget(widget);
+		Portal.MODAL.center();
 	}
 	
 	@UiHandler("delete")
 	void onDeleteClick(ClickEvent event) {
-		Set<Snapshot> users = selectionModel.getSelectedSet();
-		Integer[] ids = Collections2.transform(users, new Function<Snapshot, Integer>() {
+		Set<Snapshot> snapshots = selectionModel.getSelectedSet();
+		Integer[] ids = Collections2.transform(snapshots, new Function<Snapshot, Integer>() {
 
 			@Override
 			public Integer apply(Snapshot user) {
@@ -134,8 +136,12 @@ public class SnapshotsView extends Composite {
 	}
 	
 	@UiHandler("createVolume")
-	void onAtachClick(ClickEvent event) {
-		presenter.onCreateVolume();
+	void onCreateVolumeClick(ClickEvent event) {
+		Snapshot snapshot = selectionModel.getSelectedSet().iterator().next();
+		CreateVolume widget = new CreateVolume(snapshot.getId());
+		widget.setListener(presenter);
+		Portal.MODAL.setWidget(widget);
+		Portal.MODAL.center();
 	}
 	
 	@UiHandler("refresh")
@@ -149,12 +155,15 @@ public class SnapshotsView extends Composite {
 		switch (selectionModel.getSelectedSet().size()) {
 		case 0:
 			delete.setEnabled(false);
+			createVolume.setEnabled(false);
 			break;
 		case 1:
 			delete.setEnabled(true);
+			createVolume.setEnabled(true);
 			break;
 		default:
 			delete.setEnabled(true);
+			createVolume.setEnabled(false);
 			break;
 		}
 	}

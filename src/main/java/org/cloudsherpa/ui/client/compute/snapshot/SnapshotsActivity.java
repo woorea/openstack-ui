@@ -2,7 +2,8 @@ package org.cloudsherpa.ui.client.compute.snapshot;
 
 import org.cloudsherpa.portal.client.Portal;
 import org.cloudsherpa.ui.client.compute.common.PortalPlace;
-import org.cloudsherpa.ui.client.compute.volume.CreateVolume;
+import org.openstack.model.compute.Snapshot;
+import org.openstack.model.compute.Volume;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -25,11 +26,8 @@ public class SnapshotsActivity extends AbstractActivity implements SnapshotsView
 	}
 
 	@Override
-	public void onCreate() {
-		CreateSnapshot widget = new CreateSnapshot();
-		Portal.MODAL.setWidget(widget);
-		Portal.MODAL.center();
-		
+	public void onSave(Snapshot snapshot) {
+		VIEW.refresh();
 	}
 
 	@Override
@@ -44,11 +42,8 @@ public class SnapshotsActivity extends AbstractActivity implements SnapshotsView
 	}
 
 	@Override
-	public void onCreateVolume() {
-		CreateVolume widget = new CreateVolume();
-		Portal.MODAL.setWidget(widget);
-		Portal.MODAL.center();
-		
+	public void onSave(Volume service) {
+		Portal.PLACE_CONTROLLER.goTo(new PortalPlace("volumes"));
 	}
 
 }

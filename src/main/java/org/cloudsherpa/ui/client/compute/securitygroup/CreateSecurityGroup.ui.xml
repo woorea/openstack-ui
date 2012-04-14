@@ -8,12 +8,14 @@
 		<g:HTMLPanel>
 			<div class="modal-header" style="margin-bottom: 15px">
 				<g:Anchor ui:field="close" styleName="close">×</g:Anchor>
-				<h3>Create Volume</h3>
+				<h3>Create Security Group</h3>
 			</div>
 		</g:HTMLPanel>
 		<g:ResizeLayoutPanel height="100%">
-			<sg:SecurityGroupEditor />
-			<sg:SecurityGroupRuleEditor />
+			<g:HTMLPanel>
+				<sg:SecurityGroupEditor />
+				<sg:SecurityGroupRuleEditor />
+			</g:HTMLPanel>
 		</g:ResizeLayoutPanel>
 		<g:HTMLPanel ui:field="footer" styleName="modal-footer">
 			<g:Button ui:field="save" styleName="btn">Save</g:Button>

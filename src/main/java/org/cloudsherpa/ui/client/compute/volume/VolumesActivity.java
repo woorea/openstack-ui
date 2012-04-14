@@ -3,9 +3,11 @@ package org.cloudsherpa.ui.client.compute.volume;
 import org.cloudsherpa.portal.client.Portal;
 import org.cloudsherpa.ui.client.compute.common.PortalPlace;
 import org.cloudsherpa.ui.client.compute.snapshot.CreateSnapshot;
+import org.openstack.model.compute.Volume;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class VolumesActivity extends AbstractActivity implements VolumesView.Presenter {
@@ -22,20 +24,18 @@ public class VolumesActivity extends AbstractActivity implements VolumesView.Pre
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
+		VIEW.refresh();
 	}
 
 	@Override
 	public void onCreate() {
-		CreateVolume widget = new CreateVolume();
-		Portal.MODAL.setWidget(widget);
-		Portal.MODAL.center();
+		
 		
 	}
 
 	@Override
 	public void onDelete() {
 		onRefresh();
-		
 	}
 
 	@Override
@@ -44,11 +44,8 @@ public class VolumesActivity extends AbstractActivity implements VolumesView.Pre
 	}
 
 	@Override
-	public void onAttach() {
-		AttachVolume widget = new AttachVolume();
-		Portal.MODAL.setWidget(widget);
-		Portal.MODAL.center();
-		
+	public void onAttach(Volume volume) {
+		VIEW.refresh();
 	}
 
 	@Override

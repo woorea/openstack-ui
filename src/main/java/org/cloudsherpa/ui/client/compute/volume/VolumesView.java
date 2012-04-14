@@ -38,10 +38,9 @@ public class VolumesView extends Composite {
 	interface Binder extends UiBinder<Widget, VolumesView> {
 	}
 	
-	public interface Presenter {
+	public interface Presenter extends AttachVolume.Listener {
 		void onCreate();
 		void onDelete();
-		void onAttach();
 		void onDetach();
 		void onCreateSnapshot();
 		void onRefresh();
@@ -77,10 +76,10 @@ public class VolumesView extends Composite {
 
 				@Override
 				public void onSuccess(List<Volume> result) {
-					update();
+					selectionModel.clear();
 					updateRowData(range.getStart(), result);
 					updateRowCount(range.getLength(), true);
-					
+					update();
 				}
 			});
 			
@@ -106,7 +105,9 @@ public class VolumesView extends Composite {
 
 	@UiHandler("create")
 	void onCreateClick(ClickEvent event) {
-		presenter.onCreate();
+		CreateVolume widget = new CreateVolume(null);
+		Portal.MODAL.setWidget(widget);
+		Portal.MODAL.center();
 	}
 	
 	@UiHandler("delete")
@@ -138,7 +139,11 @@ public class VolumesView extends Composite {
 	
 	@UiHandler("attach")
 	void onAtachClick(ClickEvent event) {
-		presenter.onAttach();
+		Volume volume = selectionModel.getSelectedSet().iterator().next();
+		AttachVolume widget = new AttachVolume();
+		widget.volume = volume;
+		Portal.MODAL.setWidget(widget);
+		Portal.MODAL.center();
 	}
 	
 	@UiHandler("detach")

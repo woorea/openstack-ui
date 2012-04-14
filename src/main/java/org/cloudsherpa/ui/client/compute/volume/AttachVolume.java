@@ -1,6 +1,9 @@
 package org.cloudsherpa.ui.client.compute.volume;
 
+import java.util.List;
+
 import org.cloudsherpa.portal.client.Portal;
+import org.openstack.model.compute.Server;
 import org.openstack.model.compute.Volume;
 
 import com.google.gwt.core.client.GWT;
@@ -20,8 +23,33 @@ public class AttachVolume extends Composite {
 
 	interface AttachVolumeUiBinder extends UiBinder<Widget, AttachVolume> {
 	}
+	
+	public interface Listener {
+
+		void onAttach(Volume volume);
+		
+	}
+	
+	private Listener listener;
+	
+	Volume volume;
+	@UiField ListBox serverId;
 
 	public AttachVolume() {
+		Portal.CLOUD.listServers(0, 50, new AsyncCallback<List<Server>>() {
+			
+			@Override
+			public void onSuccess(List<Server> result) {
+				for(Server s : result) {
+					serverId.addItem(s.getName() + " " + s.getId(), s.getId());
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+			
+		});
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	
@@ -30,25 +58,15 @@ public class AttachVolume extends Composite {
 		Portal.MODAL.hide();
 	}
 	
-	public interface Listener {
-
-		void onSave(Volume volume);
-		
-	}
-	
-	private Listener listener;
-	
-	Integer volumeId;
-	@UiField ListBox serverId;
-	
 	@UiHandler({"save"})
 	void onSaveClick(ClickEvent event) {
 		
-		Portal.CLOUD.attachVolume(volumeId, serverId.getItemText(serverId.getSelectedIndex()), new AsyncCallback<Volume>() {
+		Portal.CLOUD.attachVolume(volume.getId(), serverId.getValue(serverId.getSelectedIndex()), new AsyncCallback<Volume>() {
 			
 			@Override
 			public void onSuccess(Volume result) {
-				listener.onSave(result);
+				Portal.MODAL.hide();
+				listener.onAttach(result);
 			}
 			
 			@Override

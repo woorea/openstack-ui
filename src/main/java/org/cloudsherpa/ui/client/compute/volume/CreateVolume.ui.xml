@@ -20,7 +20,7 @@
 						</tr>
 						<tr>
 							<td>
-								<g:ListBox ui:field="snapshotId" />
+								<g:ListBox ui:field="snapshots" />
 							</td>
 						</tr>
 					</tbody>

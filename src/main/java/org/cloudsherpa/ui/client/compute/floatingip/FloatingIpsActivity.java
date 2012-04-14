@@ -1,7 +1,7 @@
 package org.cloudsherpa.ui.client.compute.floatingip;
 
-import org.cloudsherpa.portal.client.Portal;
 import org.cloudsherpa.ui.client.compute.common.PortalPlace;
+import org.openstack.model.compute.FloatingIp;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -26,7 +26,6 @@ public class FloatingIpsActivity extends AbstractActivity implements FloatingIps
 	@Override
 	public void onCreate() {
 		
-		
 	}
 
 	@Override
@@ -41,11 +40,8 @@ public class FloatingIpsActivity extends AbstractActivity implements FloatingIps
 	}
 
 	@Override
-	public void onAssociate() {
-		AssociateFloatingIp widget = new AssociateFloatingIp();
-		Portal.MODAL.setWidget(widget);
-		Portal.MODAL.center();
-		
+	public void onAssociate(FloatingIp floatingIp) {
+		VIEW.refresh();
 	}
 
 	@Override

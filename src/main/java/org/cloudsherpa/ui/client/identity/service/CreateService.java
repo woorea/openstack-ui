@@ -1,7 +1,6 @@
 package org.cloudsherpa.ui.client.identity.service;
 
 import org.cloudsherpa.admin.client.Administration;
-import org.openstack.model.identity.Role;
 import org.openstack.model.identity.Service;
 import org.openstack.model.identity.keystone.KeystoneService;
 

@@ -2,7 +2,6 @@ package org.cloudsherpa.ui.client.identity.role;
 
 import org.cloudsherpa.admin.client.Administration;
 import org.openstack.model.identity.Role;
-import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.keystone.KeystoneRole;
 
 import com.google.gwt.core.client.GWT;
