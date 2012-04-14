@@ -38,7 +38,7 @@ public interface UIService extends RemoteService {
 	
 	public List<Server> listServers(int start, int max);
 	
-	public Server createServer(ServerForCreate serverForCreate);
+	public Server create(ServerForCreate serverForCreate);
 	
 	public void deleteServer(String id);
 	
@@ -48,7 +48,7 @@ public interface UIService extends RemoteService {
 	
 	public List<Flavor> listFlavors(int start, int max);
 	
-	public Flavor createFlavor(Flavor flavor);
+	public Flavor create(Flavor flavor);
 	
 	public void deleteFlavor(String id);
 	
@@ -56,7 +56,7 @@ public interface UIService extends RemoteService {
 	
 	public List<Image> listImages(int starts, int max);
 	
-	public Image createImage(Image image);
+	public Image create(Image image);
 	
 	public void deleteImage(String id);
 	
@@ -76,7 +76,7 @@ public interface UIService extends RemoteService {
 	
 	public List<Volume> listVolumes();
 	
-	public Volume createVolume(VolumeForCreate volumeForCreate);
+	public Volume create(VolumeForCreate volumeForCreate);
 	
 	public void deleteVolume(Integer id);
 	
@@ -88,7 +88,7 @@ public interface UIService extends RemoteService {
 	
 	public List<Snapshot> listSnapshots();
 	
-	public Snapshot createSnapshots(SnapshotForCreate snapshotForCreate);
+	public Snapshot create(SnapshotForCreate snapshotForCreate);
 	
 	public void deleteSnapshot(Integer ids);
 	
@@ -104,13 +104,13 @@ public interface UIService extends RemoteService {
 	
 	public List<SecurityGroup> listSecurityGroups();
 	
-	public SecurityGroup createSecurityGroup(SecurityGroupForCreate securityGroup);
+	public SecurityGroup create(SecurityGroupForCreate securityGroup);
 	
 	public void deleteSecurityGroup(Integer id);
 	
 	public void deleteSecurityGroups(Integer[] ids);
 	
-	public SecurityGroupRule createSecurityGroupRule(SecurityGroupRuleForCreate rule);
+	public SecurityGroupRule create(SecurityGroupRuleForCreate rule);
 	
 	public void deleteSecurityGroupRule(Integer id);
 	
@@ -120,7 +120,7 @@ public interface UIService extends RemoteService {
 	
 	public List<Tenant> listTenants(int start, int max);
 	
-	public Tenant createTenant(Tenant tenant);
+	public Tenant create(Tenant tenant);
 	
 	public void deleteTenant(String id);
 	
@@ -128,7 +128,7 @@ public interface UIService extends RemoteService {
 	
 	public List<User> listUsers();
 	
-	public User createUser(UserForCreate userForCreate);
+	public User create(UserForCreate userForCreate);
 	
 	public void deleteUser(String id);
 	
@@ -136,7 +136,7 @@ public interface UIService extends RemoteService {
 	
 	public List<Role> listRoles();
 	
-	public Role createRole(Role role);
+	public Role create(Role role);
 	
 	public void deleteRole(String id);
 	
@@ -144,7 +144,7 @@ public interface UIService extends RemoteService {
 	
 	public List<Service> listServices();
 	
-	public Service createService(Service service);
+	public Service create(Service service);
 	
 	public void deleteService(String id);
 	
@@ -152,7 +152,7 @@ public interface UIService extends RemoteService {
 	
 	public List<Endpoint> listEndpoints();
 	
-	public Endpoint createEndpoint(Endpoint endpoint);
+	public Endpoint create(Endpoint endpoint);
 	
 	public void deleteEndpoint(String id);
 	

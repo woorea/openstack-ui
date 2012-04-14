@@ -44,6 +44,16 @@
 							</td>
 						</tr>
 					</tbody>
+					<tbody>
+						<tr>
+							<td colspan="2">Force</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<g:CheckBox ui:field="force" />
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</g:HTMLPanel>
 		</g:ResizeLayoutPanel>

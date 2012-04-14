@@ -165,7 +165,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public Server createServer(ServerForCreate serverForCreate) {
+	public Server create(ServerForCreate serverForCreate) {
 		return new NovaServer();
 	}
 
@@ -185,7 +185,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public Flavor createFlavor(Flavor flavor) {
+	public Flavor create(Flavor flavor) {
 		return flavor;
 	}
 
@@ -200,7 +200,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public Image createImage(Image image) {
+	public Image create(Image image) {
 		return new GlanceImage();
 	}
 
@@ -240,7 +240,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public Volume createVolume(VolumeForCreate volumeForCreate) {
+	public Volume create(VolumeForCreate volumeForCreate) {
 		return new NovaVolume();
 	}
 
@@ -265,7 +265,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public Snapshot createSnapshots(SnapshotForCreate snapshotForCreate) {
+	public Snapshot create(SnapshotForCreate snapshotForCreate) {
 		return new NovaSnapshot();
 	}
 
@@ -295,7 +295,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public SecurityGroup createSecurityGroup(SecurityGroupForCreate securityGroup) {
+	public SecurityGroup create(SecurityGroupForCreate securityGroup) {
 		return new NovaSecurityGroup();
 	}
 
@@ -305,7 +305,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public SecurityGroupRule createSecurityGroupRule(SecurityGroupRuleForCreate rule) {
+	public SecurityGroupRule create(SecurityGroupRuleForCreate rule) {
 		return new NovaSecurityGroupRule();
 	}
 
@@ -320,7 +320,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public Tenant createTenant(Tenant tenant) {
+	public Tenant create(Tenant tenant) {
 		tenant.setId(String.valueOf(System.currentTimeMillis()));
 		tenants.put(tenant.getId(), tenant);
 		return tenant;
@@ -349,7 +349,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public User createUser(UserForCreate userForCreate) {
+	public User create(UserForCreate userForCreate) {
 		User user = new KeystoneUser(String.valueOf(System.currentTimeMillis()), String.valueOf(System.currentTimeMillis()));
 		users.put(user.getId(), user);
 		return user;
@@ -374,7 +374,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public Role createRole(Role role) {
+	public Role create(Role role) {
 		role.setId(String.valueOf(System.currentTimeMillis()));
 		roles.put(role.getId(), role);
 		return role;
@@ -399,7 +399,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public Service createService(Service service) {
+	public Service create(Service service) {
 		service.setId(String.valueOf(System.currentTimeMillis()));
 		services.put(service.getId(), service);
 		return service;
@@ -424,7 +424,7 @@ public class UIMockServiceImpl extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public Endpoint createEndpoint(Endpoint endpoint) {
+	public Endpoint create(Endpoint endpoint) {
 		endpoint.setId(String.valueOf(System.currentTimeMillis()));
 		endpoints.put(endpoint.getId(), endpoint);
 		return endpoint;

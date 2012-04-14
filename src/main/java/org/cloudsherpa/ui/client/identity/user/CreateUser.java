@@ -57,7 +57,7 @@ public class CreateUser extends Composite {
 		user.setPassword(password.getValue());
 		user.setEmail(email.getValue());
 		user.setEnabled(enabled.getValue());
-		Administration.CLOUD.createUser(user, new AsyncCallback<User>() {
+		Administration.CLOUD.create(user, new AsyncCallback<User>() {
 			
 			@Override
 			public void onSuccess(User result) {

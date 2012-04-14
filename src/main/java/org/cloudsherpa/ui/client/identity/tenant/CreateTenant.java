@@ -52,7 +52,7 @@ public class CreateTenant extends Composite {
 		tenant.setName(name.getValue());
 		tenant.setDescription(description.getValue());
 		tenant.setEnabled(enabled.getValue());
-		Administration.CLOUD.createTenant(tenant, new AsyncCallback<Tenant>() {
+		Administration.CLOUD.create(tenant, new AsyncCallback<Tenant>() {
 			
 			@Override
 			public void onSuccess(Tenant result) {

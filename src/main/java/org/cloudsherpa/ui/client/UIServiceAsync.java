@@ -36,38 +36,36 @@ public interface UIServiceAsync {
 	void attachVolume(Integer id, String serverId,
 			AsyncCallback<Volume> callback);
 
-	void createEndpoint(Endpoint endpoint, AsyncCallback<Endpoint> callback);
+	void create(ServerForCreate serverForCreate, AsyncCallback<Server> callback);
 
-	void createFlavor(Flavor flavor, AsyncCallback<Flavor> callback);
+	void create(Flavor flavor, AsyncCallback<Flavor> callback);
+
+	void create(Image image, AsyncCallback<Image> callback);
+
+	void create(VolumeForCreate volumeForCreate, AsyncCallback<Volume> callback);
+
+	void create(SecurityGroupForCreate securityGroup,
+			AsyncCallback<SecurityGroup> callback);
+
+	void create(SecurityGroupRuleForCreate rule,
+			AsyncCallback<SecurityGroupRule> callback);
+
+	void create(Tenant tenant, AsyncCallback<Tenant> callback);
+
+	void create(UserForCreate userForCreate, AsyncCallback<User> callback);
+
+	void create(Role role, AsyncCallback<Role> callback);
+
+	void create(Service service, AsyncCallback<Service> callback);
+
+	void create(Endpoint endpoint, AsyncCallback<Endpoint> callback);
 
 	void createFloatingIp(AsyncCallback<FloatingIp> callback);
 
-	void createImage(Image image, AsyncCallback<Image> callback);
-
 	void createKeyPair(String name, AsyncCallback<KeyPair> callback);
 
-	void createRole(Role role, AsyncCallback<Role> callback);
-
-	void createSecurityGroup(SecurityGroupForCreate securityGroup,
-			AsyncCallback<SecurityGroup> callback);
-
-	void createSecurityGroupRule(SecurityGroupRuleForCreate rule,
-			AsyncCallback<SecurityGroupRule> callback);
-
-	void createServer(ServerForCreate serverForCreate,
-			AsyncCallback<Server> callback);
-
-	void createService(Service service, AsyncCallback<Service> callback);
-
-	void createSnapshots(SnapshotForCreate snapshotForCreate,
+	void create(SnapshotForCreate snapshotForCreate,
 			AsyncCallback<Snapshot> callback);
-
-	void createTenant(Tenant tenant, AsyncCallback<Tenant> callback);
-
-	void createUser(UserForCreate userForCreate, AsyncCallback<User> callback);
-
-	void createVolume(VolumeForCreate volumeForCreate,
-			AsyncCallback<Volume> callback);
 
 	void deleteEndpoint(String id, AsyncCallback<Void> callback);
 
