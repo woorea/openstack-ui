@@ -37,7 +37,6 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public ServerList listServers(int start, int max) {
-		GWT.log("test!!!!");
 		return getComputeClient().listServers();
 	}
 
@@ -92,8 +91,7 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public ImageList listImages(int starts, int max) {
-		// TODO Auto-generated method stub
-		return null;
+		return getImagesClient().listImages();
 	}
 
 	@Override
@@ -116,8 +114,7 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public List<FloatingIp> listFloatingIps() {
-		// TODO Auto-generated method stub
-		return null;
+		return getComputeClient().listFloatingIps();
 	}
 
 	@Override
@@ -152,8 +149,7 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public List<Volume> listVolumes() {
-		// TODO Auto-generated method stub
-		return null;
+		return getComputeClient().listVolumes();
 	}
 
 	@Override
@@ -188,8 +184,7 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public List<Snapshot> listSnapshots() {
-		// TODO Auto-generated method stub
-		return null;
+		return getComputeClient().listSnapshots();
 	}
 
 	@Override
@@ -212,8 +207,7 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public List<KeyPair> listKeyPairs() {
-		// TODO Auto-generated method stub
-		return null;
+		return getComputeClient().listKeyPairs();
 	}
 
 	@Override
@@ -236,8 +230,7 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public List<SecurityGroup> listSecurityGroups() {
-		// TODO Auto-generated method stub
-		return null;
+		return getComputeClient().listSecurityGroups();
 	}
 
 	@Override
