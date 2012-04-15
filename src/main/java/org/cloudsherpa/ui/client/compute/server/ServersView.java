@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.cloudsherpa.portal.client.Portal;
 import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.nova.NovaAddressList.Network;
 import org.openstack.model.compute.nova.NovaAddressList.Network.Ip;
 import org.openstack.model.compute.nova.NovaMetadata.Item;
@@ -72,7 +73,7 @@ public class ServersView extends Composite {
 			
 			final Range range = display.getVisibleRange();
 			
-			Portal.CLOUD.listServers(range.getStart(), range.getLength(),  new AsyncCallback<List<Server>>() {
+			Portal.CLOUD.listServers(range.getStart(), range.getLength(),  new AsyncCallback<ServerList>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -81,10 +82,11 @@ public class ServersView extends Composite {
 				}
 
 				@Override
-				public void onSuccess(List<Server> result) {
-					update();
-					updateRowData(range.getStart(), result);
+				public void onSuccess(ServerList result) {
+					selectionModel.clear();
+					updateRowData(range.getStart(), result.getList());
 					updateRowCount(range.getLength(), true);
+					update();
 					
 				}
 			});

@@ -5,6 +5,7 @@ import java.util.List;
 import org.cloudsherpa.portal.client.Portal;
 import org.openstack.model.compute.FloatingIp;
 import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerList;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -36,10 +37,10 @@ public class AssociateFloatingIp extends Composite {
 	@UiField ListBox serverId;
 
 	public AssociateFloatingIp() {
-		Portal.CLOUD.listServers(0, 50, new AsyncCallback<List<Server>>() {
+		Portal.CLOUD.listServers(0, 50, new AsyncCallback<ServerList>() {
 			
 			@Override
-			public void onSuccess(List<Server> result) {
+			public void onSuccess(ServerList result) {
 				for(Server s : result) {
 					serverId.addItem(s.getName() + " " + s.getId(), s.getId());
 				}

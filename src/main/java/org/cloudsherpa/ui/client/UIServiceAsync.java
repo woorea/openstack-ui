@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.FlavorList;
 import org.openstack.model.compute.FloatingIp;
 import org.openstack.model.compute.KeyPair;
 import org.openstack.model.compute.SecurityGroup;
@@ -14,6 +15,7 @@ import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.ServerForCreate;
+import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.Snapshot;
 import org.openstack.model.compute.SnapshotForCreate;
 import org.openstack.model.compute.Volume;
@@ -22,9 +24,11 @@ import org.openstack.model.identity.Endpoint;
 import org.openstack.model.identity.Role;
 import org.openstack.model.identity.Service;
 import org.openstack.model.identity.Tenant;
+import org.openstack.model.identity.TenantList;
 import org.openstack.model.identity.User;
 import org.openstack.model.identity.UserForCreate;
 import org.openstack.model.images.Image;
+import org.openstack.model.images.ImageList;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -43,6 +47,9 @@ public interface UIServiceAsync {
 	void create(Image image, AsyncCallback<Image> callback);
 
 	void create(VolumeForCreate volumeForCreate, AsyncCallback<Volume> callback);
+
+	void create(SnapshotForCreate snapshotForCreate,
+			AsyncCallback<Snapshot> callback);
 
 	void create(SecurityGroupForCreate securityGroup,
 			AsyncCallback<SecurityGroup> callback);
@@ -63,9 +70,6 @@ public interface UIServiceAsync {
 	void createFloatingIp(AsyncCallback<FloatingIp> callback);
 
 	void createKeyPair(String name, AsyncCallback<KeyPair> callback);
-
-	void create(SnapshotForCreate snapshotForCreate,
-			AsyncCallback<Snapshot> callback);
 
 	void deleteEndpoint(String id, AsyncCallback<Void> callback);
 
@@ -132,11 +136,11 @@ public interface UIServiceAsync {
 
 	void listEndpoints(AsyncCallback<List<Endpoint>> callback);
 
-	void listFlavors(int start, int max, AsyncCallback<List<Flavor>> callback);
+	void listFlavors(int start, int max, AsyncCallback<FlavorList> callback);
 
 	void listFloatingIps(AsyncCallback<List<FloatingIp>> callback);
 
-	void listImages(int starts, int max, AsyncCallback<List<Image>> callback);
+	void listImages(int starts, int max, AsyncCallback<ImageList> callback);
 
 	void listKeyPairs(AsyncCallback<List<KeyPair>> callback);
 
@@ -144,13 +148,13 @@ public interface UIServiceAsync {
 
 	void listSecurityGroups(AsyncCallback<List<SecurityGroup>> callback);
 
-	void listServers(int start, int max, AsyncCallback<List<Server>> callback);
+	void listServers(int start, int max, AsyncCallback<ServerList> callback);
 
 	void listServices(AsyncCallback<List<Service>> callback);
 
 	void listSnapshots(AsyncCallback<List<Snapshot>> callback);
 
-	void listTenants(int start, int max, AsyncCallback<List<Tenant>> callback);
+	void listTenants(int start, int max, AsyncCallback<TenantList> callback);
 
 	void listUsers(AsyncCallback<List<User>> callback);
 

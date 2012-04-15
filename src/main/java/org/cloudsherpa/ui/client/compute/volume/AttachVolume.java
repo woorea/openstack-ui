@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.cloudsherpa.portal.client.Portal;
 import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.Volume;
 
 import com.google.gwt.core.client.GWT;
@@ -36,10 +37,10 @@ public class AttachVolume extends Composite {
 	@UiField ListBox serverId;
 
 	public AttachVolume() {
-		Portal.CLOUD.listServers(0, 50, new AsyncCallback<List<Server>>() {
+		Portal.CLOUD.listServers(0, 50, new AsyncCallback<ServerList>() {
 			
 			@Override
-			public void onSuccess(List<Server> result) {
+			public void onSuccess(ServerList result) {
 				for(Server s : result) {
 					serverId.addItem(s.getName() + " " + s.getId(), s.getId());
 				}

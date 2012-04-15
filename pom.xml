@@ -8,7 +8,6 @@
 	<name>Cloud Sherpa</name>
 	<description>Cloud Sherpa</description>
 	<build>
-		<outputDirectory>${basedir}/war/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

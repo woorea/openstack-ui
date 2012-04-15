@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.openstack.model.compute.Flavor;
+import org.openstack.model.compute.FlavorList;
 import org.openstack.model.compute.FloatingIp;
 import org.openstack.model.compute.KeyPair;
 import org.openstack.model.compute.SecurityGroup;
@@ -15,6 +16,7 @@ import org.openstack.model.compute.SecurityGroupRuleForCreate;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.ServerForCreate;
+import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.Snapshot;
 import org.openstack.model.compute.SnapshotForCreate;
 import org.openstack.model.compute.Volume;
@@ -23,9 +25,11 @@ import org.openstack.model.identity.Endpoint;
 import org.openstack.model.identity.Role;
 import org.openstack.model.identity.Service;
 import org.openstack.model.identity.Tenant;
+import org.openstack.model.identity.TenantList;
 import org.openstack.model.identity.User;
 import org.openstack.model.identity.UserForCreate;
 import org.openstack.model.images.Image;
+import org.openstack.model.images.ImageList;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -36,7 +40,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("../ui/service")
 public interface UIService extends RemoteService {
 	
-	public List<Server> listServers(int start, int max);
+	public ServerList listServers(int start, int max);
 	
 	public Server create(ServerForCreate serverForCreate);
 	
@@ -46,7 +50,7 @@ public interface UIService extends RemoteService {
 	
 	public Serializable executeServerAction(Collection<String> id, ServerAction action);
 	
-	public List<Flavor> listFlavors(int start, int max);
+	public FlavorList listFlavors(int start, int max);
 	
 	public Flavor create(Flavor flavor);
 	
@@ -54,7 +58,7 @@ public interface UIService extends RemoteService {
 	
 	public void deleteFlavors(String[] ids);
 	
-	public List<Image> listImages(int starts, int max);
+	public ImageList listImages(int starts, int max);
 	
 	public Image create(Image image);
 	
@@ -120,7 +124,7 @@ public interface UIService extends RemoteService {
 	
 	//
 	
-	public List<Tenant> listTenants(int start, int max);
+	public TenantList listTenants(int start, int max);
 	
 	public Tenant create(Tenant tenant);
 	

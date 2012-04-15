@@ -9,3 +9,4 @@ war/portal/
 .checkstyle
 .gwt/
 target/
+src/main/webapp/WEB-INF/classes/

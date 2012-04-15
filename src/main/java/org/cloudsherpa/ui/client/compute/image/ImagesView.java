@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.cloudsherpa.portal.client.Portal;
 import org.openstack.model.images.Image;
+import org.openstack.model.images.ImageList;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -65,7 +66,7 @@ public class ImagesView extends Composite {
 			
 			final Range range = display.getVisibleRange();
 			
-			Portal.CLOUD.listImages(range.getStart(), range.getLength(),  new AsyncCallback<List<Image>>() {
+			Portal.CLOUD.listImages(range.getStart(), range.getLength(),  new AsyncCallback<ImageList>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -74,9 +75,9 @@ public class ImagesView extends Composite {
 				}
 
 				@Override
-				public void onSuccess(List<Image> result) {
+				public void onSuccess(ImageList result) {
 					update();
-					updateRowData(range.getStart(), result);
+					updateRowData(range.getStart(), result.getList());
 					updateRowCount(range.getLength(), true);
 					
 				}

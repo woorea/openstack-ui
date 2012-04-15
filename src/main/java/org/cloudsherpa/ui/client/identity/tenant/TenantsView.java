@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.cloudsherpa.admin.client.Administration;
 import org.openstack.model.identity.Tenant;
+import org.openstack.model.identity.TenantList;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -64,7 +65,7 @@ public class TenantsView extends Composite {
 			
 			final Range range = display.getVisibleRange();
 			
-			Administration.CLOUD.listTenants(range.getStart(), range.getLength(), new AsyncCallback<List<Tenant>>() {
+			Administration.CLOUD.listTenants(range.getStart(), range.getLength(), new AsyncCallback<TenantList>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -73,9 +74,9 @@ public class TenantsView extends Composite {
 				}
 
 				@Override
-				public void onSuccess(List<Tenant> result) {
+				public void onSuccess(TenantList result) {
 					update();
-					updateRowData(range.getStart(), result);
+					updateRowData(range.getStart(), result.getList());
 					updateRowCount(range.getLength(), true);
 					
 				}
