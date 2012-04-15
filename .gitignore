@@ -8,3 +8,4 @@ war/admin/
 war/portal/
 .checkstyle
 .gwt/
+target/

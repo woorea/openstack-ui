@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -51,9 +50,9 @@ import org.openstack.model.identity.keystone.KeystoneUser;
 import org.openstack.model.images.Image;
 import org.openstack.model.images.glance.GlanceImage;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.thirdparty.guava.common.collect.Lists;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**

@@ -11,15 +11,16 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class CreateService extends Composite {
 
-	private static CreateVolumeUiBinder uiBinder = GWT
-			.create(CreateVolumeUiBinder.class);
+	private static Binder uiBinder = GWT
+			.create(Binder.class);
 
-	interface CreateVolumeUiBinder extends UiBinder<Widget, CreateService> {
+	interface Binder extends UiBinder<Widget, CreateService> {
 	}
 
 	public CreateService() {
@@ -41,7 +42,7 @@ public class CreateService extends Composite {
 	
 	@UiField TextBox type;
 	@UiField TextBox name;
-	@UiField TextBox description;
+	@UiField TextArea description;
 	
 	@UiHandler({"save"})
 	void onSaveClick(ClickEvent event) {

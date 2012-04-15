@@ -13,6 +13,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -38,7 +39,7 @@ public class CreateSnapshot extends Composite {
 	
 	Integer volumeId;
 	@UiField TextBox name;
-	@UiField TextBox description;
+	@UiField TextArea description;
 	@UiField CheckBox force;
 	
 	@UiHandler({"save"})
