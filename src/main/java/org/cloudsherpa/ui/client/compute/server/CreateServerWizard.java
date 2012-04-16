@@ -1,10 +1,22 @@
 package org.cloudsherpa.ui.client.compute.server;
 
-import org.cloudsherpa.portal.client.Portal;
-import org.cloudsherpa.ui.client.compute.common.MetadataEditor;
-import org.cloudsherpa.ui.client.compute.image.ImagePicker;
-import org.openstack.model.compute.ServerForCreate;
+import java.util.List;
 
+import org.cloudsherpa.portal.client.Portal;
+import org.cloudsherpa.ui.client.compute.common.FlavorPicker;
+import org.cloudsherpa.ui.client.compute.common.KeyPairPicker;
+import org.cloudsherpa.ui.client.compute.common.MetadataEditor;
+import org.cloudsherpa.ui.client.compute.common.SelectMultiple;
+import org.cloudsherpa.ui.client.compute.image.ImagePicker;
+import org.cloudsherpa.ui.client.compute.keypair.CreateKeyPairForm;
+import org.openstack.model.compute.KeyPair;
+import org.openstack.model.compute.SecurityGroup;
+import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerForCreate;
+import org.openstack.model.compute.nova.NovaServerForCreate;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
@@ -14,17 +26,17 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DeckLayoutPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.IntegerBox;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CreateServerWizard extends Composite implements Editor<ServerForCreate>, ImagePicker.Listener {
+public class CreateServerWizard extends Composite implements Editor<ServerForCreate>, ImagePicker.Listener, CreateKeyPairForm.Listener {
 
 	private static CreateServerWizardUiBinder uiBinder = GWT
 			.create(CreateServerWizardUiBinder.class);
@@ -38,7 +50,12 @@ public class CreateServerWizard extends Composite implements Editor<ServerForCre
 	}
 	
 	private static final CreateServerRequestDriver createServerRequestDriver = GWT.create(CreateServerRequestDriver.class);
-
+	
+	public interface Listener {
+		void onServerCreated(Server server);
+	}
+	
+	private Listener listener;
 	
 	@UiField HorizontalPanel steps;
 	
@@ -48,7 +65,7 @@ public class CreateServerWizard extends Composite implements Editor<ServerForCre
 	
 	@UiField ImagePicker imageRef;
 	
-	@UiField ListBox flavorRef;
+	@UiField FlavorPicker flavorRef;
 	
 	@UiField IntegerBox min;
 	
@@ -58,9 +75,11 @@ public class CreateServerWizard extends Composite implements Editor<ServerForCre
 	
 	@UiField PersonalityEditor personality;
 	
-	@UiField ListBox keyName;
+	@UiField KeyPairPicker keyName;
 	
-	@UiField ListBox securityGroups;
+	@UiField CreateKeyPairForm createKeyPairForm;
+	
+	@UiField SelectMultiple<NovaServerForCreate.SecurityGroup> securityGroups;
 	
 	@UiField
 	Button cancel;
@@ -73,6 +92,29 @@ public class CreateServerWizard extends Composite implements Editor<ServerForCre
 
 	public CreateServerWizard() {
 		initWidget(uiBinder.createAndBindUi(this));
+		createKeyPairForm.setListener(this);
+		Portal.CLOUD.listSecurityGroups(new AsyncCallback<List<SecurityGroup>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(List<SecurityGroup> result) {
+				List<NovaServerForCreate.SecurityGroup> names = Lists.transform(result, new Function<SecurityGroup, NovaServerForCreate.SecurityGroup>() {
+
+					@Override
+					public NovaServerForCreate.SecurityGroup apply(SecurityGroup input) {
+						return new NovaServerForCreate.SecurityGroup(input.getName());
+					}
+				});
+				for (NovaServerForCreate.SecurityGroup kp : names) {
+					securityGroups.addItem(kp.getName(), kp);
+				}
+			}
+
+		});
 		for (int i = 0; i < deck.getWidgetCount(); i++) {
 			HTML step = new HTML("<h3>Step" + (i + 1) + "</h3><p>" + deck.getWidget(i).getTitle() + "</p>");
 			final int j = i;
@@ -80,7 +122,7 @@ public class CreateServerWizard extends Composite implements Editor<ServerForCre
 	
 				@Override
 				public void onClick(ClickEvent event) {
-					deck.showWidget(j);
+					step(j);
 	
 				}
 			});
@@ -90,6 +132,8 @@ public class CreateServerWizard extends Composite implements Editor<ServerForCre
 		step(0);
 	}
 	
+	
+	
 	public void edit(ServerForCreate serverForCreate) {
 		createServerRequestDriver.initialize(this);
 		createServerRequestDriver.edit(serverForCreate);
@@ -98,6 +142,10 @@ public class CreateServerWizard extends Composite implements Editor<ServerForCre
 	
 	public ServerForCreate flush() {
 		return createServerRequestDriver.flush();
+	}
+	
+	public void setListener(Listener listener) {
+		this.listener = listener;
 	}
 
 	@Override
@@ -131,12 +179,31 @@ public class CreateServerWizard extends Composite implements Editor<ServerForCre
 	
 	@UiHandler("finish")
 	void onFinishClick(ClickEvent event) {
-		Window.alert(flush().toString());
+		//Window.alert(flush().toString());
+		Portal.CLOUD.create(flush(), new AsyncCallback<Server>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(Server result) {
+				listener.onServerCreated(result);
+				
+			}
+			
+		});
 	}
 	
 	@UiHandler({"close","cancel"})
 	void onCloseClick(ClickEvent event) {
 		Portal.MODAL.hide();
+	}
+
+	@Override
+	public void onKeyPairCreated(KeyPair keyPair) {
+		keyName.refresh();
 	}
 
 }

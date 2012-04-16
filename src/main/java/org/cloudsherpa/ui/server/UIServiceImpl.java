@@ -102,13 +102,15 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public void deleteImage(String id) {
-		// TODO Auto-generated method stub
+		//getComputeClient().deleteImage(id);
 		
 	}
 
 	@Override
-	public void deleteImages(String[] id) {
-		// TODO Auto-generated method stub
+	public void deleteImages(String[] ids) {
+		for(String id : ids) {
+			deleteImage(id);
+		}
 		
 	}
 
@@ -119,31 +121,32 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public FloatingIp createFloatingIp() {
-		// TODO Auto-generated method stub
-		return null;
+		return getComputeClient().createFloatingIp(null);
 	}
 
 	@Override
 	public void deleteFloatingIp(Integer id) {
-		// TODO Auto-generated method stub
+		getComputeClient().deleteFloatingIp(id);
 		
 	}
 
 	@Override
 	public void deleteFloatingIps(Integer[] ids) {
-		// TODO Auto-generated method stub
+		for(Integer id : ids) {
+			deleteFloatingIp(id);
+		}
 		
 	}
 
 	@Override
 	public FloatingIp associateFloatingIp(String ip, String serverId) {
-		// TODO Auto-generated method stub
+		//getComputeClient().action();
 		return null;
 	}
 
 	@Override
 	public FloatingIp disassociateFloatingIp(String ip) {
-		// TODO Auto-generated method stub
+		//getComputeClient().action();
 		return null;
 	}
 
@@ -154,31 +157,32 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public Volume create(VolumeForCreate volumeForCreate) {
-		// TODO Auto-generated method stub
-		return null;
+		return getComputeClient().createVolume(volumeForCreate);
 	}
 
 	@Override
 	public void deleteVolume(Integer id) {
-		// TODO Auto-generated method stub
+		getComputeClient().deleteVolume(id);
 		
 	}
 
 	@Override
-	public void deleteVolumes(Integer[] id) {
-		// TODO Auto-generated method stub
+	public void deleteVolumes(Integer[] ids) {
+		for(Integer id : ids) {
+			deleteVolume(id);
+		}
 		
 	}
 
 	@Override
 	public Volume attachVolume(Integer id, String serverId) {
-		// TODO Auto-generated method stub
+		// serveraction
 		return null;
 	}
 
 	@Override
 	public Volume detachVolume(Integer id) {
-		// TODO Auto-generated method stub
+		// serveraction
 		return null;
 	}
 
@@ -189,19 +193,20 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public Snapshot create(SnapshotForCreate snapshotForCreate) {
-		// TODO Auto-generated method stub
-		return null;
+		return getComputeClient().createSnapshot(snapshotForCreate);
 	}
 
 	@Override
-	public void deleteSnapshot(Integer ids) {
-		// TODO Auto-generated method stub
+	public void deleteSnapshot(Integer id) {
+		getComputeClient().deleteSnapshot(id);
 		
 	}
 
 	@Override
 	public void deleteSnapshots(Integer[] ids) {
-		// TODO Auto-generated method stub
+		for(Integer id : ids) {
+			deleteSnapshot(id);
+		}
 		
 	}
 
@@ -218,13 +223,15 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public void deleteKeyPair(String name) {
-		// TODO Auto-generated method stub
+		getComputeClient().deleteKeyPair(name);
 		
 	}
 
 	@Override
 	public void deleteKeyPairs(String[] names) {
-		// TODO Auto-generated method stub
+		for(String name : names) {
+			deleteKeyPair(name);
+		}
 		
 	}
 
@@ -247,37 +254,40 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public void deleteSecurityGroup(Integer id) {
-		// TODO Auto-generated method stub
+		getComputeClient().deleteSecurityGroup(id);
 		
 	}
 
 	@Override
 	public void deleteSecurityGroups(Integer[] ids) {
-		// TODO Auto-generated method stub
+		for(Integer id : ids) {
+			deleteSecurityGroup(id);
+		}
 		
 	}
 
 	@Override
 	public SecurityGroupRule create(SecurityGroupRuleForCreate rule) {
-		// TODO Auto-generated method stub
-		return null;
+		return getComputeClient().createSecurityGroupRule(rule);
 	}
 
 	@Override
 	public void deleteSecurityGroupRule(Integer id) {
-		// TODO Auto-generated method stub
+		//getComputeClient().deleteSecurityGroupRule(id);
 		
 	}
 
 	@Override
 	public void deleteSecurityGroupRules(Integer[] ids) {
-		// TODO Auto-generated method stub
+		for(Integer id : ids) {
+			deleteSecurityGroupRule(id);
+		}
 		
 	}
 
 	@Override
 	public TenantList listTenants(int start, int max) {
-		// TODO Auto-generated method stub
+		//getIdentityClient().listTenants();
 		return null;
 	}
 

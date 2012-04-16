@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:c="urn:import:org.cloudsherpa.ui.client.compute.common"
 	xmlns:s="urn:import:org.cloudsherpa.ui.client.compute.server" xmlns:i="urn:import:org.cloudsherpa.ui.client.compute.image"
-	xmlns:sg="urn:import:org.cloudsherpa.ui.client.compute.securitygroup">
+	xmlns:sg="urn:import:org.cloudsherpa.ui.client.compute.securitygroup" xmlns:kp="urn:import:org.cloudsherpa.ui.client.compute.keypair">
 	<ui:style>
 		.steps {
 			margin: 0 auto;
@@ -52,7 +52,7 @@
 								</tr>
 								<tr>
 									<td colspan="2">
-										<g:ListBox ui:field="flavorRef" />
+										<c:FlavorPicker ui:field="flavorRef" />
 									</td>
 								</tr>
 							</tbody>
@@ -92,11 +92,12 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<g:ListBox ui:field="keyName" />
+								<c:KeyPairPicker ui:field="keyName" />
 							</td>
 						</tr>
 					</tbody>
 				</table>
+				<kp:CreateKeyPairForm ui:field="createKeyPairForm" />
 			</g:HTMLPanel>
 			<g:HTMLPanel title="Security Groups">
 				<table>
@@ -108,13 +109,11 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<g:ListBox ui:field="securityGroups" multipleSelect="true" />
+								<c:SelectMultiple ui:field="securityGroups" />
 							</td>
 						</tr>
 					</tbody>
 				</table>
-				<sg:SecurityGroupEditor />
-				<sg:SecurityGroupRuleEditor />
 			</g:HTMLPanel>
 		</g:DeckLayoutPanel>
 		<g:HTMLPanel ui:field="footer" styleName="modal-footer">

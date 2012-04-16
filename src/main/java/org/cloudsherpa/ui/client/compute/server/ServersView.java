@@ -1,11 +1,11 @@
 package org.cloudsherpa.ui.client.compute.server;
 
-import java.util.List;
 import java.util.Set;
 
 import org.cloudsherpa.portal.client.Portal;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
+import org.openstack.model.compute.nova.NovaServerForCreate;
 import org.openstack.model.compute.nova.NovaAddressList.Network;
 import org.openstack.model.compute.nova.NovaAddressList.Network.Ip;
 import org.openstack.model.compute.nova.NovaMetadata.Item;
@@ -39,18 +39,11 @@ import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
-public class ServersView extends Composite {
+public class ServersView extends Composite implements CreateServerWizard.Listener {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
 	interface Binder extends UiBinder<Widget, ServersView> {
-	}
-	
-	public interface Presenter {
-		void onCreate();
-		void onDelete();
-		void onRefresh();
-		void onFilters();
 	}
 	
 	@UiField Button create;
@@ -94,16 +87,10 @@ public class ServersView extends Composite {
 		}
 
 	};
-	
-	Presenter presenter;
 
 	public ServersView() {
 		createGrid();
 		initWidget(uiBinder.createAndBindUi(this));
-	}
-
-	public void setPresenter(Presenter presenter) {
-		this.presenter = presenter;
 	}
 	
 	public void refresh() {
@@ -113,7 +100,10 @@ public class ServersView extends Composite {
 
 	@UiHandler("create")
 	void onCreateClick(ClickEvent event) {
-		presenter.onCreate();
+		CreateServerWizard widget = new CreateServerWizard();
+		widget.edit(new NovaServerForCreate());
+		Portal.MODAL.setWidget(widget);
+		Portal.MODAL.center();
 	}
 	
 	@UiHandler("delete")
@@ -132,7 +122,6 @@ public class ServersView extends Composite {
 			@Override
 			public void onSuccess(Void result) {
 				refresh();
-				presenter.onDelete();
 			}
 			
 			@Override
@@ -145,12 +134,14 @@ public class ServersView extends Composite {
 	
 	@UiHandler("refresh")
 	void onRefreshClick(ClickEvent event) {
-		presenter.onRefresh();
+		refresh();
 	}
 	
 	@UiHandler("filters")
 	void onFiltersClick(ClickEvent event) {
-		presenter.onFilters();
+		ServersFilters widget = new ServersFilters();
+		Portal.MODAL.setWidget(widget);
+		Portal.MODAL.center();
 	}
 	
 	private void update() {
@@ -288,6 +279,12 @@ public class ServersView extends Composite {
 			details.networks.add(network);			
 		}
 		
+	}
+	
+	@Override
+	public void onServerCreated(Server server) {
+		refresh();
+		Portal.MODAL.hide();
 	}
 	
 }
