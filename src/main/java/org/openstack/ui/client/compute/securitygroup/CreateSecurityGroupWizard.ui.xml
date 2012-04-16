@@ -1,0 +1,38 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:sg="urn:import:org.openstack.ui.client.compute.securitygroup">
+	<ui:style>
+		.steps {
+			margin: 0 auto;
+			width: 96%;
+			table-layout: fixed;
+			cursor: pointer;
+		}
+		.cancel {
+			float: left !important;
+		}
+	</ui:style>
+	<g:HeaderPanel width="800px" height="450px">
+		<g:HTMLPanel>
+			<div class="modal-header" style="margin-bottom: 15px">
+				<g:Anchor ui:field="close" styleName="close">×</g:Anchor>
+				<h3>Create Security Group</h3>
+				<g:HorizontalPanel ui:field="steps" styleName="{style.steps}" />
+			</div>
+		</g:HTMLPanel>
+		<g:ResizeLayoutPanel height="100%">
+			<g:DeckLayoutPanel ui:field="deck">
+				<sg:SecurityGroupEditor ui:field="securityGroup"
+					title="General" />
+				<sg:SecurityGroupRuleEditor ui:field="securityGroupRules"
+					title="Rules" />
+			</g:DeckLayoutPanel>
+		</g:ResizeLayoutPanel>
+		<g:HTMLPanel ui:field="footer" styleName="modal-footer">
+			<g:Button ui:field="previous" styleName="btn">Previous</g:Button>
+			<g:Button ui:field="next" styleName="btn">Next</g:Button>
+			<g:Button ui:field="finish" styleName="btn">Finish</g:Button>
+			<g:Button ui:field="cancel" styleName="btn {style.cancel}">Cancel</g:Button>
+		</g:HTMLPanel>
+	</g:HeaderPanel>
+</ui:UiBinder> 

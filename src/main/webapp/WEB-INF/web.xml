@@ -7,19 +7,19 @@
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>ui</servlet-name>
-		<servlet-class>org.cloudsherpa.ui.server.UIServiceImpl</servlet-class>
+		<servlet-class>org.openstack.ui.server.UIServiceImpl</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>setup</servlet-name>
-		<servlet-class>org.cloudsherpa.ui.server.SetupServlet</servlet-class>
+		<servlet-class>org.openstack.ui.server.SetupServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>login</servlet-name>
-		<servlet-class>org.cloudsherpa.ui.server.LoginServlet</servlet-class>
+		<servlet-class>org.openstack.ui.server.LoginServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>keypair-download</servlet-name>
-		<servlet-class>org.cloudsherpa.ui.server.KeyPairDownloadServlet</servlet-class>
+		<servlet-class>org.openstack.ui.server.KeyPairDownloadServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
