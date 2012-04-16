@@ -30,6 +30,9 @@ public class ServerDetails extends Composite {
 	@UiField Label tenantId;
 	@UiField Label userId;
 	
+	@UiField Label accessIPv4;
+	@UiField Label accessIPv6;
+	
 	@UiField FlexTable metadata;
 	@UiField VerticalPanel networks;
 

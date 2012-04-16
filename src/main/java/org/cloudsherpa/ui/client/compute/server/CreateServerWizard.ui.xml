@@ -75,10 +75,10 @@
 				</g:tab>
 				<g:tab>
 					<g:header>Metadata</g:header>
-					<c:MetadataEditor ui:field="metadata" />
+					<c:MapMetadataEditor ui:field="metadata" />
 				</g:tab>
 				<g:tab>
-					<g:header>Metadata</g:header>
+					<g:header>Personality</g:header>
 					<s:PersonalityEditor ui:field="personality" />
 				</g:tab>
 			</g:TabLayoutPanel>

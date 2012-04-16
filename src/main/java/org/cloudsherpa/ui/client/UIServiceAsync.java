@@ -1,7 +1,6 @@
 package org.cloudsherpa.ui.client;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 import org.openstack.model.compute.Flavor;
@@ -131,7 +130,7 @@ public interface UIServiceAsync {
 
 	void disassociateFloatingIp(String ip, AsyncCallback<FloatingIp> callback);
 
-	void executeServerAction(Collection<String> id, ServerAction action,
+	void executeServerAction(String id, ServerAction action,
 			AsyncCallback<Serializable> callback);
 
 	void listEndpoints(AsyncCallback<List<Endpoint>> callback);

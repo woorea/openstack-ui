@@ -15,6 +15,7 @@
 							<g:FlowPanel>
 								<g:Button ui:field="create" styleName="btn btn-primary"><i class="icon-play-circle icon-white"></i> Create</g:Button>
 								<g:Button ui:field="delete" styleName="btn btn-danger"><i class="icon-remove-circle icon-white"></i> Delete</g:Button>
+								<s:ServerActionPicker ui:field="actions" />
 							</g:FlowPanel>
 						</g:cell>
 						<g:cell width="50%" horizontalAlignment="right">

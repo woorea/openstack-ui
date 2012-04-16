@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -85,19 +86,18 @@ public class UIServiceImplMock extends RemoteServiceServlet implements UIService
 	private static Map<String, Endpoint> endpoints = Maps.newHashMap();
 	
 	static {
-		NovaMetadata m = new NovaMetadata();
+		Map<String, String> m = new HashMap<String, String>();
 		for(int i = 0; i < 5; i++) {
-			m.getItems().add(new NovaMetadata.Item("k."+i, "v."+i));
+			m.put("k."+i, "v."+i);
 		}
 		
-		NovaAddressList addresses = new NovaAddressList();
+		Map<String, List<Network.Ip>> addresses = Maps.newConcurrentMap();
 		for(int i = 0; i < 2; i++) {
-			Network n = new Network();
-			n.setId("network."+i);
+			List<Network.Ip> ips = Lists.newArrayList();
 			for(int j = 0; j < 3; j++) {
-				n.getIps().add(new Ip("4","192.168.1.1"));
+				ips.add(new Ip("4","192.168.1.1"));
 			}
-			addresses.getNetworks().add(n);
+			addresses.put("network."+i, ips);
 		}
 		
 		
@@ -186,8 +186,9 @@ public class UIServiceImplMock extends RemoteServiceServlet implements UIService
 	}
 
 	@Override
-	public Serializable executeServerAction(Collection<String> id, ServerAction action) {
-		return new NovaServer();
+	public Serializable executeServerAction(String id, ServerAction action) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

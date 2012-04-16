@@ -1,14 +1,17 @@
 package org.cloudsherpa.ui.client.compute.server;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.cloudsherpa.portal.client.Portal;
 import org.openstack.model.compute.Server;
+import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.ServerList;
-import org.openstack.model.compute.nova.NovaServerForCreate;
 import org.openstack.model.compute.nova.NovaAddressList.Network;
 import org.openstack.model.compute.nova.NovaAddressList.Network.Ip;
-import org.openstack.model.compute.nova.NovaMetadata.Item;
+import org.openstack.model.compute.nova.NovaServerForCreate;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -39,7 +42,7 @@ import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
-public class ServersView extends Composite implements CreateServerWizard.Listener {
+public class ServersView extends Composite implements CreateServerWizard.Listener, ServerActionPicker.Listener {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
@@ -48,6 +51,7 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	
 	@UiField Button create;
 	@UiField Button delete;
+	@UiField ServerActionPicker actions;
 	@UiField Button refresh;
 	@UiField Button filters;
 	
@@ -91,6 +95,8 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	public ServersView() {
 		createGrid();
 		initWidget(uiBinder.createAndBindUi(this));
+		actions.setSelectionModel(selectionModel);
+		actions.setListener(this);
 	}
 	
 	public void refresh() {
@@ -101,6 +107,7 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	@UiHandler("create")
 	void onCreateClick(ClickEvent event) {
 		CreateServerWizard widget = new CreateServerWizard();
+		widget.setListener(this);
 		widget.edit(new NovaServerForCreate());
 		Portal.MODAL.setWidget(widget);
 		Portal.MODAL.center();
@@ -146,16 +153,17 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	
 	private void update() {
 		switch (selectionModel.getSelectedSet().size()) {
-		case 0:
-			delete.setEnabled(false);
-			break;
-		case 1:
-			delete.setEnabled(true);
-			break;
-		default:
-			delete.setEnabled(true);
-			break;
+			case 0:
+				delete.setEnabled(false);
+				break;
+			case 1:
+				delete.setEnabled(true);
+				break;
+			default:
+				delete.setEnabled(true);
+				break;
 		}
+		actions.update();
 	}
 	
 	private void createGrid() {
@@ -238,6 +246,7 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 				
 			}
 		});
+		
 		asyncDataProvider.addDataDisplay(grid); 
 	}
 	
@@ -246,30 +255,34 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 		details.configDrive.setText(server.getConfigDrive());
 		details.created.setText(server.getCreated().toString());
 		details.updated.setText(server.getUpdated().toString());
-		details.fault.setText(server.getFault().getMessage());
-		details.flavor.setText(server.getFlavor().getName());
+		if(server.getFault() != null) {
+			details.fault.setText(server.getFault().getMessage());
+		}
+		details.flavor.setText(server.getFlavor().getId());
 		details.hostId.setText(server.getHostId());
 		details.keyName.setText(server.getKeyName());
 		details.progress.setText(server.getProgress());
 		details.status.setText(server.getStatus());
 		details.tenantId.setText(server.getTenantId());
 		details.userId.setText(server.getUserId());
+		details.accessIPv4.setText(server.getAccessIPv4());
+		details.accessIPv6.setText(server.getAccessIPv6());
 		
 		int row = 0;
-		for(Item i : server.getMetadata().getItems()) {
-			details.metadata.setText(row, 0, i.getKey());
-			details.metadata.setText(row, 1, i.getValue());
+		for(Map.Entry<String, String> entry : server.getMetadata().entrySet()) {
+			details.metadata.setText(row, 0, entry.getKey());
+			details.metadata.setText(row, 1, entry.getValue());
 			row++;
 		}
 		
-		for(Network n : server.getAddresses().getNetworks()) {
+		for(Map.Entry<String, List<Network.Ip>> n : server.getAddresses().entrySet()) {
 			VerticalPanel network = new VerticalPanel();
 			network.setWidth("100%");
-			network.add(new HTML("<h4>" + n.getId() + "<h4>"));
+			network.add(new HTML("<h4>" + n.getKey() + "<h4>"));
 			FlexTable ips = new FlexTable();
 			ips.setStyleName("table table-striped");
 			row = 0;
-			for(Ip ip : n.getIps()) {
+			for(Ip ip : n.getValue()) {
 				ips.setText(row, 0, ip.getVersion());
 				ips.setText(row, 0, ip.getAddr());
 				row++;
@@ -285,6 +298,18 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	public void onServerCreated(Server server) {
 		refresh();
 		Portal.MODAL.hide();
+	}
+
+	@Override
+	public void onServerActionSuccess(ServerAction action, Serializable result) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onServerActionFailure(ServerAction action, Throwable throwable) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -1,7 +1,6 @@
 package org.cloudsherpa.ui.server;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 import org.cloudsherpa.ui.client.UIService;
@@ -31,8 +30,6 @@ import org.openstack.model.identity.UserForCreate;
 import org.openstack.model.images.Image;
 import org.openstack.model.images.ImageList;
 
-import com.google.gwt.core.client.GWT;
-
 public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UIService {
 
 	@Override
@@ -59,9 +56,8 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 	}
 
 	@Override
-	public Serializable executeServerAction(Collection<String> id, ServerAction action) {
-		//getComputeClient();
-		return "";
+	public Serializable executeServerAction(String id, ServerAction action) {
+		return getComputeClient().executeServerAction(id, action);
 	}
 
 	@Override
@@ -287,121 +283,121 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public TenantList listTenants(int start, int max) {
-		//getIdentityClient().listTenants();
-		return null;
+		return getIdentityClient().listTenants(start, max);
 	}
 
 	@Override
 	public Tenant create(Tenant tenant) {
-		// TODO Auto-generated method stub
-		return null;
+		return getIdentityClient().createTenant(tenant);
 	}
 
 	@Override
 	public void deleteTenant(String id) {
-		// TODO Auto-generated method stub
+		getIdentityClient().deleteTenant(id);
 		
 	}
 
 	@Override
 	public void deleteTenants(String[] ids) {
-		// TODO Auto-generated method stub
+		for(String id : ids) {
+			deleteTenant(id);
+		}
 		
 	}
 
 	@Override
 	public List<User> listUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return getIdentityClient().listUsers();
 	}
 
 	@Override
 	public User create(UserForCreate userForCreate) {
-		// TODO Auto-generated method stub
-		return null;
+		return getIdentityClient().createUser(userForCreate);
 	}
 
 	@Override
 	public void deleteUser(String id) {
-		// TODO Auto-generated method stub
+		getIdentityClient().deleteUser(id);
 		
 	}
 
 	@Override
 	public void deleteUsers(String[] ids) {
-		// TODO Auto-generated method stub
+		for(String id : ids) {
+			deleteUser(id);
+		}
 		
 	}
 
 	@Override
 	public List<Role> listRoles() {
-		// TODO Auto-generated method stub
-		return null;
+		return getIdentityClient().listRoles();
 	}
 
 	@Override
 	public Role create(Role role) {
-		// TODO Auto-generated method stub
-		return null;
+		return getIdentityClient().createRole(role);
 	}
 
 	@Override
 	public void deleteRole(String id) {
-		// TODO Auto-generated method stub
+		getIdentityClient().deleteRole(id);
 		
 	}
 
 	@Override
 	public void deleteRoles(String[] ids) {
-		// TODO Auto-generated method stub
+		for(String id : ids) {
+			deleteRole(id);
+		}
 		
 	}
 
 	@Override
 	public List<Service> listServices() {
-		// TODO Auto-generated method stub
-		return null;
+		return getIdentityClient().listServices();
 	}
 
 	@Override
 	public Service create(Service service) {
-		// TODO Auto-generated method stub
-		return null;
+		return getIdentityClient().createService(service);
 	}
 
 	@Override
 	public void deleteService(String id) {
-		// TODO Auto-generated method stub
+		getIdentityClient().deleteService(id);
 		
 	}
 
 	@Override
 	public void deleteServices(String[] ids) {
-		// TODO Auto-generated method stub
+		for(String id : ids) {
+			deleteService(id);
+		}
 		
 	}
 
 	@Override
 	public List<Endpoint> listEndpoints() {
-		// TODO Auto-generated method stub
-		return null;
+		return getIdentityClient().listEndpoints();
 	}
 
 	@Override
 	public Endpoint create(Endpoint endpoint) {
-		// TODO Auto-generated method stub
-		return null;
+		return getIdentityClient().createEndpoint(endpoint);
 	}
 
 	@Override
 	public void deleteEndpoint(String id) {
-		// TODO Auto-generated method stub
+		getIdentityClient().deleteEndpoint(id);
 		
 	}
 
 	@Override
 	public void deleteEndpoints(String[] ids) {
-		// TODO Auto-generated method stub
+		for(String id : ids) {
+			deleteEndpoint(id);
+		}
 		
 	}
 

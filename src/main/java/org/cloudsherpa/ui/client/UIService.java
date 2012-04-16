@@ -48,7 +48,7 @@ public interface UIService extends RemoteService {
 	
 	public void deleteServers(String[] ids);
 	
-	public Serializable executeServerAction(Collection<String> id, ServerAction action);
+	public Serializable executeServerAction(String id, ServerAction action);
 	
 	public FlavorList listFlavors(int start, int max);
 	

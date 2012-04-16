@@ -19,13 +19,11 @@
 							</td>
 						</tr>
 						<tr>
-							<td>UUID</td>
+							<td>Status</td>
 							<td>
-								<g:Label ui:field="uuid" />
+								<g:InlineLabel ui:field="status" />
 							</td>
 						</tr>
-
-
 						<tr>
 							<td>Config Drive</td>
 							<td>
@@ -76,9 +74,9 @@
 							</td>
 						</tr>
 						<tr>
-							<td>Progress / Status</td>
+							<td>Progress</td>
 							<td>
-								<g:InlineLabel ui:field="progress" /> / <g:InlineLabel ui:field="status" />
+								<g:InlineLabel ui:field="progress" />
 							</td>
 						</tr>
 						<tr>
@@ -105,14 +103,12 @@
 						<td>Access IPv4</td>
 						<td>
 							<g:Label ui:field="accessIPv4" />
-							192.168.1.45
 						</td>
 					</tr>
 					<tr>
 						<td>Access IPv6</td>
 						<td>
 							<g:Label ui:field="accessIPv6" />
-							2001:db8:0:1::1
 						</td>
 					</tr>
 				</tbody>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.cloudsherpa.portal.client.Portal;
 import org.cloudsherpa.ui.client.compute.common.FlavorPicker;
 import org.cloudsherpa.ui.client.compute.common.KeyPairPicker;
+import org.cloudsherpa.ui.client.compute.common.MapMetadataEditor;
 import org.cloudsherpa.ui.client.compute.common.MetadataEditor;
 import org.cloudsherpa.ui.client.compute.common.SelectMultiple;
 import org.cloudsherpa.ui.client.compute.image.ImagePicker;
@@ -71,7 +72,7 @@ public class CreateServerWizard extends Composite implements Editor<ServerForCre
 	
 	@UiField IntegerBox max;
 	
-	@UiField MetadataEditor metadata;
+	@UiField MapMetadataEditor metadata;
 	
 	@UiField PersonalityEditor personality;
 	
