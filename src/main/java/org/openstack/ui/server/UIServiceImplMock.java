@@ -206,7 +206,7 @@ public class UIServiceImplMock extends RemoteServiceServlet implements UIService
 
 	@Override
 	public ImageList listImages(int starts, int max) {
-		return new GlanceImageList((Collection<GlanceImage>) (Collection<?>) images.values());
+		return new GlanceImageList(images.values());
 	}
 
 	@Override

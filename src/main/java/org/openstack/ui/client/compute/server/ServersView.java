@@ -12,6 +12,7 @@ import org.openstack.model.compute.nova.NovaAddressList.Network;
 import org.openstack.model.compute.nova.NovaAddressList.Network.Ip;
 import org.openstack.model.compute.nova.NovaServerForCreate;
 import org.openstack.portal.client.Portal;
+import org.openstack.ui.client.compute.server.ServerDetails.ServerDetailsUiBinder;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -42,7 +43,7 @@ import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
-public class ServersView extends Composite implements CreateServerWizard.Listener, ServerActionPicker.Listener {
+public class ServersView extends Composite implements CreateServerWizard.Listener, ServerDetails.Listener, ServerActionPicker.Listener {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
@@ -95,6 +96,7 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	public ServersView() {
 		createGrid();
 		initWidget(uiBinder.createAndBindUi(this));
+		details.setListener(this);
 		actions.setSelectionModel(selectionModel);
 		actions.setListener(this);
 	}
@@ -251,47 +253,8 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	}
 	
 	private void onPreview(Server server) {
-		details.id.setText(server.getId());
-		details.configDrive.setText(server.getConfigDrive());
-		details.created.setText(server.getCreated().toString());
-		details.updated.setText(server.getUpdated().toString());
-		if(server.getFault() != null) {
-			details.fault.setText(server.getFault().getMessage());
-		}
-		details.flavor.setText(server.getFlavor().getId());
-		details.hostId.setText(server.getHostId());
-		details.keyName.setText(server.getKeyName());
-		details.progress.setText(server.getProgress());
-		details.status.setText(server.getStatus());
-		details.tenantId.setText(server.getTenantId());
-		details.userId.setText(server.getUserId());
-		details.accessIPv4.setText(server.getAccessIPv4());
-		details.accessIPv6.setText(server.getAccessIPv6());
-		
-		int row = 0;
-		for(Map.Entry<String, String> entry : server.getMetadata().entrySet()) {
-			details.metadata.setText(row, 0, entry.getKey());
-			details.metadata.setText(row, 1, entry.getValue());
-			row++;
-		}
-		
-		for(Map.Entry<String, List<Network.Ip>> n : server.getAddresses().entrySet()) {
-			VerticalPanel network = new VerticalPanel();
-			network.setWidth("100%");
-			network.add(new HTML("<h4>" + n.getKey() + "<h4>"));
-			FlexTable ips = new FlexTable();
-			ips.setStyleName("table table-striped");
-			row = 0;
-			for(Ip ip : n.getValue()) {
-				ips.setText(row, 0, ip.getVersion());
-				ips.setText(row, 0, ip.getAddr());
-				row++;
-			}
-			network.add(ips);
-			
-			details.networks.add(network);			
-		}
-		
+		details.setServer(server);
+		details.bind();
 	}
 	
 	@Override
@@ -310,6 +273,60 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	public void onServerActionFailure(ServerAction action, Throwable throwable) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void onReboot(Server server) {
+		refresh();
+	}
+
+	@Override
+	public void onServerRebuilt(Server server) {
+		refresh();
+	}
+
+	@Override
+	public void onServerResized(Server server) {
+		refresh();
+	}
+
+	@Override
+	public void onResizeConfirmed(Server server) {
+		refresh();
+		
+	}
+
+	@Override
+	public void onResizeReverted(Server server) {
+		refresh();
+	}
+
+	@Override
+	public void onPasswordChanged(Server server) {
+		refresh();
+		
+	}
+
+	@Override
+	public void onServerPaused(Server server) {
+		refresh();
+		
+	}
+
+	@Override
+	public void onServerUnpaused(Server server) {
+		refresh();
+		
+	}
+
+	@Override
+	public void onServerImageCreated() {
+		refresh();
+	}
+
+	@Override
+	public void onServerBackupCreated(Server server) {
+		refresh();
 	}
 	
 }
