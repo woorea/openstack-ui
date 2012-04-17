@@ -38,8 +38,7 @@ public class RolesView extends Composite {
 	interface Binder extends UiBinder<Widget, RolesView> {
 	}
 	
-	public interface Presenter {
-		void onCreate();
+	public interface Presenter extends CreateRole.Listener {
 		void onDelete();
 		void onRefresh();
 	}
@@ -100,7 +99,10 @@ public class RolesView extends Composite {
 
 	@UiHandler("create")
 	void onCreateClick(ClickEvent event) {
-		presenter.onCreate();
+		CreateRole widget = new CreateRole();
+		widget.setListener(presenter);
+		Administration.MODAL.setWidget(widget);
+		Administration.MODAL.center();
 	}
 	
 	@UiHandler("delete")

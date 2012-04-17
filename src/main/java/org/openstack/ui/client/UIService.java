@@ -29,6 +29,7 @@ import org.openstack.model.identity.User;
 import org.openstack.model.identity.UserForCreate;
 import org.openstack.model.images.Image;
 import org.openstack.model.images.ImageList;
+import org.openstack.ui.client.common.UIException;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -39,127 +40,127 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("../ui/service")
 public interface UIService extends RemoteService {
 	
-	public ServerList listServers(int start, int max);
+	public ServerList listServers(int start, int max) throws UIException;
 	
-	public Server create(ServerForCreate serverForCreate);
+	public Server create(ServerForCreate serverForCreate) throws UIException;
 	
-	public void deleteServer(String id);
+	public void deleteServer(String id) throws UIException;
 	
-	public void deleteServers(String[] ids);
+	public void deleteServers(String[] ids) throws UIException;
 	
-	public Serializable executeServerAction(String id, ServerAction action);
+	public Serializable executeServerAction(String id, ServerAction action) throws UIException;
 	
-	public FlavorList listFlavors(int start, int max);
+	public FlavorList listFlavors(int start, int max) throws UIException;
 	
-	public Flavor create(Flavor flavor);
+	public Flavor create(Flavor flavor) throws UIException;
 	
-	public void deleteFlavor(String id);
+	public void deleteFlavor(String id) throws UIException;
 	
-	public void deleteFlavors(String[] ids);
+	public void deleteFlavors(String[] ids) throws UIException;
 	
-	public ImageList listImages(int starts, int max);
+	public ImageList listImages(int starts, int max) throws UIException;
 	
-	public Image create(Image image);
+	public Image create(Image image) throws UIException;
 	
-	public void deleteImage(String id);
+	public void deleteImage(String id) throws UIException;
 	
-	public void deleteImages(String[] id);
+	public void deleteImages(String[] id) throws UIException;
 	
-	public List<FloatingIp> listFloatingIps();
+	public List<FloatingIp> listFloatingIps() throws UIException;
 	
-	public FloatingIp createFloatingIp();
+	public FloatingIp createFloatingIp() throws UIException;
 	
-	public void deleteFloatingIp(Integer id);
+	public void deleteFloatingIp(Integer id) throws UIException;
 	
-	public void deleteFloatingIps(Integer[] ids);
+	public void deleteFloatingIps(Integer[] ids) throws UIException;
 	
-	public FloatingIp associateFloatingIp(String ip, String serverId);
+	public FloatingIp associateFloatingIp(String ip, String serverId) throws UIException;
 	
-	public FloatingIp disassociateFloatingIp(String ip);
+	public FloatingIp disassociateFloatingIp(String ip) throws UIException;
 	
-	public List<Volume> listVolumes();
+	public List<Volume> listVolumes() throws UIException;
 	
-	public Volume create(VolumeForCreate volumeForCreate);
+	public Volume create(VolumeForCreate volumeForCreate) throws UIException;
 	
-	public void deleteVolume(Integer id);
+	public void deleteVolume(Integer id) throws UIException;
 	
-	public void deleteVolumes(Integer[] id);
+	public void deleteVolumes(Integer[] id) throws UIException;
 	
-	public Volume attachVolume(Integer id, String serverId);
+	public Volume attachVolume(Integer id, String serverId) throws UIException;
 	
-	public Volume detachVolume(Integer id);
+	public Volume detachVolume(Integer id) throws UIException;
 	
-	public List<Snapshot> listSnapshots();
+	public List<Snapshot> listSnapshots() throws UIException;
 	
-	public Snapshot create(SnapshotForCreate snapshotForCreate);
+	public Snapshot create(SnapshotForCreate snapshotForCreate) throws UIException;
 	
-	public void deleteSnapshot(Integer ids);
+	public void deleteSnapshot(Integer ids) throws UIException;
 	
-	public void deleteSnapshots(Integer[] ids);
+	public void deleteSnapshots(Integer[] ids) throws UIException;
 	
-	public List<KeyPair> listKeyPairs();
+	public List<KeyPair> listKeyPairs() throws UIException;
 	
-	public KeyPair createKeyPair(String name);
+	public KeyPair createKeyPair(String name) throws UIException;
 	
-	public void deleteKeyPair(String name);
+	public void deleteKeyPair(String name) throws UIException;
+
+	public void deleteKeyPairs(String[] names) throws UIException;
 	
-	public void deleteKeyPairs(String[] names);
+	public List<SecurityGroup> listSecurityGroups() throws UIException;
 	
-	public List<SecurityGroup> listSecurityGroups();
+	public SecurityGroup create(SecurityGroupForCreate securityGroup) throws UIException;
 	
-	public SecurityGroup create(SecurityGroupForCreate securityGroup);
+	public SecurityGroup showSecurityGroup(Integer id) throws UIException;
 	
-	public SecurityGroup showSecurityGroup(Integer id);
+	public void deleteSecurityGroup(Integer id) throws UIException;
 	
-	public void deleteSecurityGroup(Integer id);
+	public void deleteSecurityGroups(Integer[] ids) throws UIException;
 	
-	public void deleteSecurityGroups(Integer[] ids);
+	public SecurityGroupRule create(SecurityGroupRuleForCreate rule) throws UIException;
 	
-	public SecurityGroupRule create(SecurityGroupRuleForCreate rule);
+	public void deleteSecurityGroupRule(Integer id) throws UIException;
 	
-	public void deleteSecurityGroupRule(Integer id);
-	
-	public void deleteSecurityGroupRules(Integer[] ids);
+	public void deleteSecurityGroupRules(Integer[] ids) throws UIException;
 	
 	//
 	
-	public TenantList listTenants(int start, int max);
+	public TenantList listTenants(int start, int max) throws UIException;
 	
-	public Tenant create(Tenant tenant);
+	public Tenant create(Tenant tenant) throws UIException;
 	
-	public void deleteTenant(String id);
+	public void deleteTenant(String id) throws UIException;
 	
-	public void deleteTenants(String[] ids);
+	public void deleteTenants(String[] ids) throws UIException;
 	
-	public List<User> listUsers();
+	public List<User> listUsers() throws UIException;
 	
-	public User create(UserForCreate userForCreate);
+	public User create(UserForCreate userForCreate) throws UIException;
 	
-	public void deleteUser(String id);
+	public void deleteUser(String id) throws UIException;
 	
-	public void deleteUsers(String[] ids);
+	public void deleteUsers(String[] ids) throws UIException;
 	
-	public List<Role> listRoles();
+	public List<Role> listRoles() throws UIException;
 	
-	public Role create(Role role);
+	public Role create(Role role) throws UIException;
 	
-	public void deleteRole(String id);
+	public void deleteRole(String id) throws UIException;
 	
-	public void deleteRoles(String[] ids);
+	public void deleteRoles(String[] ids) throws UIException;
 	
-	public List<Service> listServices();
+	public List<Service> listServices() throws UIException;
 	
-	public Service create(Service service);
+	public Service create(Service service) throws UIException;
 	
-	public void deleteService(String id);
+	public void deleteService(String id) throws UIException;
 	
-	public void deleteServices(String[] ids);
+	public void deleteServices(String[] ids) throws UIException;
 	
-	public List<Endpoint> listEndpoints();
+	public List<Endpoint> listEndpoints() throws UIException;
 	
-	public Endpoint create(Endpoint endpoint);
+	public Endpoint create(Endpoint endpoint) throws UIException;
 	
-	public void deleteEndpoint(String id);
+	public void deleteEndpoint(String id) throws UIException;
 	
-	public void deleteEndpoints(String[] ids);
+	public void deleteEndpoints(String[] ids) throws UIException;
 }

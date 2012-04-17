@@ -3,8 +3,6 @@ package org.openstack.ui.client.compute.server;
 import java.io.Serializable;
 
 import org.openstack.model.compute.Server;
-import org.openstack.model.compute.nova.server.actions.GetVncConsoleAction;
-import org.openstack.model.compute.nova.server.actions.RebootAction;
 import org.openstack.model.compute.nova.server.actions.ResizeAction;
 import org.openstack.portal.client.Portal;
 import org.openstack.ui.client.compute.common.FlavorPicker;
@@ -16,8 +14,8 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class Resize extends Composite {
@@ -37,7 +35,7 @@ public class Resize extends Composite {
 
 	@UiField FlavorPicker flavorRef;
 	
-	@UiField ListBox autoDiskConfig;
+	@UiField CheckBox autoDiskConfig;
 
 	public Resize() {
 		initWidget(uiBinder.createAndBindUi(this));

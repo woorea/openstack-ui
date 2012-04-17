@@ -1,6 +1,6 @@
 package org.openstack.ui.client.identity.role;
 
-import org.openstack.admin.client.Administration;
+import org.openstack.model.identity.Role;
 import org.openstack.ui.client.compute.common.AdministrationPlace;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -24,14 +24,6 @@ public class RolesActivity extends AbstractActivity implements RolesView.Present
 	}
 
 	@Override
-	public void onCreate() {
-		CreateRole widget = new CreateRole();
-		Administration.MODAL.setWidget(widget);
-		Administration.MODAL.center();
-		
-	}
-
-	@Override
 	public void onDelete() {
 		onRefresh();
 		
@@ -40,6 +32,11 @@ public class RolesActivity extends AbstractActivity implements RolesView.Present
 	@Override
 	public void onRefresh() {
 		
+	}
+
+	@Override
+	public void onRoleCreated(Role tenant) {
+		VIEW.refresh();
 	}
 
 }

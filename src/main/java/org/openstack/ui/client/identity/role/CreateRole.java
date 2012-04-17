@@ -16,14 +16,25 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CreateRole extends Composite {
 
-	private static CreateVolumeUiBinder uiBinder = GWT
-			.create(CreateVolumeUiBinder.class);
+	private static Binder uiBinder = GWT.create(Binder.class);
 
-	interface CreateVolumeUiBinder extends UiBinder<Widget, CreateRole> {
+	interface Binder extends UiBinder<Widget, CreateRole> {
 	}
+	
+	public interface Listener {
+		void onRoleCreated(Role tenant);
+	}
+	
+	private Listener listener;
+	
+	@UiField TextBox name;
 
 	public CreateRole() {
 		initWidget(uiBinder.createAndBindUi(this));
+	}
+	
+	public void setListener(Listener listener) {
+		this.listener = listener;
 	}
 	
 	@UiHandler({"close","cancel"})
@@ -31,15 +42,7 @@ public class CreateRole extends Composite {
 		Administration.MODAL.hide();
 	}
 	
-	public interface Listener {
-
-		void onSave(Role tenant);
-		
-	}
 	
-	private Listener listener;
-	
-	@UiField TextBox name;
 	
 	@UiHandler({"save"})
 	void onSaveClick(ClickEvent event) {
@@ -49,7 +52,8 @@ public class CreateRole extends Composite {
 			
 			@Override
 			public void onSuccess(Role result) {
-				listener.onSave(result);
+				Administration.MODAL.hide();
+				listener.onRoleCreated(result);
 			}
 			
 			@Override

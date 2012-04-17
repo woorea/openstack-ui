@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/bootstrap.css">
+	href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.css">
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/custom.css">
 </head>

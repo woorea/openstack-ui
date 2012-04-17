@@ -1,18 +1,15 @@
 package org.openstack.ui.client.compute.server;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.ServerList;
-import org.openstack.model.compute.nova.NovaAddressList.Network;
-import org.openstack.model.compute.nova.NovaAddressList.Network.Ip;
 import org.openstack.model.compute.nova.NovaServerForCreate;
 import org.openstack.portal.client.Portal;
-import org.openstack.ui.client.compute.server.ServerDetails.ServerDetailsUiBinder;
+import org.openstack.ui.client.common.DefaultAsyncCallback;
+import org.openstack.ui.client.common.DefaultGridResources;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -27,23 +24,24 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.Range;
+import com.google.gwt.view.client.RangeChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 public class ServersView extends Composite implements CreateServerWizard.Listener, ServerDetails.Listener, ServerActionPicker.Listener {
+	
+	private static final int POLLING_INTERVAL = 60000;
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
@@ -58,37 +56,42 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	
 	@UiField ServerDetails details;
 	
+	
+	
 	@UiField(provided = true) DataGrid<Server> grid;
 	
 	MultiSelectionModel<Server> selectionModel;
 	
 	DefaultSelectionEventManager<Server> selectionEventManager = DefaultSelectionEventManager.createCheckboxManager(0);
 	
+	private final Timer polling = new Timer() {
+
+		@Override
+		public void run() {
+			refresh();
+		}
+		
+	};
+	
 	AsyncDataProvider<Server> asyncDataProvider = new AsyncDataProvider<Server>() {
 
 		@Override
 		protected void onRangeChanged(HasData<Server> display) {
 			
+			polling.cancel();
+			
 			final Range range = display.getVisibleRange();
 			
-			Portal.CLOUD.listServers(range.getStart(), range.getLength(),  new AsyncCallback<ServerList>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-					
-				}
-
+			Portal.CLOUD.listServers(range.getStart(), range.getLength(),  new DefaultAsyncCallback<ServerList>() {
 				@Override
 				public void onSuccess(ServerList result) {
-					selectionModel.clear();
+					//selectionModel.clear();
 					updateRowData(range.getStart(), result.getList());
 					updateRowCount(range.getLength(), true);
 					update();
-					
+					polling.schedule(POLLING_INTERVAL);
 				}
 			});
-			
 		}
 
 	};
@@ -102,8 +105,8 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	}
 	
 	public void refresh() {
-		grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
-		//RangeChangeEvent.fire(grid, grid.getVisibleRange());
+		//grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
+		RangeChangeEvent.fire(grid, grid.getVisibleRange());
 	}
 
 	@UiHandler("create")
@@ -169,9 +172,11 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	}
 	
 	private void createGrid() {
-		grid = new DataGrid<Server>();
+		DataGrid.Resources resources = GWT.create(DefaultGridResources.class);
+		grid = new DataGrid<Server>(15, resources);
+		grid.setStyleName(resources.dataGridStyle().dataGridWidget());
 		selectionModel = new MultiSelectionModel<Server>();
-		Column<Server, Boolean> checkboxColumn = new Column<Server, Boolean>(new CheckboxCell()) {
+		Column<Server, Boolean> checkboxColumn = new Column<Server, Boolean>(new CheckboxCell(true, false)) {
 
 			@Override
 			public Boolean getValue(Server object) {
@@ -198,7 +203,7 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 			}
 		};
 		grid.setColumnWidth(statusColumn, "100px");
-		grid.addColumn(statusColumn, "Name");
+		grid.addColumn(statusColumn, "Status");
 		TextColumn<Server> nameColumn = new TextColumn<Server>() {
 			@Override
 			public String getValue(Server object) {

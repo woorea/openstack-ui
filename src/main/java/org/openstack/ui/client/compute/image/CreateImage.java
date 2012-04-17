@@ -20,12 +20,15 @@ import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 
 public class CreateImage extends Composite {
 	
-	private static final String UPLOAD_ACTION_URL = GWT.getHostPageBaseURL() + "uploadImage";
+	private static final String UPLOAD_ACTION_URL = GWT.getHostPageBaseURL() + "image-upload";
 
 	private static CreateVolumeUiBinder uiBinder = GWT.create(CreateVolumeUiBinder.class);
 
 	interface CreateVolumeUiBinder extends UiBinder<Widget, CreateImage> {
 	}
+	
+	private static final String[] dfs = new String[]{"aki", "ari", "ami", "raw", "iso", "vhd", "vdi", "qcow2", "vmdk"};
+	private static final String[] cfs = new String[]{"aki", "ari", "ami", "bare", "ovf"};
 	
 	@UiField FormPanel form;
 	
@@ -44,6 +47,12 @@ public class CreateImage extends Composite {
 		form.setAction(UPLOAD_ACTION_URL);
 		form.setEncoding(FormPanel.ENCODING_MULTIPART);
 		form.setMethod(FormPanel.METHOD_POST);
+		for(String df : dfs) {
+			diskFormat.addItem(df);
+		}
+		for(String cf : cfs) {
+			containerFormat.addItem(cf);
+		}
 		upload.addClickHandler(new ClickHandler() {
 			
 			@Override
