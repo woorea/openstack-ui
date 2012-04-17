@@ -22,7 +22,7 @@
 							</tr>
 							<tr>
 								<td>
-									<g:TextBox ui:field="name" />
+									<g:TextBox ui:field="name" name="name" />
 								</td>
 							</tr>
 						</tbody>
@@ -32,7 +32,7 @@
 							</tr>
 							<tr>
 								<td>
-									<g:ListBox ui:field="diskFormat" />
+									<g:ListBox ui:field="diskFormat" name="diskFormat" />
 								</td>
 							</tr>
 						</tbody>
@@ -42,7 +42,7 @@
 							</tr>
 							<tr>
 								<td>
-									<g:ListBox ui:field="containerFormat" />
+									<g:ListBox ui:field="containerFormat" name="containerFormat" />
 								</td>
 							</tr>
 						</tbody>
@@ -52,7 +52,7 @@
 							</tr>
 							<tr>
 								<td>
-									<g:FileUpload ui:field="file" />
+									<g:FileUpload ui:field="file" name="file" />
 								</td>
 							</tr>
 						</tbody>

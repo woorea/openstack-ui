@@ -46,11 +46,14 @@ public class UploadImageServlet extends HttpServlet {
 					if (item.isFormField()) {
 						String name = item.getFieldName();
 						String value = item.getString();
+						System.out.println(name + " = " + value);
 					} else {
+						/*
 						client.getImagesEndpoint().post(item.getInputStream(), item.getSize(), image);
 						resp.setStatus(HttpServletResponse.SC_CREATED);
 						resp.getWriter().print("The file was created successfully.");
 						resp.flushBuffer();
+						*/
 					}
 					
 				}
