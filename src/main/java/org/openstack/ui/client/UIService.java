@@ -74,10 +74,6 @@ public interface UIService extends RemoteService {
 	
 	public void deleteFloatingIps(Integer[] ids) throws UIException;
 	
-	public FloatingIp associateFloatingIp(String ip, String serverId) throws UIException;
-	
-	public FloatingIp disassociateFloatingIp(String ip) throws UIException;
-	
 	public List<Volume> listVolumes() throws UIException;
 	
 	public Volume create(VolumeForCreate volumeForCreate) throws UIException;

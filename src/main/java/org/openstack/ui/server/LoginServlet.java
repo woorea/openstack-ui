@@ -18,8 +18,8 @@ public class LoginServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Properties properties = new Properties();
-		properties.load(LoginServlet.class.getResourceAsStream("/openstack.properties"));
+		
+		Properties properties = SetupServlet.loadProperties();
 		
 		if(properties.getProperty("identity.endpoint.publicURL") == null) {
 			resp.sendRedirect(String.format("%s/setup",req.getContextPath()));
@@ -36,8 +36,7 @@ public class LoginServlet extends HttpServlet {
 			session.invalidate();
 		}
 		
-		Properties properties = new Properties();
-		properties.load(LoginServlet.class.getResourceAsStream("/openstack.properties"));
+		Properties properties = SetupServlet.loadProperties();
 		
 		if(properties.getProperty("identity.endpoint.publicURL") == null) {
 			resp.sendRedirect(String.format("%s/setup",req.getContextPath()));
@@ -67,5 +66,7 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 	}
+
+	
 
 }

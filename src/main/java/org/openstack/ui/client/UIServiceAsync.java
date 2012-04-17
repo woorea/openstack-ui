@@ -33,9 +33,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface UIServiceAsync {
 
-	void associateFloatingIp(String ip, String serverId,
-			AsyncCallback<FloatingIp> callback);
-
 	void attachVolume(Integer id, String serverId,
 			AsyncCallback<Volume> callback);
 
@@ -127,8 +124,6 @@ public interface UIServiceAsync {
 	void deleteVolumes(Integer[] id, AsyncCallback<Void> callback);
 
 	void detachVolume(Integer id, AsyncCallback<Volume> callback);
-
-	void disassociateFloatingIp(String ip, AsyncCallback<FloatingIp> callback);
 
 	void executeServerAction(String id, ServerAction action,
 			AsyncCallback<Serializable> callback);

@@ -28,11 +28,7 @@ public class SetupServlet extends HttpServlet {
 			session.invalidate();
 		}
 		
-		File file = new File(this.getClass().getResource("/openstack.properties").getFile());
-		
-		Properties properties = new Properties();
-		
-		properties.load(new FileInputStream(file));
+		Properties properties = SetupServlet.loadProperties();
 		
 		properties.setProperty("verbose", "true");
 		
@@ -41,12 +37,32 @@ public class SetupServlet extends HttpServlet {
 		properties.setProperty("identity.endpoint.adminURL", req.getParameter("identity.endpoint.adminURL"));
 		properties.setProperty("identity.admin.token", req.getParameter("identity.admin.token"));
 		
-		properties.store(new FileOutputStream(file), "last updated : " + new Date());
-		
-		System.out.println(file.getAbsolutePath());
+		properties.store(new FileOutputStream(findOrCreateConfigFile()), "last updated : " + new Date());
 		
 		resp.sendRedirect(String.format("%s/login", req.getContextPath()));
 		
+	}
+	
+	public static Properties loadProperties() throws IOException {
+		
+		File configFile = findOrCreateConfigFile();
+		
+		Properties properties = new Properties();
+		properties.load(new FileInputStream(configFile));
+		
+		return properties;
+	}
+	
+	private static File findOrCreateConfigFile() throws IOException {
+		File configDir = new File(System.getProperty("user.home"),".openstack");
+		if(!configDir.exists()) {
+			configDir.mkdirs();
+		}
+		File configFile = new File(configDir, "openstack.properties");
+		if(!configFile.exists()) {
+			configFile.createNewFile();
+		}
+		return configFile;
 	}
 
 }

@@ -23,12 +23,14 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
@@ -50,13 +52,13 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	
 	@UiField Button create;
 	@UiField Button delete;
-	@UiField ServerActionPicker actions;
 	@UiField Button refresh;
 	@UiField Button filters;
+	@UiField SimplePager pager;
 	
-	@UiField ServerDetails details;
+	@UiField SimpleLayoutPanel details;
 	
-	
+	ServerDetails serverDetails = new ServerDetails();
 	
 	@UiField(provided = true) DataGrid<Server> grid;
 	
@@ -89,7 +91,7 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 					updateRowData(range.getStart(), result.getList());
 					updateRowCount(range.getLength(), true);
 					update();
-					polling.schedule(POLLING_INTERVAL);
+					//polling.schedule(POLLING_INTERVAL);
 				}
 			});
 		}
@@ -99,9 +101,9 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	public ServersView() {
 		createGrid();
 		initWidget(uiBinder.createAndBindUi(this));
-		details.setListener(this);
-		actions.setSelectionModel(selectionModel);
-		actions.setListener(this);
+		filters.setVisible(false);
+		pager.setVisible(false);
+		serverDetails.setListener(this);
 	}
 	
 	public void refresh() {
@@ -168,7 +170,6 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 				delete.setEnabled(true);
 				break;
 		}
-		actions.update();
 	}
 	
 	private void createGrid() {
@@ -215,8 +216,7 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 		TextColumn<Server> imageColumn = new TextColumn<Server>() {
 			@Override
 			public String getValue(Server object) {
-				//return object.getImage().getName();
-				return "";
+				return Portal.images.get(object.getImage().getId()).getName();
 			}
 		};
 		// grid.setColumnWidth(imageColumn, "120px");
@@ -224,8 +224,7 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 		TextColumn<Server> flavorColumn = new TextColumn<Server>() {
 			@Override
 			public String getValue(Server object) {
-				//return object.getFlavor().getName();
-				return "";
+				return Portal.flavors.get(object.getFlavor().getId()).getName();
 			}
 		};
 		grid.setColumnWidth(flavorColumn, "120px");
@@ -239,7 +238,8 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 		preview.setFieldUpdater(new FieldUpdater<Server, String>() {
 		  @Override
 		  public void update(int index, Server server, String value) {
-			  onPreview(server);
+			  serverDetails.bind(server);
+			  details.setWidget(serverDetails);
 		  }
 		});
 		grid.setColumnWidth(preview, "100px");
@@ -255,11 +255,6 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 		});
 		
 		asyncDataProvider.addDataDisplay(grid); 
-	}
-	
-	private void onPreview(Server server) {
-		details.setServer(server);
-		details.bind();
 	}
 	
 	@Override

@@ -6,197 +6,225 @@
 			width: 100%;
 			table-layout: fixed;
 		}
+		
+		.title {
+			font-weight: bold;
+		}
 	</ui:style>
-	<g:HTMLPanel>
-		<g:HorizontalPanel styleName="{style.details}">
-			<g:HTMLPanel>
-				<table class="table table-stripped {style.details}">
-					<tbody>
-						<tr>
-							<td>ID</td>
-							<td>
-								<g:Label ui:field="id" />
-							</td>
-						</tr>
-						<tr>
-							<td>Status</td>
-							<td>
-								<table class="{style.details}">
-									<tbody>
-										<tr>
-											<td><g:InlineLabel ui:field="status" /></td>
-											<td style="text-align: right">
-												<g:Anchor ui:field="reboot" text="Reboot" />
-												<g:Anchor ui:field="pause" text="Pause" />
-												<g:Anchor ui:field="unpause" text="Unpause" />
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</td>
-						</tr>
-						<tr>
-							<td>Config Drive</td>
-							<td>
-								<g:Label ui:field="configDrive" />
-							</td>
-						</tr>
-						<tr>
-							<td>Created</td>
-							<td>
-								<g:Label ui:field="created" />
-							</td>
-						</tr>
-						<tr>
-							<td>Updated</td>
-							<td>
-								<g:Label ui:field="updated" />
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<g:Anchor ui:field="console" text="Show console output" />
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<g:Anchor ui:field="vnc" text="VNC Connect" />
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<g:Anchor ui:field="createImage" text="Create Image" />
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<g:Anchor ui:field="changePassword" text="Change Password" />
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<g:Anchor ui:field="lock" text="Lock" />
-								<g:Anchor ui:field="unlock" text="Unlock" />
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<g:Anchor ui:field="suspend" text="Suspend" />
-								<g:Anchor ui:field="resume" text="Resume" />
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<g:Anchor ui:field="createBackup" text="Create Backup" />
-							</td>
-						</tr>
-						<tr>
-							<td>Fault</td>
-							<td>
-								<g:Label ui:field="fault" />
-							</td>
-						</tr>
+	<g:TabLayoutPanel barHeight="30">
+		<g:tab>
+			<g:header>General</g:header>
+			<g:ScrollPanel height="100%">
 
-					</tbody>
-				</table>
-			</g:HTMLPanel>
+
+				<g:HorizontalPanel styleName="{style.details}">
+					<g:HTMLPanel>
+						<table class="table table-stripped {style.details}">
+							<tbody>
+								<tr>
+									<td class="{style.title}">ID</td>
+									<td>
+										<g:Label ui:field="id" />
+									</td>
+								</tr>
+								<tr>
+									<td class="{style.title}">Status</td>
+									<td>
+										<table class="{style.details}">
+											<tbody>
+												<tr>
+													<td style="border: 0;">
+														<g:InlineLabel ui:field="status" />
+													</td>
+													<td style="border: 0; text-align: right">
+														<g:Anchor ui:field="reboot" text="Reboot" />
+														<g:Anchor ui:field="pause" text="Pause" />
+														<g:Anchor ui:field="unpause" text="Unpause" />
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td class="{style.title}">Config Drive</td>
+									<td>
+										<g:Label ui:field="configDrive" />
+									</td>
+								</tr>
+								<tr>
+									<td class="{style.title}">Created</td>
+									<td>
+										<g:Label ui:field="created" />
+									</td>
+								</tr>
+								<tr>
+									<td class="{style.title}">Updated</td>
+									<td>
+										<g:Label ui:field="updated" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<g:Anchor ui:field="console" text="Show console output" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<g:Anchor ui:field="vnc" text="VNC Connect" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<g:Anchor ui:field="createImage" text="Create Image" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<g:Anchor ui:field="changePassword" text="Change Password" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<g:Anchor ui:field="lock" text="Lock" />
+										<g:Anchor ui:field="unlock" text="Unlock" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<g:Anchor ui:field="suspend" text="Suspend" />
+										<g:Anchor ui:field="resume" text="Resume" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<g:Anchor ui:field="createBackup" text="Create Backup" />
+									</td>
+								</tr>
+								<tr>
+									<td class="{style.title}">Fault</td>
+									<td>
+										<g:Label ui:field="fault" />
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</g:HTMLPanel>
+					<g:HTMLPanel>
+						<table class="table table-stripped {style.details}">
+							<tbody>
+								<tr>
+									<td class="{style.title}">Image</td>
+									<td>
+										<table class="{style.details}">
+											<tbody>
+												<tr>
+													<td style="border: 0; text-align: right">
+														<g:Label ui:field="image" />
+													</td>
+												</tr>
+												<tr>
+													<td style="border: 0; text-align: right">
+														<g:Anchor ui:field="rebuild" text="Rebuild" />
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td class="{style.title}">Flavor</td>
+									<td>
+										<table class="{style.details}">
+											<tbody>
+												<tr>
+													<td style="border: 0; text-align: right">
+														<g:Label ui:field="flavor" />
+													</td>
+												</tr>
+												<tr>
+													<td style="border: 0; text-align: right">
+														<g:Anchor ui:field="resize" text="Resize" />
+														<g:Anchor ui:field="confirmResize" text="Confirm Resize" />
+														<g:Anchor ui:field="revertResize" text="Revert Resize" />
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td class="{style.title}">Host</td>
+									<td>
+										<g:Label ui:field="hostId" />
+									</td>
+								</tr>
+								<tr>
+									<td class="{style.title}">Key Name</td>
+									<td>
+										<g:Label ui:field="keyName" />
+									</td>
+								</tr>
+								<tr>
+									<td class="{style.title}">Progress</td>
+									<td>
+										<g:InlineLabel ui:field="progress" />
+									</td>
+								</tr>
+								<tr>
+									<td class="{style.title}">Tenant ID</td>
+									<td>
+										<g:Label ui:field="tenantId" />
+									</td>
+								</tr>
+								<tr>
+									<td class="{style.title}">User ID</td>
+									<td>
+										<g:Label ui:field="userId" />
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</g:HTMLPanel>
+				</g:HorizontalPanel>
+			</g:ScrollPanel>
+		</g:tab>
+		<g:tab>
+			<g:header>Networking</g:header>
 			<g:HTMLPanel>
-				<table class="table table-stripped {style.details}">
+				<h3>Networking</h3>
+				<table class="table table-stripped ">
+
 					<tbody>
 						<tr>
-							<td>Image</td>
+							<td>Access IPv4</td>
 							<td>
-								<table class="{style.details}">
-									<tbody>
-										<tr>
-											<td><g:Label ui:field="image" /></td>
-											<td style="text-align: right">
-												<g:Anchor ui:field="rebuild" text="Rebuild" />
-											</td>
-										</tr>
-									</tbody>
-								</table>
+								<g:Label ui:field="accessIPv4" />
 							</td>
 						</tr>
 						<tr>
-							<td>Flavor</td>
+							<td>Access IPv6</td>
 							<td>
-								<table class="{style.details}">
-									<tbody>
-										<tr>
-											<td><g:Label ui:field="flavor" /></td>
-											<td style="text-align: right">
-												<g:Anchor ui:field="resize" text="Resize" />
-												<g:Anchor ui:field="confirmResize" text="Confirm Resize" />
-												<g:Anchor ui:field="revertResize" text="Revert Resize" />
-											</td>
-										</tr>
-									</tbody>
-								</table>
+								<g:Label ui:field="accessIPv6" />
 							</td>
 						</tr>
 						<tr>
-							<td>Host</td>
-							<td>
-								<g:Label ui:field="hostId" />
-							</td>
-						</tr>
-						<tr>
-							<td>Key Name</td>
-							<td>
-								<g:Label ui:field="keyName" />
-							</td>
-						</tr>
-						<tr>
-							<td>Progress</td>
-							<td>
-								<g:InlineLabel ui:field="progress" />
-							</td>
-						</tr>
-						<tr>
-							<td>Tenant ID</td>
-							<td>
-								<g:Label ui:field="tenantId" />
-							</td>
-						</tr>
-						<tr>
-							<td>User ID</td>
-							<td>
-								<g:Label ui:field="userId" />
+							<td colspan="2">
+								<g:Anchor ui:field="resetNetworking" text="Reset Networking" />
+								<g:Anchor ui:field="injectNetworkInfo" text="Inject Network Info" />
 							</td>
 						</tr>
 					</tbody>
 				</table>
+				<g:VerticalPanel ui:field="networks" width="100%" />
 			</g:HTMLPanel>
-		</g:HorizontalPanel>
-		<g:HTMLPanel>
-			<h3>Networking</h3>
-			<table class="table table-stripped ">
-				
-				<tbody>
-					<tr>
-						<td>Access IPv4</td>
-						<td>
-							<g:Label ui:field="accessIPv4" />
-						</td>
-					</tr>
-					<tr>
-						<td>Access IPv6</td>
-						<td>
-							<g:Label ui:field="accessIPv6" />
-						</td>
-					</tr>
-					<tr>
-					<td colspan="2">
-						<g:Anchor ui:field="resetNetworking" text="Reset Networking" />
-						<g:Anchor ui:field="injectNetworkInfo" text="Inject Network Info" />
-					</td>
-				</tr>
-				</tbody>
-			</table>
-			<g:VerticalPanel ui:field="networks" width="100%"/>
-			<h3>Metadata</h3>
-			<g:FlexTable ui:field="metadata" styleName="table table-stripped" />
-		</g:HTMLPanel>
-	</g:HTMLPanel>
+		</g:tab>
+		<g:tab>
+			<g:header>Metadata</g:header>
+			<g:HTMLPanel>
+				<h3>Metadata</h3>
+				<g:FlexTable ui:field="metadata" styleName="table table-stripped" />
+			</g:HTMLPanel>
+		</g:tab>
+	</g:TabLayoutPanel>
 </ui:UiBinder> 

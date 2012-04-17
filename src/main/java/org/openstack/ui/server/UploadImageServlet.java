@@ -44,18 +44,13 @@ public class UploadImageServlet extends HttpServlet {
 				for (FileItem item : items) {
 					// process only file upload - discard other form item types
 					if (item.isFormField()) {
-						String name = item.getFieldName();
-						String value = item.getString();
-						System.out.println(name + " = " + value);
+						setImageAttribute(image, item.getFieldName(), item.getString());
 					} else {
-						/*
 						client.getImagesEndpoint().post(item.getInputStream(), item.getSize(), image);
 						resp.setStatus(HttpServletResponse.SC_CREATED);
 						resp.getWriter().print("The file was created successfully.");
 						resp.flushBuffer();
-						*/
 					}
-					
 				}
 			} catch (Exception e) {
 				resp.sendError(
@@ -67,6 +62,16 @@ public class UploadImageServlet extends HttpServlet {
 		} else {
 			resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE,
 					"Request contents type is not supported by the servlet.");
+		}
+	}
+
+	private void setImageAttribute(GlanceImage image, String name, String value) {
+		if("name".equals(name)) {
+			image.setName(value);
+		} else if ("diskFormat".equals(name)) {
+			image.setDiskFormat(value);
+		} else if ("containerFormat".equals(name)) {
+			image.setContainerFormat(value);
 		}
 	}
 

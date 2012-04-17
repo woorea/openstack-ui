@@ -136,18 +136,6 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 	}
 
 	@Override
-	public FloatingIp associateFloatingIp(String ip, String serverId) throws UIException {
-		//getComputeClient().action();
-		return null;
-	}
-
-	@Override
-	public FloatingIp disassociateFloatingIp(String ip) throws UIException {
-		//getComputeClient().action();
-		return null;
-	}
-
-	@Override
 	public List<Volume> listVolumes() throws UIException {
 		return getComputeClient().listVolumes();
 	}

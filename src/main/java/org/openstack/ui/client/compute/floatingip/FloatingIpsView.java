@@ -1,10 +1,14 @@
 package org.openstack.ui.client.compute.floatingip;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
 import org.openstack.model.compute.FloatingIp;
+import org.openstack.model.compute.nova.floatingip.AssociateFloatingIpAction;
+import org.openstack.model.compute.nova.floatingip.DisassociateFloatingIpAction;
 import org.openstack.portal.client.Portal;
+import org.openstack.ui.client.common.DefaultAsyncCallback;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -159,17 +163,13 @@ public class FloatingIpsView extends Composite {
 	@UiHandler("disassociate")
 	void onDisassociateClick(ClickEvent event) {
 		FloatingIp floatingIp = selectionModel.getSelectedSet().iterator().next();
-		Portal.CLOUD.disassociateFloatingIp(floatingIp.getIp(), new AsyncCallback<FloatingIp>() {
+		DisassociateFloatingIpAction action = new DisassociateFloatingIpAction();
+		action.setAddress(floatingIp.getIp());
+		Portal.CLOUD.executeServerAction(floatingIp.getInstanceId(), action, new DefaultAsyncCallback<Serializable>() {
 			
 			@Override
-			public void onSuccess(FloatingIp result) {
-				refresh();
-				presenter.onDisassociate();
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert(caught.toString());
+			public void onSuccess(Serializable result) {
+				Portal.MODAL.hide();
 			}
 			
 		});

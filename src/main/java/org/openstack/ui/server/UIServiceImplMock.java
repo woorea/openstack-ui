@@ -235,7 +235,8 @@ public class UIServiceImplMock extends RemoteServiceServlet implements UIService
 	public void deleteFloatingIp(Integer id) {
 		floatingIps.remove(id);
 	}
-
+	
+	/*
 	@Override
 	public FloatingIp associateFloatingIp(String ip, String serverId) {
 		FloatingIp fip = null;
@@ -261,6 +262,7 @@ public class UIServiceImplMock extends RemoteServiceServlet implements UIService
 		}
 		return fip;
 	}
+	*/
 
 	@Override
 	public List<Volume> listVolumes() {

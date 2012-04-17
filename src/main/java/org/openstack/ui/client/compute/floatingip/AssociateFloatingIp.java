@@ -1,8 +1,11 @@
 package org.openstack.ui.client.compute.floatingip;
 
+import java.io.Serializable;
+
 import org.openstack.model.compute.FloatingIp;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerList;
+import org.openstack.model.compute.nova.floatingip.AssociateFloatingIpAction;
 import org.openstack.portal.client.Portal;
 
 import com.google.gwt.core.client.GWT;
@@ -10,6 +13,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ListBox;
@@ -67,12 +71,13 @@ public class AssociateFloatingIp extends Composite {
 	
 	@UiHandler({"save"})
 	void onSaveClick(ClickEvent event) {
-		Portal.CLOUD.associateFloatingIp(floatingIp.getIp(), serverId.getValue(serverId.getSelectedIndex()), new AsyncCallback<FloatingIp>() {
+		AssociateFloatingIpAction action = new AssociateFloatingIpAction();
+		action.setAddress(floatingIp.getIp());
+		Portal.CLOUD.executeServerAction(serverId.getValue(serverId.getSelectedIndex()), action, new AsyncCallback<Serializable>() {
 			
 			@Override
-			public void onSuccess(FloatingIp result) {
+			public void onSuccess(Serializable result) {
 				Portal.MODAL.hide();
-				listener.onAssociate(result);
 			}
 			
 			@Override

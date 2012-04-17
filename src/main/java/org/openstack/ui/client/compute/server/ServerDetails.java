@@ -33,21 +33,21 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ResizeComposite;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ServerDetails extends Composite {
+public class ServerDetails extends ResizeComposite {
 
-	private static ServerDetailsUiBinder uiBinder = GWT
-			.create(ServerDetailsUiBinder.class);
+	private static Binder uiBinder = GWT.create(Binder.class);
 
-	interface ServerDetailsUiBinder extends UiBinder<Widget, ServerDetails> {
+	interface Binder extends UiBinder<Widget, ServerDetails> {
 	
 	}
 	
@@ -72,7 +72,10 @@ public class ServerDetails extends Composite {
 	@UiField Label hostId;
 	@UiField Label keyName;
 	@UiField Label progress;
+	
 	@UiField Label status;
+	
+	
 	@UiField Label tenantId;
 	@UiField Label userId;
 	
@@ -81,6 +84,20 @@ public class ServerDetails extends Composite {
 	
 	@UiField FlexTable metadata;
 	@UiField VerticalPanel networks;
+	
+	@UiField Anchor reboot;
+	@UiField Anchor pause;
+	@UiField Anchor unpause;
+	@UiField Anchor vnc;
+	@UiField Anchor console;
+	@UiField Anchor createImage;
+	@UiField Anchor changePassword;
+	@UiField Anchor lock;
+	@UiField Anchor unlock;
+	@UiField Anchor rebuild;
+	@UiField Anchor resize;
+	@UiField Anchor confirmResize;
+	@UiField Anchor revertResize;
 
 	public ServerDetails() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -88,10 +105,6 @@ public class ServerDetails extends Composite {
 	
 	public void setListener(Listener listener) {
 		this.listener = listener;
-	}
-	
-	public void setServer(Server server) {
-		this.server = server;
 	}
 	
 	@UiHandler("reboot")
@@ -381,8 +394,26 @@ public class ServerDetails extends Composite {
 	}
 
 
-	public void bind() {
+	public void bind(Server server) {
+		this.server = server;
+		
+		reboot.setVisible("ACTIVE".equals(server.getStatus()));
+		pause.setVisible("ACTIVE".equals(server.getStatus()));
+		unpause.setVisible("PAUSED".equals(server.getStatus()));
+		vnc.setVisible("ACTIVE".equals(server.getStatus()));
+		console.setVisible(true);
+		createImage.setVisible("ACTIVE".equals(server.getStatus()));
+		changePassword.setVisible("ACTIVE".equals(server.getStatus()));
+		lock.setVisible("ACTIVE".equals(server.getStatus()));
+		unlock.setVisible("LOCKED".equals(server.getStatus()));
+		rebuild.setVisible("ACTIVE".equals(server.getStatus()));
+		resize.setVisible(true);
+		confirmResize.setVisible(true);
+		revertResize.setVisible(true);
+		
+		
 		id.setText(server.getId());
+		status.setText(server.getStatus());
 		configDrive.setText(server.getConfigDrive());
 		created.setText(server.getCreated().toString());
 		updated.setText(server.getUpdated().toString());
@@ -394,7 +425,7 @@ public class ServerDetails extends Composite {
 		hostId.setText(server.getHostId());
 		keyName.setText(server.getKeyName());
 		progress.setText(server.getProgress());
-		status.setText(server.getStatus());
+		
 		tenantId.setText(server.getTenantId());
 		userId.setText(server.getUserId());
 		accessIPv4.setText(server.getAccessIPv4());
