@@ -3,7 +3,7 @@
 	<ui:style>
 		
 	</ui:style>
-	<g:HeaderPanel width="600px" height="450px">
+	<g:HeaderPanel width="320px" height="400px">
 		<g:HTMLPanel>
 			<div class="modal-header" style="margin-bottom: 15px">
 				<g:Anchor ui:field="close" styleName="close">×</g:Anchor>
@@ -56,18 +56,12 @@
 								</td>
 							</tr>
 						</tbody>
-						<tbody>
-							<tr>
-								<td>
-									<g:Button ui:field="upload" />
-								</td>
-							</tr>
-						</tbody>
 					</table>
 				</g:HTMLPanel>
 			</g:FormPanel>
 		</g:ResizeLayoutPanel>
 		<g:HTMLPanel ui:field="footer" styleName="modal-footer">
+			<g:Button ui:field="upload" styleName="btn">Upload Image</g:Button>
 			<g:Button ui:field="cancel" styleName="btn">Cancel</g:Button>
 		</g:HTMLPanel>
 	</g:HeaderPanel>
