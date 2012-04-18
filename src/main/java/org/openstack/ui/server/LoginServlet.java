@@ -58,12 +58,15 @@ public class LoginServlet extends HttpServlet {
 		oss.setAccess(openstack.getAccess());
 		
 		req.getSession().setAttribute(Constants.OPENSTACK_SESSION, oss);
-		
+		/*
 		if(GWT.isProdMode()) {
 			resp.sendRedirect(String.format("%s/portal.html",req.getContextPath()));
 		} else {
 			resp.sendRedirect(String.format("%s/portal.html?gwt.codesvr=127.0.0.1:9997",req.getContextPath()));
 		}
+		*/
+		
+		resp.sendRedirect(String.format("%s/portal.html",req.getContextPath()));
 		
 	}
 
