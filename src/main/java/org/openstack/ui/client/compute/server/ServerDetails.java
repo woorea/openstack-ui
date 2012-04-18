@@ -94,6 +94,8 @@ public class ServerDetails extends ResizeComposite {
 	@UiField Anchor changePassword;
 	@UiField Anchor lock;
 	@UiField Anchor unlock;
+	@UiField Anchor suspend;
+	@UiField Anchor resume;
 	@UiField Anchor rebuild;
 	@UiField Anchor resize;
 	@UiField Anchor confirmResize;
@@ -406,6 +408,8 @@ public class ServerDetails extends ResizeComposite {
 		changePassword.setVisible("ACTIVE".equals(server.getStatus()));
 		lock.setVisible("ACTIVE".equals(server.getStatus()));
 		unlock.setVisible("LOCKED".equals(server.getStatus()));
+		suspend.setVisible("ACTIVE".equals(server.getStatus()));
+		resume.setVisible("SUSPENDED".equals(server.getStatus()));
 		rebuild.setVisible("ACTIVE".equals(server.getStatus()));
 		resize.setVisible(true);
 		confirmResize.setVisible(true);

@@ -1,6 +1,5 @@
 package org.openstack.ui.client.identity.service;
 
-import org.openstack.admin.client.Administration;
 import org.openstack.ui.client.compute.common.AdministrationPlace;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -25,9 +24,7 @@ public class ServicesActivity extends AbstractActivity implements ServicesView.P
 
 	@Override
 	public void onCreate() {
-		CreateService widget = new CreateService();
-		Administration.MODAL.setWidget(widget);
-		Administration.MODAL.center();
+		
 		
 	}
 

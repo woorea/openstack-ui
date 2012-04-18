@@ -63,9 +63,7 @@
 								</div>
 							</g:HTMLPanel>
 							<g:HTMLPanel>
-								<a href="/portal.html">Portal</a>
-								|
-								<a href="/portal.html">Administration</a>
+								<a href="/admin.html">Identity Administration</a>
 								|
 								<g:ListBox ui:field="tenants" />
 							</g:HTMLPanel>
@@ -76,7 +74,9 @@
 		</g:north>
 		<g:south size="32">
 			<g:HTMLPanel>
-				FOOTER
+				<div style="text-align: right; font-size: 0.8em">
+				&copy; Apache2 / Luis Gervaso / Woorea Solutions, S.L - 2012 - <a href="http://github.com/wooorea" target="_blank">http://github.com/wooorea</a> <a href="https://twitter.com/#!/woorea" target="_blank">@woorea</a>
+				</div>
 			</g:HTMLPanel>
 		</g:south>
 		<g:center>

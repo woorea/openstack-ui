@@ -7,6 +7,25 @@
 	<packaging>war</packaging>
 	<name>OpenStack UI</name>
 	<description>OpenStack UI</description>
+	
+	<licenses>
+		<license>
+			<name>Apache2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<inceptionYear>2012</inceptionYear>
+
+	<developers>
+		<developer>
+			<id>woorea</id>
+			<name>Luis Gervaso</name>
+			<email>luis@woorea.es</email>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+	
 	<build>
 		<plugins>
 			<plugin>

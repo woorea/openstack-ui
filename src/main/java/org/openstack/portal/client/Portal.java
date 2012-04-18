@@ -60,8 +60,6 @@ public class Portal implements EntryPoint {
 				Portal.MODAL.setGlassEnabled(true);
 				//CloudSherpa.MODAL.setAnimationEnabled(true);
 				
-				
-				
 				ActivityMapper activityMapper = new PortalActivityMapper();
 				
 				ActivityManager activityManager = new ActivityManager(activityMapper, EVENT_BUS);
@@ -78,7 +76,7 @@ public class Portal implements EntryPoint {
 					
 						PlaceHistoryMapper historyMapper = GWT.create(PortalPlaceHistoryMapper.class);
 						PlaceHistoryHandler historyManager = new PlaceHistoryHandler(historyMapper);
-						historyManager.register(Portal.PLACE_CONTROLLER, Portal.EVENT_BUS, new PortalPlace(TENANT_ID,"servers"));
+						historyManager.register(Portal.PLACE_CONTROLLER, Portal.EVENT_BUS, new PortalPlace(result.getList().get(0).getId(),"servers"));
 						
 						historyManager.handleCurrentHistory();
 						

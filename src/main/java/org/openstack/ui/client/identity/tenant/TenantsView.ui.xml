@@ -26,30 +26,9 @@
 			</g:HeaderPanel>
 		</g:north>
 		<g:center>
-			<g:TabLayoutPanel barHeight="30">
-				<g:tab>
-					<g:header>General</g:header>
-					<t:TenantDetails ui:field="details" />
-				</g:tab>
-				<g:tab>
-					<g:header>Users</g:header>
-					<g:HTMLPanel>
-						t2
-					</g:HTMLPanel>
-				</g:tab>
-				<g:tab>
-					<g:header>Roles</g:header>
-					<g:HTMLPanel>
-						t3
-					</g:HTMLPanel>
-				</g:tab>
-				<g:tab>
-					<g:header>Services</g:header>
-					<g:HTMLPanel>
-						t3
-					</g:HTMLPanel>
-				</g:tab>
-			</g:TabLayoutPanel>
+			<g:ScrollPanel height="100%">
+				<t:TenantDetails ui:field="details" />
+			</g:ScrollPanel>
 		</g:center>
 	</g:SplitLayoutPanel>
 </ui:UiBinder> 

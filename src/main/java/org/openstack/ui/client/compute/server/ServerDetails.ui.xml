@@ -38,6 +38,7 @@
 													</td>
 													<td style="border: 0; text-align: right">
 														<g:Anchor ui:field="reboot" text="Reboot" />
+														|
 														<g:Anchor ui:field="pause" text="Pause" />
 														<g:Anchor ui:field="unpause" text="Unpause" />
 													</td>
@@ -145,7 +146,9 @@
 												<tr>
 													<td style="border: 0; text-align: right">
 														<g:Anchor ui:field="resize" text="Resize" />
+														|
 														<g:Anchor ui:field="confirmResize" text="Confirm Resize" />
+														|
 														<g:Anchor ui:field="revertResize" text="Revert Resize" />
 													</td>
 												</tr>

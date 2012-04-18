@@ -4,7 +4,7 @@
 	<ui:style>
 		
 	</ui:style>
-	<g:HeaderPanel width="600px" height="450px">
+	<g:HeaderPanel width="600px" height="210px">
 		<g:HTMLPanel>
 			<div class="modal-header" style="margin-bottom: 15px">
 				<g:Anchor ui:field="close" styleName="close">×</g:Anchor>
@@ -12,8 +12,23 @@
 			</div>
 		</g:HTMLPanel>
 		<g:ResizeLayoutPanel height="100%">
-			<c:FlavorPicker ui:field="flavorRef" />
-			<g:CheckBox ui:field="autoDiskConfig" />
+			<g:HTMLPanel>
+				<table>
+					<tbody>
+						<tr>
+							<td colspan="2">Flavor</td>
+						</tr>
+						<tr>
+							<td colspan="2"><c:FlavorPicker ui:field="flavorRef" /></td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<td><g:CheckBox ui:field="autoDiskConfig" /></td><td>Auto Disk Config</td>
+						</tr>
+					</tbody>
+				</table>
+			</g:HTMLPanel>
 		</g:ResizeLayoutPanel>
 		<g:HTMLPanel ui:field="footer" styleName="modal-footer">
 			<g:Button ui:field="execute" styleName="btn">Reboot Now</g:Button>

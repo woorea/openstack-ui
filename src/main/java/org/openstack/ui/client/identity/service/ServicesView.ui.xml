@@ -26,18 +26,9 @@
 			</g:HeaderPanel>
 		</g:north>
 		<g:center>
-			<g:TabLayoutPanel barHeight="30">
-				<g:tab>
-					<g:header>tab.1</g:header>
-					<s:ServiceDetails ui:field="details" />
-				</g:tab>
-				<g:tab>
-					<g:header>tab.2</g:header>
-					<g:HTMLPanel>
-						t2
-					</g:HTMLPanel>
-				</g:tab>
-			</g:TabLayoutPanel>
+			<g:ScrollPanel height="100%">
+				<s:ServiceDetails ui:field="details" />
+			</g:ScrollPanel>
 		</g:center>
 	</g:SplitLayoutPanel>
 </ui:UiBinder> 

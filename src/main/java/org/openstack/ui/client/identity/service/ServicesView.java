@@ -34,7 +34,7 @@ import com.google.gwt.view.client.RangeChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
-public class ServicesView extends Composite {
+public class ServicesView extends Composite implements CreateService.Listener {
 
 	private static Binder uiBinder = GWT.create(Binder.class);
 
@@ -105,7 +105,9 @@ public class ServicesView extends Composite {
 
 	@UiHandler("create")
 	void onCreateClick(ClickEvent event) {
-		presenter.onCreate();
+		CreateService widget = new CreateService();
+		Administration.MODAL.setWidget(widget);
+		Administration.MODAL.center();
 	}
 	
 	@UiHandler("delete")
@@ -231,6 +233,13 @@ public class ServicesView extends Composite {
 		details.name.setText(server.getId());
 		details.description.setText(server.getId());
 		details.type.setText(server.getId());
+	}
+
+	@Override
+	public void onSave(Service service) {
+		Administration.MODAL.hide();
+		refresh();
+		
 	}
 	
 }

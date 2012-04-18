@@ -26,7 +26,9 @@
 			</g:HeaderPanel>
 		</g:north>
 		<g:center>
-			<u:UserDetails ui:field="details" />
+			<g:ScrollPanel height="100%">
+				<u:UserDetails ui:field="details" />
+			</g:ScrollPanel>
 		</g:center>
 	</g:SplitLayoutPanel>
 </ui:UiBinder> 

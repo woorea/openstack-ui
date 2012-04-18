@@ -9,7 +9,7 @@
 	</ui:style>
 	<g:HorizontalPanel styleName="{style.details}">
 		<g:HTMLPanel>
-			<table class="{style.details}">
+			<table class="table table-stripped {style.details}">
 				<tbody>
 					<tr>
 						<td>ID</td>

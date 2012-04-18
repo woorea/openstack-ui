@@ -64,4 +64,9 @@ public class CreateService extends Composite {
 		});
 	}
 
+	public void setListener(Listener listener) {
+		this.listener = listener;
+		
+	}
+
 }

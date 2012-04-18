@@ -5,23 +5,76 @@
 		.page {
 			margin: 10px;
 		}
+		
 		.main {
 			border: 8px solid #E7E7E7;
 		}
+		
 		.nav {
 			background-color: #F1F1F1;
 			height: 100%;
 		}
+		
+		.compute {
+			margin: 10px;
+		}
+		
+		.content {
+			border: 4px solid #E7E7E7;
+		}
+		
+		.m5 {
+			margin: 5px;
+		}
+		
+		.m10 {
+			margin: 10px;
+		}
+		
+		.top-inner {
+			table-layout: fixed;
+			width: 100%;
+		}
+		
+		.tt {
+			border-collapse: separate;
+			border-spacing: 5px;
+		}
+		
+		.w100 {
+			width: 100%;
+		}
 	</ui:style>
 	<g:DockLayoutPanel styleName="{style.page}">
 		<g:north size="96">
-			<g:HTMLPanel>
-				TOP
-			</g:HTMLPanel>
+			<g:SimplePanel styleName="{style.m10}">
+				<g:HorizontalPanel styleName="{style.top-inner}">
+					<g:cell width="50%">
+						<g:HTMLPanel>
+							<img src="img/os-logo.png" />
+						</g:HTMLPanel>
+					</g:cell>
+					<g:cell width="50%" horizontalAlignment="RIGHT">
+						<g:VerticalPanel styleName="{style.tt}">
+							<g:HTMLPanel>
+								<div style="text-align: right">
+									<a href="/setup">Setup</a>
+									<a href="/login">Logout</a>
+								</div>
+							</g:HTMLPanel>
+							<g:HTMLPanel>
+								<a href="/portal.html">Portal</a>
+							</g:HTMLPanel>
+						</g:VerticalPanel>
+					</g:cell>
+				</g:HorizontalPanel>
+			</g:SimplePanel>
 		</g:north>
 		<g:south size="32">
 			<g:HTMLPanel>
-				FOOTER
+				<div style="text-align: right; font-size: 0.8em">
+				&copy; Apache2 / Luis Gervaso / Woorea Solutions, S.L - 2012 - <a href="http://github.com/wooorea" target="_blank">http://github.com/wooorea</a> <a href="https://twitter.com/#!/woorea" target="_blank">@woorea</a>
+				</div>
 			</g:HTMLPanel>
 		</g:south>
 		<g:center>
