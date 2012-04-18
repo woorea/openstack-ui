@@ -106,6 +106,7 @@ public class ServicesView extends Composite implements CreateService.Listener {
 	@UiHandler("create")
 	void onCreateClick(ClickEvent event) {
 		CreateService widget = new CreateService();
+		widget.setListener(this);
 		Administration.MODAL.setWidget(widget);
 		Administration.MODAL.center();
 	}
