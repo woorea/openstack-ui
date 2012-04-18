@@ -2,25 +2,23 @@ package org.openstack.ui.client.compute.volume;
 
 import org.openstack.model.compute.Volume;
 import org.openstack.portal.client.Portal;
+import org.openstack.portal.client.PortalActivity;
 import org.openstack.ui.client.compute.common.PortalPlace;
 import org.openstack.ui.client.compute.snapshot.CreateSnapshot;
 
-import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
-public class VolumesActivity extends AbstractActivity implements VolumesView.Presenter {
+public class VolumesActivity extends PortalActivity implements VolumesView.Presenter {
 	
 	public static final VolumesView VIEW = new VolumesView();
 
-	private PortalPlace place;
-
 	public VolumesActivity(PortalPlace place) {
-		this.place = place;
+		super(place);
 	}
 
 	@Override
-	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+	public void startOnPanel(AcceptsOneWidget panel, EventBus eventBus) {
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
 		VIEW.refresh();

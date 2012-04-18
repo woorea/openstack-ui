@@ -2,27 +2,25 @@ package org.openstack.ui.client.compute.snapshot;
 
 import org.openstack.model.compute.Snapshot;
 import org.openstack.model.compute.Volume;
-import org.openstack.portal.client.Portal;
+import org.openstack.portal.client.PortalActivity;
 import org.openstack.ui.client.compute.common.PortalPlace;
 
-import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
-public class SnapshotsActivity extends AbstractActivity implements SnapshotsView.Presenter {
+public class SnapshotsActivity extends PortalActivity implements SnapshotsView.Presenter {
 	
 	public static final SnapshotsView VIEW = new SnapshotsView();
 
-	private PortalPlace place;
-
 	public SnapshotsActivity(PortalPlace place) {
-		this.place = place;
+		super(place);
 	}
 
 	@Override
-	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+	public void startOnPanel(AcceptsOneWidget panel, EventBus eventBus) {
 		VIEW.setPresenter(this);
 		panel.setWidget(VIEW);
+		VIEW.refresh();
 	}
 
 	@Override
@@ -43,7 +41,7 @@ public class SnapshotsActivity extends AbstractActivity implements SnapshotsView
 
 	@Override
 	public void onSave(Volume service) {
-		Portal.PLACE_CONTROLLER.goTo(new PortalPlace("volumes"));
+		//Portal.PLACE_CONTROLLER.goTo(new PortalPlace("","volumes"));
 	}
 
 }

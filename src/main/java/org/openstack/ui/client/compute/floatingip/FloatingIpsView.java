@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.openstack.model.compute.FloatingIp;
-import org.openstack.model.compute.nova.floatingip.AssociateFloatingIpAction;
 import org.openstack.model.compute.nova.floatingip.DisassociateFloatingIpAction;
 import org.openstack.portal.client.Portal;
 import org.openstack.ui.client.common.DefaultAsyncCallback;

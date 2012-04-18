@@ -5,6 +5,8 @@ import java.util.Set;
 import org.openstack.model.images.Image;
 import org.openstack.model.images.ImageList;
 import org.openstack.portal.client.Portal;
+import org.openstack.ui.client.common.DefaultAsyncCallback;
+import org.openstack.ui.client.common.PreviewButtonCell;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -65,13 +67,7 @@ public class ImagesView extends Composite {
 			
 			final Range range = display.getVisibleRange();
 			
-			Portal.CLOUD.listImages(range.getStart(), range.getLength(),  new AsyncCallback<ImageList>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-					
-				}
+			Portal.CLOUD.listImages(range.getStart(), range.getLength(),  new DefaultAsyncCallback<ImageList>() {
 
 				@Override
 				public void onSuccess(ImageList result) {
@@ -136,8 +132,8 @@ public class ImagesView extends Composite {
 	
 	@UiHandler("refresh")
 	void onRefreshClick(ClickEvent event) {
-		//grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
-		RangeChangeEvent.fire(grid, grid.getVisibleRange());
+		grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
+		//RangeChangeEvent.fire(grid, grid.getVisibleRange());
 		presenter.onRefresh();
 	}
 	
@@ -174,7 +170,7 @@ public class ImagesView extends Composite {
 			}
 		};
 		grid.setColumnWidth(statusColumn, "120px");
-		grid.addColumn(statusColumn);
+		grid.addColumn(statusColumn, "Status");
 		/*
 		Column<Image, String> logoColumn = new Column<Image, String>(new LogoCell()) {
 
@@ -193,16 +189,24 @@ public class ImagesView extends Composite {
 			}
 		};
 		grid.setColumnWidth(nameColumn, "120px");
-		grid.addColumn(nameColumn);
+		grid.addColumn(nameColumn, "Name");
 		TextColumn<Image> minDiskColumn = new TextColumn<Image>() {
 			@Override
 			public String getValue(Image object) {
 				return String.valueOf(object.getMinDisk());
 			}
 		};
-		grid.setColumnWidth(minDiskColumn, "120px");
-		grid.addColumn(minDiskColumn);
-		ButtonCell previewButton = new ButtonCell();
+		grid.setColumnWidth(minDiskColumn, "60px");
+		grid.addColumn(minDiskColumn, "Min Disk");
+		TextColumn<Image> minRamColumn = new TextColumn<Image>() {
+			@Override
+			public String getValue(Image object) {
+				return String.valueOf(object.getMinRam());
+			}
+		};
+		grid.setColumnWidth(minRamColumn, "60px");
+		grid.addColumn(minRamColumn, "Min Ram");
+		ButtonCell previewButton = new PreviewButtonCell();
 		Column<Image,String> preview = new Column<Image,String>(previewButton) {
 		  public String getValue(Image object) {
 		    return "Preview";
@@ -235,7 +239,9 @@ public class ImagesView extends Composite {
 		details.ownerx.setText(image.getOwner());
 		details.createdAt.setText(image.getCreatedAt());
 		details.deleted.setText(String.valueOf(image.isDeleted()));
-		details.deletedAt.setText(image.getDeletedAt().toString());
+		if(image.getDeletedAt() != null) {
+			details.deletedAt.setText(image.getDeletedAt().toString());
+		}
 		details.diskFormat.setText(image.getDiskFormat());
 		details.isProtected.setText(String.valueOf(image.isProtected()));
 		details.isPublic.setText(String.valueOf(image.isPublic()));

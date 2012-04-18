@@ -6,6 +6,7 @@ import java.util.Set;
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.SecurityGroupRule;
 import org.openstack.portal.client.Portal;
+import org.openstack.ui.client.common.PreviewButtonCell;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -176,9 +177,9 @@ public class SecurityGroupsView extends Composite {
 				return object.getName();
 			}
 		};
-		grid.setColumnWidth(nameColumn, "120px");
-		grid.addColumn(nameColumn, "");
-		ButtonCell previewButton = new ButtonCell();
+		//grid.setColumnWidth(nameColumn, "120px");
+		grid.addColumn(nameColumn, "name");
+		ButtonCell previewButton = new PreviewButtonCell();
 		Column<SecurityGroup,String> preview = new Column<SecurityGroup,String>(previewButton) {
 		  public String getValue(SecurityGroup object) {
 		    return "Preview";
@@ -190,7 +191,7 @@ public class SecurityGroupsView extends Composite {
 		    onPreview(securityGroup);
 		  }
 		});
-		grid.setColumnWidth(preview, "100px");
+		grid.setColumnWidth(preview, "120px");
 		grid.addColumn(preview);
 		grid.setSelectionModel(selectionModel, selectionEventManager);
 		selectionModel.addSelectionChangeHandler(new Handler() {

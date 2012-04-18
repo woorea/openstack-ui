@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.openstack.admin.client.Administration;
 import org.openstack.model.identity.Service;
+import org.openstack.ui.client.common.PreviewButtonCell;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -199,7 +200,7 @@ public class ServicesView extends Composite {
 		};
 		grid.setColumnWidth(descriptionColumn, "120px");
 		grid.addColumn(descriptionColumn, "Description");
-		ButtonCell previewButton = new ButtonCell();
+		ButtonCell previewButton = new PreviewButtonCell();
 		Column<Service,String> preview = new Column<Service,String>(previewButton) {
 		  public String getValue(Service object) {
 		    return "Preview";

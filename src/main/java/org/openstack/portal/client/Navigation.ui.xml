@@ -7,18 +7,18 @@
 	<g:HTMLPanel>
 		<g:Tree ui:field="tree">
 			<g:TreeItem text="COMPUTE (Nova)" state="true">
-				<g:Hyperlink text="Servers" targetHistoryToken="p:servers" />
-				<g:Hyperlink text="Images" targetHistoryToken="p:images" />
+				<g:Hyperlink text="Servers" targetHistoryToken="p:%tenantId%:servers" />
+				<g:Hyperlink text="Images" targetHistoryToken="p:%tenantId%:images" />
 				<g:TreeItem text="Networking" state="true">
-					<g:Hyperlink text="Floating Ips" targetHistoryToken="p:floatingips" />
+					<g:Hyperlink text="Floating Ips" targetHistoryToken="p:%tenantId%:floatingips" />
 				</g:TreeItem>
 				<g:TreeItem text="Storage" state="true">
-					<g:Hyperlink text="Volumes" targetHistoryToken="p:volumes" />
-					<g:Hyperlink text="Snapshots" targetHistoryToken="p:snapshots" />
+					<g:Hyperlink text="Volumes" targetHistoryToken="p:%tenantId%:volumes" />
+					<g:Hyperlink text="Snapshots" targetHistoryToken="p:%tenantId%:snapshots" />
 				</g:TreeItem>
 				<g:TreeItem text="Security" state="true">
-					<g:Hyperlink text="Key Pairs" targetHistoryToken="p:keypairs" />
-					<g:Hyperlink text="Security Groups" targetHistoryToken="p:securitygroups" />
+					<g:Hyperlink text="Key Pairs" targetHistoryToken="p:%tenantId%:keypairs" />
+					<g:Hyperlink text="Security Groups" targetHistoryToken="p:%tenantId%:securitygroups" />
 				</g:TreeItem>
 			</g:TreeItem>
 		</g:Tree>

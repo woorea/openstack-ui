@@ -2,6 +2,7 @@ package org.openstack.ui.client.compute.securitygroup;
 
 import org.openstack.model.compute.SecurityGroup;
 import org.openstack.portal.client.Portal;
+import org.openstack.ui.client.common.DefaultAsyncCallback;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -10,7 +11,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DeckLayoutPanel;
@@ -90,17 +90,12 @@ public class CreateSecurityGroupWizard extends Composite {
 	@UiHandler("next")
 	void onNextClick(ClickEvent event) {
 		final int currentIndex = deck.getVisibleWidgetIndex();
-		Portal.CLOUD.create(securityGroup.flush(), new AsyncCallback<SecurityGroup>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert(caught.getMessage());
-				
-			}
+		Portal.CLOUD.create(securityGroup.flush(), new DefaultAsyncCallback<SecurityGroup>() {
 
 			@Override
 			public void onSuccess(SecurityGroup result) {
 				if(currentIndex < deck.getWidgetCount()) {
+					GWT.log(""+result);
 					securityGroupRules.refresh(result.getId());
 					step(currentIndex + 1);
 				}

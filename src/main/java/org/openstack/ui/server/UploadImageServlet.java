@@ -1,6 +1,5 @@
 package org.openstack.ui.server;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -13,8 +12,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.FilenameUtils;
-import org.openstack.client.ImagesClient;
 import org.openstack.client.OpenStackClient;
 import org.openstack.model.images.glance.GlanceImage;
 

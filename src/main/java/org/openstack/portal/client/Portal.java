@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.FlavorList;
+import org.openstack.model.identity.Tenant;
+import org.openstack.model.identity.TenantList;
 import org.openstack.model.images.Image;
 import org.openstack.model.images.ImageList;
 import org.openstack.ui.client.UIService;
@@ -21,6 +23,7 @@ import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.web.bindery.event.shared.EventBus;
@@ -42,30 +45,11 @@ public class Portal implements EntryPoint {
 	
 	public static final Map<String, Image> images = new HashMap<String, Image>();
 	
+	public static String TENANT_ID;
+	
+	public static final PortalView VIEW = new PortalView();
+	
 	public void onModuleLoad() {
-		
-		Portal.CLOUD.listFlavors(0, 100, new DefaultAsyncCallback<FlavorList>() {
-
-			@Override
-			public void onSuccess(FlavorList result) {
-				for(Flavor flavor : result) {
-					flavors.put(flavor.getId(), flavor);
-				}
-			}
-			
-		});
-		
-		Portal.CLOUD.listImages(0, 100, new DefaultAsyncCallback<ImageList>() {
-
-			@Override
-			public void onSuccess(ImageList result) {
-				for(Image image : result) {
-					images.put(image.getId(), image);
-				}
-			}
-			
-		});
-		
 		
 		
 		Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
@@ -76,25 +60,36 @@ public class Portal implements EntryPoint {
 				Portal.MODAL.setGlassEnabled(true);
 				//CloudSherpa.MODAL.setAnimationEnabled(true);
 				
-				PortalView view = new PortalView();
+				
 				
 				ActivityMapper activityMapper = new PortalActivityMapper();
 				
 				ActivityManager activityManager = new ActivityManager(activityMapper, EVENT_BUS);
-				activityManager.setDisplay(view.main);
+				activityManager.setDisplay(VIEW.main);
 				
-				PlaceHistoryMapper historyMapper = GWT.create(PortalPlaceHistoryMapper.class);
-				PlaceHistoryHandler historyManager = new PlaceHistoryHandler(historyMapper);
-				historyManager.register(PLACE_CONTROLLER, EVENT_BUS, new PortalPlace("servers"));
-				
-				historyManager.handleCurrentHistory();
-				
-				RootLayoutPanel.get().add(view);
+				Portal.CLOUD.listUserTenants(new DefaultAsyncCallback<TenantList>() {
+
+					@Override
+					public void onSuccess(TenantList result) {
+						
+						for(Tenant t : result.getList()) {
+							VIEW.tenants.addItem(t.getName(), t.getId());
+						}
+					
+						PlaceHistoryMapper historyMapper = GWT.create(PortalPlaceHistoryMapper.class);
+						PlaceHistoryHandler historyManager = new PlaceHistoryHandler(historyMapper);
+						historyManager.register(Portal.PLACE_CONTROLLER, Portal.EVENT_BUS, new PortalPlace(TENANT_ID,"servers"));
+						
+						historyManager.handleCurrentHistory();
+						
+						RootLayoutPanel.get().add(VIEW);
+						
+					}
+					
+				});
 				
 			}
 		});
-		
-		
 		
 	}
 	

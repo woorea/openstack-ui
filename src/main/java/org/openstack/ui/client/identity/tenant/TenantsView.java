@@ -5,6 +5,7 @@ import java.util.Set;
 import org.openstack.admin.client.Administration;
 import org.openstack.model.identity.Tenant;
 import org.openstack.model.identity.TenantList;
+import org.openstack.ui.client.common.PreviewButtonCell;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -189,7 +190,7 @@ public class TenantsView extends Composite {
 		};
 		grid.setColumnWidth(enabledColumn, "120px");
 		grid.addColumn(enabledColumn, "STATUS");
-		ButtonCell previewButton = new ButtonCell();
+		ButtonCell previewButton = new PreviewButtonCell();
 		Column<Tenant,String> preview = new Column<Tenant,String>(previewButton) {
 		  public String getValue(Tenant object) {
 		    return "Preview";

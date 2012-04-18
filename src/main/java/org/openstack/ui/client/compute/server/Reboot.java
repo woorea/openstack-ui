@@ -3,7 +3,6 @@ package org.openstack.ui.client.compute.server;
 import java.io.Serializable;
 
 import org.openstack.model.compute.Server;
-import org.openstack.model.compute.nova.server.actions.GetVncConsoleAction;
 import org.openstack.model.compute.nova.server.actions.RebootAction;
 import org.openstack.portal.client.Portal;
 

@@ -20,11 +20,13 @@ public class OpenStackSession implements Serializable {
 	}
 
 	public Access getAccess() {
-		return access;
+		return this.access;
 	}
 
 	public void setAccess(Access access) {
+		System.out.println("BEFORE " + this.access);
 		this.access = access;
+		System.out.println("AFTER " + this.access);
 	}
 
 }

@@ -3,6 +3,9 @@ package org.openstack.ui.server;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.openstack.client.OpenStackClient;
 import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.FlavorList;
 import org.openstack.model.compute.FloatingIp;
@@ -30,8 +33,31 @@ import org.openstack.model.images.Image;
 import org.openstack.model.images.ImageList;
 import org.openstack.ui.client.UIService;
 import org.openstack.ui.client.common.UIException;
+import org.openstack.ui.client.common.UISecurityException;
 
 public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UIService {
+	
+	@Override
+	public void authenticate(String tenantId) throws UIException {
+		try {
+			OpenStackClient openstack = getClient();
+			openstack.exchangeTokenForTenant(tenantId);
+			HttpSession httpSession =  perThreadRequest.get().getSession(false);
+			OpenStackSession session = (OpenStackSession) httpSession.getAttribute(Constants.OPENSTACK_SESSION);
+			session.setAccess(openstack.getAccess());
+			/*
+			return OpenStackClient.authenticate(session.getProperties(), session.getAccess());
+			*/
+		} catch (Exception e) {
+			throw new UISecurityException("Session expired!");
+		}
+	}
+
+	@Override
+	public TenantList listUserTenants() throws UIException {
+		return getClient().getIdentityEndpoint().tenants().get();
+		
+	}
 
 	@Override
 	public ServerList listServers(int start, int max) throws UIException {
@@ -99,7 +125,7 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 
 	@Override
 	public void deleteImage(String id) throws UIException {
-		//getComputeClient().deleteImage(id);
+		getImagesClient().deleteImage(id);
 		
 	}
 
@@ -226,15 +252,13 @@ public class UIServiceImpl extends OpenStackRemoteServiceServlet implements UISe
 	}
 
 	@Override
-	public SecurityGroup create(SecurityGroupForCreate securityGroup) throws UIException {
-		// TODO Auto-generated method stub
-		return null;
+	public SecurityGroup create(SecurityGroupForCreate securityGroupForCreate) throws UIException {
+		return getComputeClient().createSecurityGroup(securityGroupForCreate);
 	}
 
 	@Override
 	public SecurityGroup showSecurityGroup(Integer id) throws UIException {
-		// TODO Auto-generated method stub
-		return null;
+		return getComputeClient().showSecurityGroup(id);
 	}
 
 	@Override

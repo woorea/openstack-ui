@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.openstack.admin.client.Administration;
 import org.openstack.model.identity.User;
+import org.openstack.ui.client.common.PreviewButtonCell;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -179,7 +180,7 @@ public class UsersView extends Composite {
 		};
 		grid.setColumnWidth(descriptionColumn, "120px");
 		grid.addColumn(descriptionColumn, "Description");
-		ButtonCell previewButton = new ButtonCell();
+		ButtonCell previewButton = new PreviewButtonCell();
 		Column<User,String> preview = new Column<User,String>(previewButton) {
 		  public String getValue(User object) {
 		    return "Preview";

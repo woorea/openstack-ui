@@ -156,4 +156,8 @@ public interface UIServiceAsync {
 
 	void showSecurityGroup(Integer id, AsyncCallback<SecurityGroup> callback);
 
+	void authenticate(String tenantId, AsyncCallback<Void> callback);
+
+	void listUserTenants(AsyncCallback<TenantList> callback);
+
 }

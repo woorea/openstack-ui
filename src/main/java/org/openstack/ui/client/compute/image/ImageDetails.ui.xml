@@ -6,61 +6,64 @@
 			width: 100%;
 			table-layout: fixed;
 		}
+		.title {
+			font-weight: bold;
+		}
 	</ui:style>
 	<g:HorizontalPanel styleName="{style.details}">
 		<g:HTMLPanel>
-			<table class="{style.details}">
+			<table class="table table-stripped {style.details}">
 				<tbody>
 					<tr>
-						<td>ID</td>
+						<td class="{style.title}">ID</td>
 						<td>
 							<g:Label ui:field="id" />
 						</td>
 					</tr>
 					<tr>
-						<td>Checksum</td>
+						<td class="{style.title}">Checksum</td>
 						<td>
 							<g:Label ui:field="checksum" />
 						</td>
 					</tr>
 					<tr>
-						<td>Container Format</td>
+						<td class="{style.title}">Container Format</td>
 						<td>
 							<g:Label ui:field="containerFormat" />
 						</td>
 					</tr>
 					<tr>
-						<td>Created At</td>
+						<td class="{style.title}">Created At</td>
 						<td>
 							<g:Label ui:field="createdAt" />
 						</td>
 					</tr>
 					<tr>
-						<td>Updated At</td>
+						<td class="{style.title}">Updated At</td>
 						<td>
 							<g:Label ui:field="updatedAt" />
 						</td>
 					</tr>
 					<tr>
-						<td>Deleted</td>
+						<td class="{style.title}">Deleted</td>
 						<td>
 							<g:Label ui:field="deleted" />
 						</td>
 					</tr>
 					<tr>
-						<td>Deleted At</td>
+						<td class="{style.title}">Deleted At</td>
 						<td>
 							<g:Label ui:field="deletedAt" />
 						</td>
 					</tr>
 					<tr>
-						<td>Disk Format</td>
+						<td class="{style.title}">Disk Format</td>
 						<td>
 							<g:Label ui:field="diskFormat" />
 						</td>
 					</tr>
 					<tr>
-						<td>Protected</td>
+						<td class="{style.title}">Protected</td>
 						<td>
 							<g:Label ui:field="isProtected" />
 						</td>
@@ -69,52 +72,52 @@
 			</table>
 		</g:HTMLPanel>
 		<g:HTMLPanel>
-			<table class="{style.details}">
+			<table class="table table-stripped {style.details}">
 				<tbody>
 					<tr>
-						<td>Public</td>
+						<td class="{style.title}">Public</td>
 						<td>
 							<g:Label ui:field="isPublic" />
 						</td>
 					</tr>
 					<tr>
-						<td>minDisk</td>
+						<td class="{style.title}">minDisk</td>
 						<td>
 							<g:Label ui:field="minDisk" />
 						</td>
 					</tr>
 					<tr>
-						<td>minRam</td>
+						<td class="{style.title}">minRam</td>
 						<td>
 							<g:Label ui:field="minRam" />
 						</td>
 					</tr>
 					<tr>
-						<td>name</td>
+						<td class="{style.title}">name</td>
 						<td>
 							<g:Label ui:field="name" />
 						</td>
 					</tr>
 					<tr>
-						<td>owner</td>
+						<td class="{style.title}">owner</td>
 						<td>
 							<g:Label ui:field="ownerx" />
 						</td>
 					</tr>
 					<tr>
-						<td>size</td>
+						<td class="{style.title}">size</td>
 						<td>
 							<g:Label ui:field="size" />
 						</td>
 					</tr>
 					<tr>
-						<td>status</td>
+						<td class="{style.title}">status</td>
 						<td>
 							<g:Label ui:field="status" />
 						</td>
 					</tr>
 					<tr>
-						<td>uri</td>
+						<td class="{style.title}">uri</td>
 						<td>
 							<g:Label ui:field="uri" />
 						</td>

@@ -1,25 +1,11 @@
 package org.openstack.ui.client.compute.server;
 
-import java.io.Serializable;
-import java.util.List;
-
-import org.openstack.model.compute.KeyPair;
-import org.openstack.model.compute.SecurityGroup;
 import org.openstack.model.compute.Server;
-import org.openstack.model.compute.ServerForCreate;
-import org.openstack.model.compute.nova.NovaServerForCreate;
-import org.openstack.model.compute.nova.server.actions.RebootAction;
 import org.openstack.model.compute.nova.server.actions.RebuildAction;
 import org.openstack.portal.client.Portal;
-import org.openstack.ui.client.compute.common.FlavorPicker;
-import org.openstack.ui.client.compute.common.KeyPairPicker;
 import org.openstack.ui.client.compute.common.MapMetadataEditor;
-import org.openstack.ui.client.compute.common.SelectMultiple;
 import org.openstack.ui.client.compute.image.ImagePicker;
-import org.openstack.ui.client.compute.keypair.CreateKeyPairForm;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
@@ -29,13 +15,11 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DeckLayoutPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 

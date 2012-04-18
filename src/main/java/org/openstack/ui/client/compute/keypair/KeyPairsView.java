@@ -89,6 +89,7 @@ public class KeyPairsView extends Composite {
 	public KeyPairsView() {
 		createGrid();
 		initWidget(uiBinder.createAndBindUi(this));
+		importPublicKey.setVisible(false);
 	}
 
 	public void setPresenter(Presenter presenter) {

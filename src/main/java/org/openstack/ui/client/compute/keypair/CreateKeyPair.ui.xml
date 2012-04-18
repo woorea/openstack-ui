@@ -4,7 +4,7 @@
 	<ui:style>
 		
 	</ui:style>
-	<g:HeaderPanel width="600px" height="450px">
+	<g:HeaderPanel width="600px" height="200px">
 		<g:HTMLPanel>
 			<div class="modal-header" style="margin-bottom: 15px">
 				<g:Anchor ui:field="close" styleName="close">×</g:Anchor>

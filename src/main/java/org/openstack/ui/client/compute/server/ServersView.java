@@ -3,13 +3,16 @@ package org.openstack.ui.client.compute.server;
 import java.io.Serializable;
 import java.util.Set;
 
+import org.openstack.model.compute.Flavor;
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.ServerAction;
 import org.openstack.model.compute.ServerList;
 import org.openstack.model.compute.nova.NovaServerForCreate;
+import org.openstack.model.images.Image;
 import org.openstack.portal.client.Portal;
 import org.openstack.ui.client.common.DefaultAsyncCallback;
 import org.openstack.ui.client.common.DefaultGridResources;
+import org.openstack.ui.client.common.PreviewButtonCell;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -107,8 +110,8 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 	}
 	
 	public void refresh() {
-		//grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
-		RangeChangeEvent.fire(grid, grid.getVisibleRange());
+		grid.setVisibleRangeAndClearData(grid.getVisibleRange(), true);
+		//RangeChangeEvent.fire(grid, grid.getVisibleRange());
 	}
 
 	@UiHandler("create")
@@ -216,20 +219,22 @@ public class ServersView extends Composite implements CreateServerWizard.Listene
 		TextColumn<Server> imageColumn = new TextColumn<Server>() {
 			@Override
 			public String getValue(Server object) {
-				return Portal.images.get(object.getImage().getId()).getName();
+				Image image = Portal.images.get(object.getImage().getId());
+				return image != null ? image.getName() : "";
 			}
 		};
-		// grid.setColumnWidth(imageColumn, "120px");
+		grid.setColumnWidth(imageColumn, "120px");
 		grid.addColumn(imageColumn, "Image");
 		TextColumn<Server> flavorColumn = new TextColumn<Server>() {
 			@Override
 			public String getValue(Server object) {
-				return Portal.flavors.get(object.getFlavor().getId()).getName();
+				Flavor flavor = Portal.flavors.get(object.getFlavor().getId());
+				return flavor != null ? flavor.getName() : "";
 			}
 		};
 		grid.setColumnWidth(flavorColumn, "120px");
 		grid.addColumn(flavorColumn, "Flavor");
-		ButtonCell previewButton = new ButtonCell();
+		ButtonCell previewButton = new PreviewButtonCell();
 		Column<Server,String> preview = new Column<Server,String>(previewButton) {
 		  public String getValue(Server object) {
 		    return "Preview";

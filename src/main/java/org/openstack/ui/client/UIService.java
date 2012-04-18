@@ -40,6 +40,10 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("../ui/service")
 public interface UIService extends RemoteService {
 	
+	public void authenticate(String tenantId) throws UIException;
+	
+	public TenantList listUserTenants() throws UIException;
+	
 	public ServerList listServers(int start, int max) throws UIException;
 	
 	public Server create(ServerForCreate serverForCreate) throws UIException;

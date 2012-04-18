@@ -4,11 +4,7 @@ import java.io.Serializable;
 
 import org.openstack.model.compute.Server;
 import org.openstack.model.compute.nova.server.actions.CreateBackupAction;
-import org.openstack.model.compute.nova.server.actions.GetVncConsoleAction;
-import org.openstack.model.compute.nova.server.actions.RebootAction;
-import org.openstack.model.compute.nova.server.actions.ResizeAction;
 import org.openstack.portal.client.Portal;
-import org.openstack.ui.client.compute.common.FlavorPicker;
 import org.openstack.ui.client.compute.common.MapMetadataEditor;
 
 import com.google.gwt.core.client.GWT;

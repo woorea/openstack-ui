@@ -56,6 +56,7 @@ import org.openstack.model.images.ImageList;
 import org.openstack.model.images.glance.GlanceImage;
 import org.openstack.model.images.glance.GlanceImageList;
 import org.openstack.ui.client.UIService;
+import org.openstack.ui.client.common.UIException;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -585,6 +586,18 @@ public class UIServiceImplMock extends RemoteServiceServlet implements UIService
 			deleteSecurityGroupRule(id);
 		}
 		
+	}
+
+	@Override
+	public void authenticate(String tenantId) throws UIException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public TenantList listUserTenants() throws UIException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
